@@ -1,5 +1,5 @@
 import { ChangeEvent, FC, useState, JSX, FormEvent } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import InputField from "../../components/InputField";
 import CheckBox from "../../components/CheckBox";
 import Swal from "sweetalert2";
@@ -19,7 +19,7 @@ const LoginForm: FC = (): JSX.Element => {
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-black px-4">
+    <div className="flex min-h-screen items-center justify-center bg-dark-bg px-4">
       <div className="w-full max-w-md space-y-8 rounded-xl bg-white p-8 shadow-lg">
         <h2 className="text-center text-2xl font-bold text-gray-900">
           Sign In

@@ -1,1 +1,67 @@
 @import "tailwindcss";
+/* @import "tailwindcss/preflight"; */
+/* @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;500;600;700;800;900&family=Poppins:wght@300;400;500;600;700;800&display=swap'); */
+
+@theme {
+    --color-dark-bg: #181a1e;
+    --color-dark: #edeffd;
+    --color-dark-varient: #a3bdcc;
+    --color-light: rgba(0, 0, 0, 0.4);
+    --box-shadow: 0 2rem 3rem var(--color-light);
+
+    --color-primary: #7380ec;
+    --color-danger: #ff7782;
+    --color-success: #41f1b6;
+    --color-warning: #ffbb55;
+    --color-info: #7d8da1;
+    --color-dark: #363949;
+    --color-light: rgba(132, 139, 200, 0.18);
+    --color-dark-varient: #677483;
+    --color-background: #f6f6f9;
+
+    --card-border-radius: 2rem;
+    --border-radius-1: 0.4rem;
+    --border-radius-2: 1.2rem;
+
+    --card-padding: 1.8rem;
+    --box-shadow: 0 2rem 3rem var(--color-light)
+}
+
+@layer {}
+
+@font-face {
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    src: url();
+}
+
+@media screen {}
+
+body {
+    overflow-x: hidden;
+}
+
+table {
+    padding: 10px;
+    border-collapse: collapse;
+}
+
+table thead tr th {
+    font-weight: 200;
+}
+
+table thead tr th,
+table tbody tr,
+table tbody tr td {
+    padding: 10px;
+}
+
+
+.remove-scroll::-webkit-scrollbar {
+    width: 3px;
+    background-color: red;
+}
+
+.remove-scroll-1::-webkit-scrollbar {
+    width: 3px;
+    background-color: violet;
+}

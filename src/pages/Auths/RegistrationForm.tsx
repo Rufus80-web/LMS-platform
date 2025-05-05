@@ -2,7 +2,6 @@ import { ChangeEvent, FC, useState, JSX } from "react";
 import InputField from "../../components/InputField";
 import FormHeader from "../../components/FormHeader";
 import FormSelect from "../../components/FormSelect";
-import { Link } from "react-router-dom";
 
 const RegistrationForm: FC = (): JSX.Element => {
   type Gender = "Male" | "Female" | "Other" | undefined;
@@ -204,7 +203,7 @@ const RegistrationForm: FC = (): JSX.Element => {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-black px-4">
+    <div className="flex min-h-screen items-center justify-center bg-dark-bg px-4">
       <div className="w-full max-w-md space-y-8 rounded-xl bg-white p-8 shadow-lg">
         <FormHeader title="Sign Up" />
         <form className="mt-6 space-y-6">{renderContent()}</form>
