@@ -27,7 +27,7 @@
     --box-shadow: 0 2rem 3rem var(--color-light)
 }
 
-@layer {}
+/* @layer { */
 
 @font-face {
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
@@ -36,6 +36,18 @@
 
 @media screen {}
 
+
+
+.btn-save-update-pass {
+    @apply flex w-[6vw] justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm focus:outline-none focus:ring-2 hover:bg-white hover:border-1 hover:border-indigo-500 hover:text-black focus:ring-offset-2 hover:cursor-pointer
+}
+
+.btn-cancel-update-pass {
+    @apply flex w-[6vw] justify-center rounded-md border border-transparent bg-white px-4 py-2 text-sm font-medium text-[#413f3f91] shadow-sm focus:outline-none hover:cursor-pointer
+}
+
+
+/* Vanilla CSS */
 body {
     overflow-x: hidden;
 }

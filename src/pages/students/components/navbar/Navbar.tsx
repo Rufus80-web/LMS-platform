@@ -1,6 +1,6 @@
 import { JSX } from "react";
 
-import { navItems } from "../../../../static/navbarList";
+import { navItems } from "../../../../static/utils";
 import { Link, useLocation } from "react-router-dom";
 
 const Navbar = (): JSX.Element => {

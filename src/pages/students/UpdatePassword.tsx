@@ -1,89 +1,101 @@
 import { ChangeEvent, FC, useState, JSX, FormEvent } from "react";
 import { Link } from "react-router-dom";
 import InputField from "../../components/InputField";
-import CheckBox from "../../components/CheckBox";
-import Swal from "sweetalert2";
+import Sidebar from "./components/sidebar/Sidebar";
+import Navbar from "./components/navbar/Navbar";
 
 const UpdatePassword: FC = (): JSX.Element => {
-  const [email, setEmail] = useState<string>('');
-  const [password, setPassword] = useState<string>('');
+  const [currentPassword, setCurrentPassword] = useState<string>("");
+  const [newPassword, setNewPassword] = useState<string>("");
+  const [confirmNewPassword, setConfirmNewPassword] = useState<string>("");
 
   const handlePasswordUpdate = (e: FormEvent): void => {
-    e.preventDefault()
-
-    if(!email || !password) {
-        Swal.fire('Oops!!', 'Invalid email or password', 'error')
-    } else {
-        Swal.fire('Nice', 'Login Successfully', 'success')
-    }
-  }
-
+    e.preventDefault();
+  };
   return (
-    <div className="flex min-h-screen items-center justify-center bg-dark-bg px-4">
-      <div className="w-full max-w-md space-y-8 rounded-xl bg-white p-8 shadow-lg">
-        <h2 className="text-center text-2xl font-bold text-gray-900">
-          Sign In
-        </h2>
+    <div className="w-screen min-h-screen bg-[#f6f6f9]">
+      {/* sidebar section  */}
+      <Sidebar />
 
-        <form onSubmit={handlePasswordUpdate} className="mt-6 space-y-6">
-          <div className="space-y-4">
-            {/* email field  */}
-            <InputField
-              id="email"
-              name="email"
-              value={email}
-              label="Email"
-              type="email"
-              onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                setEmail(e.target.value)
-              }
-            />
-            {/* password filed  */}
-            <InputField
-              id="password"
-              name="password"
-              value={password}
-              label="Password"
-              type="password"
-              onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                setPassword(e.target.value)
-              }
-            />
-          </div>
+      {/* Deside the sidebar  */}
+      <div className="w-[82vw] min-h-screen absolute right-0 flex flex-col">
+        {/* Navbar section  */}
+        <Navbar />
 
-          <div className="flex items-center justify-between">
-            <div className="flex items-center">
-              <CheckBox id="remember-me" name="remember-me" />
-              <label
-                htmlFor="remember-me"
-                className="ml-2 block text-sm text-gray-900"
-              >
-                Remember me
-              </label>
+        {/* Password Update form  */}
+        <div className="absolute bottom-0 w-[82vw] h-full flex  justify-center items-start gap-3 pt-20 pl-2">
+          <div className="w-full max-w-md space-y-8 rounded-xl bg-white p-8 shadow-2xl shadow-gray-400 hover:shadow-none">
+            <div className="flex flex-col gap-0">
+              <h2 className="text-left text-2xl font-bold text-[#00000070]">
+                Create new password
+              </h2>
+              <span className="text-[12px] space-y-0 text-[#383737ad]">
+                Your new password must be different from previously existing
+                passwords.
+              </span>
             </div>
-            {/* signup or password page  */}
-            <div className="text-sm">
-              <Link
-                to={{ pathname: "" }}
-                className="font-medium text-indigo-600 hover:text-indigo-500"
-              >
-                Forgot your password?
-              </Link>
-            </div>
-          </div>
 
-          <p className="text-center">No account? <a className="decoration-none text-indigo-500 hover:ring-amber-700 hover:text-orange-400 text-sm" href="/signUp">Sign Up</a></p>
+            <form onSubmit={handlePasswordUpdate} className="mt-6 space-y-6">
+              <div className="space-y-4">
+                {/* old password field  */}
+                <InputField
+                  id="currentPassword"
+                  name="currentPassword"
+                  value={currentPassword}
+                  label="Current Password"
+                  type="password"
+                  onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                    setCurrentPassword(e.target.value)
+                  }
+                />
+                {/* new password filed  */}
+                <InputField
+                  id="newPassword"
+                  name="newPassword"
+                  value={newPassword}
+                  label="New Password"
+                  type="password"
+                  onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                    setNewPassword(e.target.value)
+                  }
+                />
+                {/* Confirm password filed  */}
+                <InputField
+                  id="confirmNewPassword"
+                  name="confirmNewPassword"
+                  value={confirmNewPassword}
+                  label="Confirm Password"
+                  type="password"
+                  onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                    setConfirmNewPassword(e.target.value)
+                  }
+                />
+              </div>
 
-          {/* submit button  */}
-          <div>
-            <button
-              type="submit"
-              className="flex w-full justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 hover:cursor-pointer"
-            >
-              Sign in
-            </button>
+              {/* form button  */}
+              <div>
+                <div className="flex gap-2">
+                  <button type="submit" className="btn-save-update-pass">
+                    Save
+                  </button>
+                  <button type="button" className="btn-cancel-update-pass">
+                    Cancel
+                  </button>
+                </div>
+
+                {/* signup or password page  */}
+                <div className="text-sm pt-5">
+                  <Link
+                    to={{ pathname: "" }}
+                    className="font-medium text-[#999595b4] text-[10px]"
+                  >
+                    Forgot your password?
+                  </Link>
+                </div>
+              </div>
+            </form>
           </div>
-        </form>
+        </div>
       </div>
     </div>
   );
