@@ -7,6 +7,9 @@ import DashHeader from "./components/DashHeader";
 import Navbar from "./components/navbar/Navbar";
 import { Sidebar } from "./TSidebar";
 
+import ChartComponent from "./components/ChartComponent";
+import {Container} from "@mui/material"
+
 
 type SidebarType = () => void;
 
@@ -36,7 +39,11 @@ const AllClasses: FC = () => {
               title="ALL CLASSES"
               message="Class Competition"
             />
-            <div className={`mt-8 pr-3`}></div>
+            <div className={`mt-4 pr-3`}>
+               <Container maxWidth="lg" sx={{ mt: 5 }}>
+                 <ChartComponent />
+               </Container>
+            </div>
           </div>
         </div>
       </TeacherSidebarContext.Provider>

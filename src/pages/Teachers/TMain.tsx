@@ -5,8 +5,8 @@ import Navbar from "./components/navbar/Navbar";
 import DashHeader from "./components/DashHeader";
 import BoxUtil from "./components/Box";
 import RecordInfo from "./components/Records";
-import _TableHeaders from "./components/table/TableHeaders";
-import _TableBody from "./components/table/TableBody";
+import _TableHeaders from "./components/talble/TableHeaders";
+import _TableBody from "./components/talble/TableBody";
 
 // context imports
 import { useTeacherSidebarContext } from "../../context/TeacherSidebarContext";

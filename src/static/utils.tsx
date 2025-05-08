@@ -1,5 +1,5 @@
 import { TableDataProps } from "./types";
-import {Home, InfoOutline, UploadFile,  TimeToLeaveTwoTone, Person, ChatSharp, MarkUnreadChatAltTwoTone, PlusOne} from "@mui/icons-material"
+import {Home, InfoOutline, UploadFile, PatternSharp,  TimeToLeaveTwoTone, Person, ChatSharp, MarkUnreadChatAltTwoTone, PlusOne, TimeToLeave, PlusOneSharp} from "@mui/icons-material"
 
 
 export const navItems = [
@@ -15,13 +15,13 @@ export const teacherSidebarItems = {
   closed: {
     icons: [
         {id: 1, name: <Home />, url: 'dashboard'},
-        {id: 2, name: "fas fa-user", url: 'students'},
+        {id: 2, name: <InfoOutline />, url: 'students'},
         {id: 3, name: <UploadFile />, url: 'upload-exercise'},
-        {id: 4, name: "fas fa-pen", url: 'student-admission'},
-        {id: 5, name: "fas fa-dog", url: 'timetable'},
-        {id: 6, name: "fas fa-message", url: 'class-progress'},
-        {id: 7, name: "fas fa-cross", url: 'class-mark'},
-        {id: 8, name: "fas fa-time", url: 'all-classes'},
+        {id: 4, name: <PatternSharp />, url: 'student-admission'},
+        {id: 5, name: <TimeToLeaveTwoTone />, url: 'timetable'},
+        {id: 6, name: <TimeToLeave />, url: 'class-progress'},
+        {id: 7, name: <MarkUnreadChatAltTwoTone />, url: 'class-mark'},
+        {id: 8, name: <PlusOneSharp />, url: 'all-classes'},
     ]
   },
   open: {

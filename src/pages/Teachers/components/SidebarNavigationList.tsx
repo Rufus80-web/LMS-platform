@@ -43,10 +43,10 @@ const SidebarNavigationList = () => {
                 } p-3 flex justify-center items-center hover:bg-[#0000005e]`}
               >
                 <span
-                  className={`${item.name} text-[20px] text-[#7a7a7afb] ${
+                  className={`text-[20px] text-[#7a7a7afb] ${
                     location.pathname === item.url && "text-black"
                   }`}
-                ></span>
+                >{item.name}</span>
               </Link>
             ))}
           </ul>

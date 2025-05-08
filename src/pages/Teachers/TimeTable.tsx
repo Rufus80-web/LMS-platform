@@ -6,6 +6,7 @@ import {
 import DashHeader from "./components/DashHeader";
 import Navbar from "./components/navbar/Navbar";
 import { Sidebar } from "./TSidebar";
+import CalendarPlanner from "./components/CalendarPlanner";
 
 
 type SidebarType = () => void;
@@ -36,7 +37,9 @@ const TimeTableTeacher: FC = () => {
               title="Timetable"
               message="Full calendar interactive page"
             />
-            <div className={`mt-8 pr-3`}></div>
+            <div className={`mt-8 pr-3`}>
+              <CalendarPlanner />
+            </div>
           </div>
         </div>
       </TeacherSidebarContext.Provider>

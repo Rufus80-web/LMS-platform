@@ -6,7 +6,7 @@ import {
 import DashHeader from "./components/DashHeader";
 import Navbar from "./components/navbar/Navbar";
 import { Sidebar } from "./TSidebar";
-
+import PieChart from "./components/PieChart";
 
 type SidebarType = () => void;
 
@@ -32,11 +32,12 @@ const ClassMarks: FC = () => {
           <Navbar />
 
           <div className="pl-3">
-            <DashHeader
-              title="Student Record"
-              message="Simple Pie Chart"
-            />
-            <div className={`mt-8 pr-3`}></div>
+            <DashHeader title="Student Records" message="Simple Pie Chart" />
+            <div className="flex justify-center items-center">
+              <div className={`mt-0 pr-3 w-[500px] h-[500px]`}>
+                <PieChart />
+              </div>
+            </div>
           </div>
         </div>
       </TeacherSidebarContext.Provider>

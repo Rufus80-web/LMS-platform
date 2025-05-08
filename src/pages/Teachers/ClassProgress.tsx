@@ -6,7 +6,7 @@ import {
 import DashHeader from "./components/DashHeader";
 import Navbar from "./components/navbar/Navbar";
 import { Sidebar } from "./TSidebar";
-
+import BarChart from "./components/BarChart";
 
 type SidebarType = () => void;
 
@@ -32,11 +32,12 @@ const ClassProgress: FC = () => {
           <Navbar />
 
           <div className="pl-3">
-            <DashHeader
-              title="Class Progress"
-              message="Simple class data"
-            />
-            <div className={`mt-8 pr-3`}></div>
+            <DashHeader title="Class Progress" message="Simple class data" />
+            <div className="flex justify-start">
+              <div className={`mt-8 pr-3 h-[65vh] w-full`}>
+                <BarChart />
+              </div>
+            </div>
           </div>
         </div>
       </TeacherSidebarContext.Provider>

@@ -8,8 +8,8 @@ import {
 } from "../../context/TeacherSidebarContext";
 import { Paper, Table, TableContainer, TablePagination } from "@mui/material";
 import DashHeader from "./components/DashHeader";
-import _TableBody from "./components/table/TableBody";
-import _TableHeaders from "./components/table/TableHeaders";
+import _TableBody from "./components/talble/TableBody";
+import _TableHeaders from "./components/talble/TableHeaders";
 
 import { useTableDataContext } from "../../context/TableActionContext";
 
