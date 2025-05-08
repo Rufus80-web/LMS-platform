@@ -2,7 +2,6 @@ import {
   createBrowserRouter as BrowserRouter,
   createRoutesFromElements as RouteElement,
   Route,
-  Routes,
 } from "react-router-dom";
 
 //Layout imports
@@ -18,6 +17,7 @@ import StudentDashboard from "../pages/students/Dashboard";
 import TimeTable from "../pages/students/TimeTable";
 import Exam from "../pages/students/Exam";
 import UpdatePassword from "../pages/students/UpdatePassword";
+import StudentExam from "../pages/students/StudentExam";
 
 //Teacher views
 import TDashboard from "../pages/Teachers/TDashboard";
@@ -41,6 +41,7 @@ export const router = BrowserRouter(
         <Route path="timetable" element={<TimeTable />}></Route>
         <Route path="exams" element={<Exam />}></Route>
         <Route path="update_pass" element={<UpdatePassword />}></Route>
+        {/* <Route path="exam" element={<StudentExam />}></Route> */}
       </Route>
       <Route path="/teacher" element={<TeacherLayout />}>
         <Route path="dashboard" element={<TDashboard />}></Route>

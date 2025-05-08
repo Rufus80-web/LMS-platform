@@ -21,16 +21,24 @@ const CalendarPlanner: React.FC = () => {
   const [open, setOpen] = useState(false);
   const [selectedDate, setSelectedDate] = useState<DateSelectArg | null>(null);
   const [title, setTitle] = useState("");
+
+
+  // Set Event Container Dialog
   const handleDateSelect = (selectInfo: DateSelectArg) => {
     setSelectedDate(selectInfo);
     setTitle("");
     setOpen(true);
   };
+
+  //Remobe planned event if confirmed
   const handleEventClick = (clickInfo: EventClickArg) => {
     if (window.confirm(`Delete event '${clickInfo.event.title}'?`)) {
       clickInfo.event.remove();
     }
   };
+
+
+  // Add new event on the calendar
   const handleAddEvent = () => {
     if (selectedDate && title.trim()) {
       const calendarApi = selectedDate.view.calendar;
