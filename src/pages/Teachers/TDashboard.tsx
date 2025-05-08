@@ -2,6 +2,7 @@ import { FC, useState } from "react";
 
 import { Sidebar } from "./TSidebar";
 import MainContent from "./TMain";
+import { TeacherSidebarContext } from "../../context/TeacherSidebarContext";
 
 type SidebarType = () => void;
 
@@ -13,8 +14,12 @@ const TDashboard: FC = () => {
   };
   return (
     <div className="w-screen min-h-screen flex">
-      <Sidebar isOpen={isOpenSidebar} handleWidth={handleSidebarWidth} />
-      <MainContent />
+      <TeacherSidebarContext.Provider
+        value={{ isOpen: isOpenSidebar, shouldOpen: handleSidebarWidth }}
+      >
+        <Sidebar  />
+        <MainContent />
+      </TeacherSidebarContext.Provider>
     </div>
   );
 };

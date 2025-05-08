@@ -1,3 +1,7 @@
+import { TableDataProps } from "./types";
+import {Home, InfoOutline,  TimeToLeaveTwoTone, Person, Person2TwoTone, ChatSharp, MarkUnreadChatAltTwoTone, PlusOne} from "@mui/icons-material"
+
+
 export const navItems = [
   { id: 1, name: "Home", icon: "fas", url: "/student/dashboard" },
   { id: 2, name: "Time Table", icon: "fas", url: "/student/timetable" },
@@ -10,7 +14,7 @@ export const navItems = [
 export const teacherSidebarItems = {
   closed: {
     icons: [
-        {id: 1, name: "fas fa-home", url: '/teacher/dashboard'},
+        {id: 1, name: <Home />, url: '/teacher/dashboard'},
         {id: 2, name: "fas fa-user", url: ''},
         {id: 3, name: "fas fa-car", url: ''},
         {id: 4, name: "fas fa-pen", url: ''},
@@ -25,33 +29,82 @@ export const teacherSidebarItems = {
         {
           id: 1,  
           title: "",
-          children: [{ icon: "fas fa-home", name: "Dashnoard", goto: "/teacher/dashboard" }],
+          children: [{ icon: <Home />, name: "Dashnoard", goto: "/teacher/dashboard" }],
         },
         {
           id: 2,  
           title: "Data",
           children: [
-            { icon: "fas fa-user", name: "Students", goto: "" },
-            { icon: "fas fa-message", name: "Contact Information", goto: "" },
+            { icon: <InfoOutline />, name: "Students", goto: "" },
+            { icon: <Person2TwoTone />, name: "Contact Information", goto: "" },
           ],
         },
         {
           id: 3,  
           title: "Pages",
           children: [
-            { icon: "fas fa-user", name: "New Admission", goto: "" },
-            { icon: "fas fa-cross", name: "Tmetable", goto: "" },
+            { icon: <Person />, name: "New Admission", goto: "" },
+            { icon: <TimeToLeaveTwoTone />, name: "Tmetable", goto: "" },
           ],
         },
         {
           id: 4,  
           title: "Charts",
           children: [
-            { icon: "fas fa-square", name: "Class Progress", goto: "" },
-            { icon: "fas fa-circle", name: "Class Marks", goto: "" },
-            { icon: "fas fa-plus", name: "All Classes", goto: "" },
+            { icon: <ChatSharp />, name: "Class Progress", goto: "" },
+            { icon: <MarkUnreadChatAltTwoTone />, name: "Class Marks", goto: "" },
+            { icon: <PlusOne />, name: "All Classes", goto: "" },
           ],
         },
       ],
   }
 };
+
+export const tNavbarItems = [
+  {id: 1, icon: 'fas fa-sun', url: ''},
+  {id: 2, icon: 'fas fa-info', url: ''},
+  {id: 3, icon: 'fas fa-pen', url: ''},
+  {id: 1, icon: 'fas fa-user', url: ''},
+]
+
+const createData = (tdata: TableDataProps): TableDataProps => {
+  return { ...tdata };
+};
+
+export const rows = [
+  createData({
+    id: 1,
+    name: "John Snow",
+    age: 35,
+    phoneNumber: "(665)121-5890",
+    email: "johnsnow@gmail.com",
+  }),
+  createData({
+    id: 2,
+    name: "Meka Alice",
+    age: 22,
+    phoneNumber: "(665)121-5454",
+    email: "alicemeka@gmail.com",
+  }),
+  createData({
+    id: 3,
+    name: "Wenga Audrey",
+    age: 19,
+    phoneNumber: "(665)121-3456",
+    email: "awoulbesteph@gmail.com",
+  }),
+  createData({
+    id: 4,
+    name: "Awoulbe Stephan",
+    age: 26,
+    phoneNumber: "(665)121-0654",
+    email: "johnsnow@gmail.com",
+  }),
+  createData({
+    id: 5,
+    name: "Djiane Meganne",
+    age: 41,
+    phoneNumber: "(665)121-2345",
+    email: "djianemegan@gmail.com",
+  }),
+];

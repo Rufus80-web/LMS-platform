@@ -1,0 +1,19 @@
+<div className="w-full h-[8vh] border-2 bg-indigo-300 grid grid-cols-7">
+              <div className="flex justify-between items-center"><input type="checkbox" className="w-4 h-4 rounded-lg" /></div>
+              <TableHeader name="ID" />
+              <TableHeader name="Name" />
+              <TableHeader name="Age" />
+              <TableHeader name="Phone Number" />
+              <TableHeader name="Email" />
+              <TableHeader name="Access Level" />
+           </div>
+
+
+
+
+
+
+           <div className="w-full h-[49vh] border-2 bg-pink-300"></div>
+           <div className="w-full h-[8vh] border-2 bg-indigo-300"></div>
+
+           mt-10 relative overflow-auto flex flex-col
