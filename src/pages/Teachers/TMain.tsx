@@ -1,15 +1,17 @@
-import React, { ChangeEvent, useState } from "react";
 import { Table, TableContainer, Paper, TablePagination } from "@mui/material";
+import { useTableDataContext } from "../../context/TableActionContext";
 
 import Navbar from "./components/navbar/Navbar";
 import DashHeader from "./components/DashHeader";
 import BoxUtil from "./components/Box";
 import RecordInfo from "./components/Records";
-import _TableHeaders from "./components/talble/TableHeaders";
-import _TableBody from "./components/talble/TableBody";
+import _TableHeaders from "./components/table/TableHeaders";
+import _TableBody from "./components/table/TableBody";
 
 // context imports
 import { useTeacherSidebarContext } from "../../context/TeacherSidebarContext";
+
+
 // static impaort
 import { rows } from "../../static/utils";
 
@@ -20,49 +22,19 @@ import mortarboard from "../../assets/images/mortarboard.png";
 import shoppingList from "../../assets/images/shopping-list.png";
 
 
+
 const MainContent: React.FC = () => {
   const { isOpen } = useTeacherSidebarContext();
-  const [order, setOrder] = useState<"asc" | "desc">("asc"); // default sorting order
-  const [orderBy, setOrderBy] = useState<string>("name");
-  const [page, setPage] = useState(0);
-  const [rowPerPage, setRowPerPage] = useState(3);
-
-  type TableSorting = (property: string) => void;
-
-  //Handling the sorting functionality
-  const handleRequestSorting: TableSorting = (
-    property
-  ): ReturnType<TableSorting> => {
-    const isAsc: boolean = orderBy === property && order === "asc";
-    setOrder(isAsc ? "desc" : "asc");
-    setOrderBy(property);
-  };
-
-  //handle page change
-  const handlePageChange = (event, newPage: number) => {
-    setPage(newPage);
-  };
-
-  const handleChangeRowPerPage = (event: ChangeEvent | any) => {
-    setRowPerPage(parseInt(event.target.value, 10));
-    setPage(0);
-  };
-
-  const sortedRows = [...rows].sort((a, b) => {
-    if (orderBy === "name") {
-      return order === "asc"
-        ? a.name.localeCompare(b.name)
-        : b.name.localeCompare(a.name);
-    } if (orderBy === "phoneNumber") {
-      return order === "asc"
-        ? a.phoneNumber.localeCompare(b.phoneNumber)
-        : b.phoneNumber.localeCompare(a.phoneNumber);
-    } else {
-      return order === "asc"
-        ? a[orderBy] - b[orderBy]
-        : b[orderBy] - a[orderBy];
-    }
-  });
+  const {
+    _order,
+    _orderBy,
+    _page,
+    _rowPerPage,
+    _sortedRow,
+    sort,
+    changePage,
+    changeRowPerPage,
+  } = useTableDataContext();
 
   //UI
   return (
@@ -93,14 +65,14 @@ const MainContent: React.FC = () => {
             <TableContainer>
               <Table>
                 <_TableHeaders
-                  order={order}
-                  orderBy={orderBy}
-                  handleSort={handleRequestSorting}
+                  order={_order}
+                  orderBy={_orderBy}
+                  handleSort={sort}
                 />
                 <_TableBody
-                  tableRows={sortedRows}
-                  page={page}
-                  rowPerPage={rowPerPage}
+                  tableRows={_sortedRow}
+                  page={_page}
+                  rowPerPage={_rowPerPage}
                 />
               </Table>
             </TableContainer>
@@ -108,10 +80,10 @@ const MainContent: React.FC = () => {
               rowsPerPageOptions={[3, 5, 10]}
               component="div"
               count={rows?.length}
-              rowsPerPage={rowPerPage}
-              page={page}
-              onPageChange={handlePageChange}
-              onRowsPerPageChange={handleChangeRowPerPage}
+              rowsPerPage={_rowPerPage}
+              page={_page}
+              onPageChange={changePage}
+              onRowsPerPageChange={changeRowPerPage}
               className="bg-indigo-300"
             />
           </Paper>

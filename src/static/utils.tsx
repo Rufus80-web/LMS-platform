@@ -1,5 +1,5 @@
 import { TableDataProps } from "./types";
-import {Home, InfoOutline,  TimeToLeaveTwoTone, Person, Person2TwoTone, ChatSharp, MarkUnreadChatAltTwoTone, PlusOne} from "@mui/icons-material"
+import {Home, InfoOutline, UploadFile,  TimeToLeaveTwoTone, Person, ChatSharp, MarkUnreadChatAltTwoTone, PlusOne} from "@mui/icons-material"
 
 
 export const navItems = [
@@ -14,14 +14,14 @@ export const navItems = [
 export const teacherSidebarItems = {
   closed: {
     icons: [
-        {id: 1, name: <Home />, url: '/teacher/dashboard'},
-        {id: 2, name: "fas fa-user", url: ''},
-        {id: 3, name: "fas fa-car", url: ''},
-        {id: 4, name: "fas fa-pen", url: ''},
-        {id: 5, name: "fas fa-dog", url: ''},
-        {id: 6, name: "fas fa-message", url: ''},
-        {id: 7, name: "fas fa-cross", url: ''},
-        {id: 8, name: "fas fa-time", url: ''},
+        {id: 1, name: <Home />, url: 'dashboard'},
+        {id: 2, name: "fas fa-user", url: 'students'},
+        {id: 3, name: <UploadFile />, url: 'upload-exercise'},
+        {id: 4, name: "fas fa-pen", url: 'student-admission'},
+        {id: 5, name: "fas fa-dog", url: 'timetable'},
+        {id: 6, name: "fas fa-message", url: 'class-progress'},
+        {id: 7, name: "fas fa-cross", url: 'class-mark'},
+        {id: 8, name: "fas fa-time", url: 'all-classes'},
     ]
   },
   open: {
@@ -29,31 +29,31 @@ export const teacherSidebarItems = {
         {
           id: 1,  
           title: "",
-          children: [{ icon: <Home />, name: "Dashnoard", goto: "/teacher/dashboard" }],
+          children: [{ icon: <Home />, name: "Dashnoard", goto: "dashboard" }],
         },
         {
           id: 2,  
           title: "Data",
           children: [
-            { icon: <InfoOutline />, name: "Students", goto: "" },
-            { icon: <Person2TwoTone />, name: "Contact Information", goto: "" },
+            { icon: <InfoOutline />, name: "Students", goto: "students" },
+            { icon: <UploadFile />, name: "Upload Exercise", goto: "upload-exercise" },
           ],
         },
         {
           id: 3,  
           title: "Pages",
           children: [
-            { icon: <Person />, name: "New Admission", goto: "" },
-            { icon: <TimeToLeaveTwoTone />, name: "Tmetable", goto: "" },
+            { icon: <Person />, name: "New Admission", goto: "student-admission" },
+            { icon: <TimeToLeaveTwoTone />, name: "Tmetable", goto: "timetable" },
           ],
         },
         {
           id: 4,  
           title: "Charts",
           children: [
-            { icon: <ChatSharp />, name: "Class Progress", goto: "" },
-            { icon: <MarkUnreadChatAltTwoTone />, name: "Class Marks", goto: "" },
-            { icon: <PlusOne />, name: "All Classes", goto: "" },
+            { icon: <ChatSharp />, name: "Class Progress", goto: "class-progress" },
+            { icon: <MarkUnreadChatAltTwoTone />, name: "Class Marks", goto: "class-mark" },
+            { icon: <PlusOne />, name: "All Classes", goto: "all-classes" },
           ],
         },
       ],
@@ -64,7 +64,7 @@ export const tNavbarItems = [
   {id: 1, icon: 'fas fa-sun', url: ''},
   {id: 2, icon: 'fas fa-info', url: ''},
   {id: 3, icon: 'fas fa-pen', url: ''},
-  {id: 1, icon: 'fas fa-user', url: ''},
+  {id: 4, icon: 'fas fa-user', url: ''},
 ]
 
 const createData = (tdata: TableDataProps): TableDataProps => {

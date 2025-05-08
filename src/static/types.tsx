@@ -1,3 +1,6 @@
+import { ChangeEvent } from "react";
+
+type TableSorting = (property: string) => void;
 
 export type TableDataProps = {
   // index: number
@@ -14,3 +17,14 @@ export type TableBodyProps = {
   page: number;
   rowPerPage: number;
 };
+
+export type TableContextProps = {
+  _order: 'desc' | 'asc',
+  _orderBy: string,
+  _sortedRow: Array<TableDataProps>,
+  _page: number,
+  _rowPerPage: number,
+  sort: TableSorting
+  changePage: (event: any, newPage: number) => void,
+  changeRowPerPage: (event: ChangeEvent | any) => void
+}
