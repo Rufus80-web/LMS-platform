@@ -1,32 +1,67 @@
 import { TableHead, TableRow, TableCell, TableSortLabel } from "@mui/material";
+import { useTheme } from "../../../../context/ThemeContext";
 
 type TableHeadProps = {
-    orderBy: string,
-    order: 'asc' | 'desc',
-    handleSort: (property: string) => void
-}
+  orderBy: string;
+  order: "asc" | "desc";
+  handleSort: (property: string) => void;
+};
 
-const _TableHeaders = ({orderBy, order, handleSort}: TableHeadProps) => {
+const _TableHeaders = ({ orderBy, order, handleSort }: TableHeadProps) => {
+  const { themeMode } = useTheme();
+  let color = themeMode === 'light' ? 'black' : 'white'
   return (
     <TableHead>
-      <TableRow className="bg-indigo-300">
+      <TableRow
+        className={`${
+          themeMode === "light" ? "bg-indigo-300" : "bg-indigo-600 text-white"
+        }`}
+      >
         <TableCell>
           <input type="checkbox" className="w-4 h-4 rounded-3xl" />
         </TableCell>
-        <TableCell>ID</TableCell>
-        <TableCell>
-            <TableSortLabel active={orderBy === 'name'} direction={orderBy === 'name' ? order : 'asc'} onClick={() => handleSort('name')}>Name</TableSortLabel>
+        <TableCell style={{ color: color }}>
+          ID
         </TableCell>
-        <TableCell>
-            <TableSortLabel active={orderBy === 'age'} direction={orderBy === 'age' ? order : 'asc'} onClick={() => handleSort('age')}>Age</TableSortLabel>
+        <TableCell style={{ color: color }}>
+          <TableSortLabel
+            active={orderBy === "name"}
+            direction={orderBy === "name" ? order : "asc"}
+            onClick={() => handleSort("name")}
+          >
+            Name
+          </TableSortLabel>
         </TableCell>
-        <TableCell>
-            <TableSortLabel active={orderBy === 'phoneNumber'} direction={orderBy === 'phoneNumber' ? order : 'asc'} onClick={() => handleSort('phoneNumber')}>Phone Number</TableSortLabel>
+        <TableCell style={{ color: color }}>
+          <TableSortLabel
+            active={orderBy === "age"}
+            direction={orderBy === "age" ? order : "asc"}
+            onClick={() => handleSort("age")}
+          >
+            Age
+          </TableSortLabel>
         </TableCell>
-        <TableCell>
-            <TableSortLabel active={orderBy === 'email'} direction={orderBy === 'email' ? order : 'asc'} onClick={() => handleSort('email')}>Email</TableSortLabel>
+        <TableCell style={{ color: color }}>
+          <TableSortLabel
+            active={orderBy === "phoneNumber"}
+            direction={orderBy === "phoneNumber" ? order : "asc"}
+            onClick={() => handleSort("phoneNumber")}
+          >
+            Phone Number
+          </TableSortLabel>
         </TableCell>
-        <TableCell>Acess Level</TableCell>
+        <TableCell style={{ color: color }}>
+          <TableSortLabel
+            active={orderBy === "email"}
+            direction={orderBy === "email" ? order : "asc"}
+            onClick={() => handleSort("email")}
+          >
+            Email
+          </TableSortLabel>
+        </TableCell>
+        <TableCell style={{ color: color }}>
+          Acess Level
+        </TableCell>
       </TableRow>
     </TableHead>
   );

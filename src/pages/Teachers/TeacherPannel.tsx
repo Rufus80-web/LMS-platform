@@ -8,6 +8,7 @@ import {
   Card,
   CardContent,
 } from "@mui/material";
+import { useTheme } from "../../context/ThemeContext";
 
 
 interface Question {
@@ -26,7 +27,9 @@ const TeacherPanel: React.FC<TeacherPanelProps> = ({ onSave }) => {
   const [questions, setQuestions] = useState<Question[]>([]);
   const [startTime, setStartTime] = useState("");
   const [duration, setDuration] = useState(30);
+  const {themeMode} = useTheme()
 
+  // handling file upload Logic frontend side
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
@@ -37,16 +40,17 @@ const TeacherPanel: React.FC<TeacherPanelProps> = ({ onSave }) => {
         if (Array.isArray(json)) {
           setQuestions(json);
         } else {
-          alert("Invalid JSON format.");
+          console.log("Invalid JSON format.");
         }
       } catch {
-        alert("Failed to read JSON file.");
+        console.log("Failed to read JSON file.");
       }
     };
     reader.readAsText(file);
   };
 
 
+  //In case teacher may need to update a question
   const handleQuestionEdit = (
     index: number,
     key: keyof Question,
@@ -55,10 +59,11 @@ const TeacherPanel: React.FC<TeacherPanelProps> = ({ onSave }) => {
     const updated = [...questions];
     if (key === "options") return; // Options are handled separately
     updated[index][key] = value;
-    setQuestions(updated);
+    setQuestions(updated); //In real time we will fetch and update the file at the backend
   };
 
 
+  // Performing option edit Logic
   const handleOptionEdit = (qIndex: number, oIndex: number, value: string) => {
     const updated = [...questions];
     updated[qIndex].options[oIndex] = value;
@@ -67,7 +72,7 @@ const TeacherPanel: React.FC<TeacherPanelProps> = ({ onSave }) => {
 
 
   return (
-    <Box sx={{ p: 3 }}>
+    <Box sx={{ p: 3, pl: 0 }}>
       <Typography variant="h5">Teacher Panel - Upload & Schedule</Typography>
       <Box sx={{ mt: 2 }}>
         <Typography>Upload Graded Exercise File (.json)</Typography>
@@ -84,13 +89,20 @@ const TeacherPanel: React.FC<TeacherPanelProps> = ({ onSave }) => {
           value={startTime}
           onChange={(e) => setStartTime(e.target.value)}
           InputLabelProps={{ shrink: true }}
-          sx={{ mr: 2 }}
+          sx={{ mr: 2, }}
         />
         <TextField
           label="Duration (mins)"
           type="number"
           value={duration}
+          sx={{ mr: 2 }}
           onChange={(e) => setDuration(Number(e.target.value))}
+        />
+        <TextField
+          label="Course"
+          type="text"
+          value={''}
+        //   onChange={(e) => setDuration(Number(e.target.value))}
         />
       </Box>
       {questions.map((q, i) => (
@@ -128,7 +140,10 @@ const TeacherPanel: React.FC<TeacherPanelProps> = ({ onSave }) => {
       ))}
       <Button
         variant="contained"
-        onClick={() => onSave(questions, startTime, duration)}
+        onClick={() => {
+            onSave(questions, startTime, duration)
+            setQuestions([]) // customize
+        }}
         sx={{ mt: 2 }}
       >
         Save Exam

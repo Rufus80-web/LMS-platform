@@ -8,6 +8,7 @@ import DashHeader from "./components/DashHeader";
 import Navbar from "./components/navbar/Navbar";
 import { Sidebar } from "./TSidebar";
 import Input from "./components/Input";
+import { useTheme } from "../../context/ThemeContext";
 
 
 type SidebarType = () => void;
@@ -27,6 +28,7 @@ const NewAdmission: FC = () => {
     address1: "",
     address2: "",
   })
+  const {themeMode} = useTheme()
 
   const OnChange = (e: ChangeEvent<HTMLInputElement>) => {
     const {name, value} = e.target
@@ -51,8 +53,8 @@ const NewAdmission: FC = () => {
         <Sidebar />
         <div
           className={`w-screen min-h-screen ${
-            isOpen ? "pl-10 pr-3" : "pl-12 pr-3"
-          } pb-[2em]`}
+            isOpen ? "pl-14 pr-3" : "pl-12 pr-3"
+          } pb-[2em] ${themeMode === 'dark' ? 'bg-content-dark' : 'bg-white'}`}
         >
           <Navbar />
 

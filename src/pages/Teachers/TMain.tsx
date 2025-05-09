@@ -1,5 +1,7 @@
 import { Table, TableContainer, Paper, TablePagination } from "@mui/material";
 import { useTableDataContext } from "../../context/TableActionContext";
+import { useTheme } from "../../context/ThemeContext";
+
 
 import Navbar from "./components/navbar/Navbar";
 import DashHeader from "./components/DashHeader";
@@ -11,7 +13,6 @@ import _TableBody from "./components/talble/TableBody";
 // context imports
 import { useTeacherSidebarContext } from "../../context/TeacherSidebarContext";
 
-
 // static impaort
 import { rows } from "../../static/utils";
 
@@ -21,10 +22,9 @@ import money from "../../assets/images/money.png";
 import mortarboard from "../../assets/images/mortarboard.png";
 import shoppingList from "../../assets/images/shopping-list.png";
 
-
-
 const MainContent: React.FC = () => {
   const { isOpen } = useTeacherSidebarContext();
+  const {themeMode} = useTheme()
   const {
     _order,
     _orderBy,
@@ -39,9 +39,9 @@ const MainContent: React.FC = () => {
   //UI
   return (
     <div
-      className={`w-screen min-h-screen ${
+      className={`w-screen min-h-screen pb-[2em] ${
         isOpen ? "pl-15 pr-3" : "pl-12 pr-3"
-      } pb-[2em]`}
+      } ${themeMode === 'dark' ? 'bg-content-dark' : 'bg-white'}`}
     >
       <Navbar />
       <DashHeader title="Dashboard" message="Welcome to your Dashboard" />
@@ -59,7 +59,7 @@ const MainContent: React.FC = () => {
         <div
           className={`${
             isOpen ? "w-[1030px]" : "w-[1200px]"
-          } rounded-3xl shadow-2xl shadow-gray-300 mt-10`}
+          } rounded-3xl mt-10`}
         >
           <Paper>
             <TableContainer>
@@ -84,7 +84,8 @@ const MainContent: React.FC = () => {
               page={_page}
               onPageChange={changePage}
               onRowsPerPageChange={changeRowPerPage}
-              className="bg-indigo-300"
+              className={`${themeMode === 'light' ? 'bg-indigo-300' : 'bg-indigo-600'}`}
+              style={{color: themeMode === "light" ? "black" : "white",}}
             />
           </Paper>
         </div>

@@ -17,7 +17,7 @@ import {
 
 
 const CalendarPlanner: React.FC = () => {
-  const [events, setEvents] = useState<EventInput[]>([]);
+  const [events] = useState<EventInput[]>([]);
   const [open, setOpen] = useState(false);
   const [selectedDate, setSelectedDate] = useState<DateSelectArg | null>(null);
   const [title, setTitle] = useState("");

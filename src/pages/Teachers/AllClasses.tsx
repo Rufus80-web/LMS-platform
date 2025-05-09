@@ -9,6 +9,7 @@ import { Sidebar } from "./TSidebar";
 
 import ChartComponent from "./components/ChartComponent";
 import {Container} from "@mui/material"
+import { useTheme } from "../../context/ThemeContext";
 
 
 type SidebarType = () => void;
@@ -20,6 +21,7 @@ const AllClasses: FC = () => {
     setIsOpenSidebar((prev) => !prev);
   };
   const { isOpen } = useTeacherSidebarContext();
+  const { themeMode} = useTheme()
 
   return (
     <div className="w-screen min-h-screen flex select-none">
@@ -29,12 +31,12 @@ const AllClasses: FC = () => {
         <Sidebar />
         <div
           className={`w-screen min-h-screen ${
-            isOpen ? "pl-10 pr-3" : "pl-12 pr-3"
-          } pb-[2em]`}
+            isOpen ? "pl-14 pr-3" : "pl-12 pr-3"
+          } pb-[2em] ${themeMode === 'dark' ? 'bg-content-dark' : 'bg-white'}`}
         >
           <Navbar />
 
-          <div className="pl-3">
+          <div className="pl-1">
             <DashHeader
               title="ALL CLASSES"
               message="Class Competition"

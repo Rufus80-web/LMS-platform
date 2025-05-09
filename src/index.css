@@ -24,7 +24,9 @@
     --border-radius-2: 1.2rem;
 
     --card-padding: 1.8rem;
-    --box-shadow: 0 2rem 3rem var(--color-light)
+    --box-shadow: 0 2rem 3rem var(--color-light);
+    --color-sidebar-dark: #434957;
+    --color-content-dark: #141b2d;
 }
 
 /* @layer { */
@@ -42,10 +44,10 @@
     @apply flex w-[6vw] justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm focus:outline-none focus:ring-2 hover:bg-white hover:border-1 hover:border-indigo-500 hover:text-black focus:ring-offset-2 hover:cursor-pointer
 }
 .small-input {
-    @apply w-[50%] h-13 bg-gray-200 border-b-1 border-gray-400 outline-none focus:border-b-2 focus:border-indigo-400 focus:ring-indigo-400 indent-4 rounded-lg
+    @apply w-[50%] h-13 border-b-1 border-gray-400 outline-none focus:border-b-2 focus:border-indigo-400 focus:ring-indigo-400 indent-4 rounded-lg
 }
 .long-input{
-    @apply w-full h-13 bg-gray-200 border-b-1 border-gray-400 outline-none focus:border-b-2 focus:border-indigo-400 focus:ring-indigo-400 indent-4 rounded-lg
+    @apply w-full h-13 border-b-1 border-gray-400 outline-none focus:border-b-2 focus:border-indigo-400 focus:ring-indigo-400 indent-4 rounded-lg
 }
 
 .btn-cancel-update-pass {
@@ -61,6 +63,7 @@ body {
 table {
     padding: 10px;
     border-collapse: collapse;
+    /* color: #d4d0d08c;; */
 }
 
 table thead tr th {

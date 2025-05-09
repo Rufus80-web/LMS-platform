@@ -1,4 +1,5 @@
 import { useTeacherSidebarContext } from "../../context/TeacherSidebarContext";
+import { useTheme } from "../../context/ThemeContext";
 
 import teacher2 from "../../assets/images/profile-2.jpeg";
 
@@ -8,6 +9,7 @@ import SidebarNavigationList from "./components/SidebarNavigationList";
 
 export const Sidebar = () => {
   const {isOpen, shouldOpen} = useTeacherSidebarContext()
+  const {themeMode} = useTheme()
   return (
     <div
       className={`select-none overflow-hidden h-screen flex  ${
@@ -20,7 +22,7 @@ export const Sidebar = () => {
         isOpen
           ? "duration-300 transition-all ease-linear w-64"
           : "duration-300 transition-all ease-linear w-18"
-      } overflow-x-hidden bg-[#f2f0f0]  overflow-y-auto fixed h-screen scrollbar-thin scrollbar-thumb-gray-500 scrollbar-track-gray-200`}>
+      } overflow-x-hidden ${themeMode === 'light' ? 'bg-[#f2f0f0] text-black' : 'bg-sidebar-dark text-white'}  overflow-y-auto fixed h-screen scrollbar-thin scrollbar-thumb-gray-500 scrollbar-track-gray-200`}>
          {/** Bars icon of sidebar */}
       <div
         className={`w-full p-0 flex ${

@@ -1,4 +1,5 @@
 import { ChangeEvent } from "react";
+import { useTheme } from "../../../context/ThemeContext";
 
 type InputProps = {
   name: string;
@@ -17,6 +18,7 @@ const Input = ({
   onChange,
   style,
 }: InputProps) => {
+  const {themeMode} = useTheme()
   return (
     <input
       type={type}
@@ -24,7 +26,7 @@ const Input = ({
       value={value}
       placeholder={placeholder}
       onChange={onChange}
-      className={style}
+      className={`${style} ${themeMode === 'dark' ? 'bg-[#43495779] placeholder:text-slate-50 text-white' : 'bg-gray-200'}`}
     />
   );
 };

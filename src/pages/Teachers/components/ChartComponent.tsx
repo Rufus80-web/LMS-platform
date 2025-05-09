@@ -9,7 +9,8 @@ import {
   Legend,
   ResponsiveContainer,
 } from "recharts";
-import { Typography, Box } from "@mui/material";
+import { Box } from "@mui/material";
+import { useTheme } from "../../../context/ThemeContext";
 const data = [
   { transportation: "plane", us: 500, france: 300, japan: 100 },
   { transportation: "helicopter", us: 400, france: 280, japan: 80 },
@@ -25,8 +26,9 @@ const data = [
   { transportation: "others", us: 370, france: 280, japan: 5 },
 ];
 const ChartComponent = () => {
+  const { themeMode } = useTheme()
   return (
-    <Box sx={{ bgcolor: "white", color: "black", p: 0, borderRadius: 2 }}>
+    <Box sx={{ bgcolor: themeMode === 'light' ? "white" : 'transparent', color: "black", p: 0, borderRadius: 2 }}>
       {/* <Typography variant="h4" gutterBottom>
         Graphical View of your classes
       </Typography>
@@ -36,8 +38,8 @@ const ChartComponent = () => {
       <ResponsiveContainer width="100%" height={400}>
         <LineChart data={data}>
           <CartesianGrid strokeDasharray="2 2" stroke="#ccc" /> {/** Removes stroke borders(grids) and color set to (3, 3) or any from (0,0) to see chnages */}
-          <XAxis dataKey="transportation" stroke="#000" />
-          <YAxis stroke="#000" />
+          <XAxis dataKey="transportation" stroke={themeMode === 'light' ? '#000' : '#d4d0d08c'} />
+          <YAxis stroke={themeMode === 'light' ? '#000' : '#d4d0d08c'} />
           <Tooltip />
           <Legend />
           <Line

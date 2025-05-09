@@ -1,4 +1,5 @@
 import {} from 'react'
+import { useTheme } from '../../../context/ThemeContext'
 
 type SectionHeaderProps = {
   title: string,
@@ -6,9 +7,10 @@ type SectionHeaderProps = {
 }
 
 const DashHeader = ( {title, message}: SectionHeaderProps) => {
+  const {themeMode} = useTheme()
   return (
     <div className='pt-4'>
-        <h1 className='font-bold text-3xl uppercase'>{title}</h1>
+        <h1 className={`font-bold text-3xl uppercase ${themeMode === 'dark' && 'text-[#f2f0f0]'}`}>{title}</h1>
         <p className='text-teal-500'>{message}</p>
     </div>
   )

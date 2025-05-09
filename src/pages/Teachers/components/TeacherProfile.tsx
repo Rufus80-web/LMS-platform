@@ -13,7 +13,7 @@ const TeacherProfile = ({ profile }: ProfileProp) => {
         />
       </div>
       <div className="flex flex-col justify-center items-center">
-        <h1 className="text-3xl font-bold">Kapnang</h1>
+        <h1 className="text-3xl font-bold">Rufus</h1>
         <span className="text-teal-300">Teacher</span>
       </div>
     </div>

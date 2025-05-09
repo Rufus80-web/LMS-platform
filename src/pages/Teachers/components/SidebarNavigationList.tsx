@@ -1,12 +1,20 @@
 import { teacherSidebarItems as Items } from "../../../static/utils";
 import { Link, useLocation } from "react-router-dom";
+import { useTheme } from "../../../context/ThemeContext";
+import {Fragment} from 'react'
 
 import { useTeacherSidebarContext } from "../../../context/TeacherSidebarContext";
-import { Fragment } from "react/jsx-runtime";
 
 const SidebarNavigationList = () => {
   const location = useLocation()
+  const {themeMode} = useTheme()
   const {isOpen} = useTeacherSidebarContext()
+
+
+  
+
+
+
   return (
     <div className="w-full pt-4">
         {isOpen ? ( // Displayed if sidebar with is >= 25vw (25%)
@@ -19,9 +27,10 @@ const SidebarNavigationList = () => {
                 <ul key={i} className="list-none flex flex-col gap-x-2">
                   <Link to={`/teacher/${el.goto}`} className="decoration-0 mt-2">
                     <li
-                      className={`w-full ml-[1.15em] ${
-                        location.pathname === '/teacher/' + el.goto && "bg-gray-300"
-                      } cursor-pointer  h-[7vh] flex items-center justify-start pl-7 gap-2 text-[13px]`}
+                      className={`w-full ml-[1.15em]
+                      ${location.pathname === `/teacher/${el.goto}` && themeMode === 'light' && 'bg-gray-300'}
+                      ${location.pathname === `/teacher/${el.goto}` && themeMode === 'dark' && 'bg-dark-bg'}
+                      cursor-pointer  h-[7vh] flex items-center justify-start pl-7 gap-2 text-[13px]`}
                     >
                       <span>{el.icon}</span>
                       <span>{el.name}</span>
