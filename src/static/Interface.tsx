@@ -13,3 +13,15 @@ export const themeMode: ThemeModeProps = {
     lightTheme: () => {},
     darkTheme: () => {}
 }
+
+interface SliceInitialState {
+    username?: string,
+    isLoggedIn: boolean,
+    redirect?: string,
+    redirected?: boolean
+}
+
+export interface AuthSliceProps {
+    name: string,
+    initState: SliceInitialState,
+}

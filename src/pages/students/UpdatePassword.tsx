@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import InputField from "../../components/InputField";
 import Sidebar from "./components/sidebar/Sidebar";
 import Navbar from "./components/navbar/Navbar";
+import { useTheme } from "../../context/ThemeContext";
 
 const UpdatePassword: FC = (): JSX.Element => {
   const [currentPassword, setCurrentPassword] = useState<string>("");
@@ -12,8 +13,11 @@ const UpdatePassword: FC = (): JSX.Element => {
   const handlePasswordUpdate = (e: FormEvent): void => {
     e.preventDefault();
   };
+
+  const { themeMode } = useTheme()
+  
   return (
-    <div className="w-screen min-h-screen bg-[#f6f6f9]">
+    <div className={`w-screen min-h-screen ${themeMode === 'light' ? 'bg-[#f6f6f9]' : 'bg-sidebar-dark'}`}>
       {/* sidebar section  */}
       <Sidebar />
 
@@ -24,7 +28,7 @@ const UpdatePassword: FC = (): JSX.Element => {
 
         {/* Password Update form  */}
         <div className="absolute bottom-0 w-[82vw] h-full flex  justify-center items-start gap-3 pt-20 pl-2">
-          <div className="w-full max-w-md space-y-8 rounded-xl bg-white p-8 shadow-2xl shadow-gray-400 hover:shadow-none">
+          <div className={`w-full max-w-md space-y-8 rounded-xl p-8 shadow-2xl shadow-gray-400 hover:shadow-none ${themeMode === 'dark' && 'bg-amber-50'}`}>
             <div className="flex flex-col gap-0">
               <h2 className="text-left text-2xl font-bold text-[#00000070]">
                 Create new password
@@ -35,7 +39,7 @@ const UpdatePassword: FC = (): JSX.Element => {
               </span>
             </div>
 
-            <form onSubmit={handlePasswordUpdate} className="mt-6 space-y-6">
+            <form onSubmit={handlePasswordUpdate} className={`mt-6 space-y-6`}>
               <div className="space-y-4">
                 {/* old password field  */}
                 <InputField

@@ -2,34 +2,52 @@ import { JSX } from "react";
 
 import { navItems } from "../../../../static/utils";
 import { Link, useLocation } from "react-router-dom";
+import { Button } from "@mui/material";
+import { useTheme } from "../../../../context/ThemeContext";
 
 const Navbar = (): JSX.Element => {
   const { pathname } = useLocation();
+  const { themeMode, lightTheme, darkTheme } = useTheme();
+
+  const toggleThemeMode = () => {
+    if (themeMode === "light") {
+      darkTheme();
+    } else {
+      lightTheme();
+    }
+  };
 
   return (
-    <nav className="w-full z-50 h-[8vh] fixed bg-[#f6f6f9] flex justify-end items-center">
+    <nav
+      className={`w-full z-50 h-[8vh] fixed flex justify-end items-center ${
+        themeMode === "dark" ? "bg-sidebar-dark" : "bg-[#f6f6f9]"
+      }`}
+    >
       <ul className="flex justify-end items-center gap-4 text-[14px] pr-[18em]">
         {navItems?.map((item) => (
           <Link
-            to={item.type !== "btn" ? { pathname: item?.url } : ""}
+            to={item.url}
             key={item.id}
             className={`decoration-none text-black hover:cursor-pointer ${
               pathname === item.url &&
-              "border-blue-300 transition-all  duration-50 animate-pulse border-b-2 h-full w-max bg-gray-400 p-4 text-white text-[13px]"
-            }`}
+              "transition-all  duration-50 animate-pulse h-full w-max text-blue-500 text-[12px] font-bold"
+            } hover:text-teal-600`}
           >
-            <li className="flex justify-center items-center gap-1">
-              <span className={` ${item.icon} `}></span>
-              {item.type === "btn" ? (
-                <button className="w-max h-max bg-primary text-gray-100 p-1 cursor-pointer rounded-sm hover:bg-success">
-                  {item.name}
-                </button>
-              ) : (
-                <span>{item.name}</span>
-              )}
+            <li className="flex justify-center items-center gap-0">
+              <span className="text-dark-varient">{item.icon}</span>
+              <span className={`${themeMode === 'dark' ? 'text-slate-50' : 'text-dark'}`}>{item.name}</span>
             </li>
           </Link>
         ))}
+        <li>
+          <Button
+            variant="contained"
+            style={{ fontSize: "10px" }}
+            onClick={toggleThemeMode}
+          >
+            {themeMode === 'light' ? 'Light' : 'Dark'}
+          </Button>
+        </li>
       </ul>
     </nav>
   );

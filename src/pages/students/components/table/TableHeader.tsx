@@ -1,3 +1,6 @@
+import { TableHead, TableCell, TableRow } from '@mui/material'
+import { useTheme } from '../../../../context/ThemeContext';
+
 type TableHeaderprops = {
   th1: string;
   th2: string;
@@ -6,15 +9,16 @@ type TableHeaderprops = {
 };
 
 const TableHeader = ({ th1, th2, th3, th4 }: TableHeaderprops) => {
+  const {themeMode} = useTheme()
   return (
-    <thead>
-      <tr className="bg-white">
-        <th className="text-left px-4 py-2 text-sm font-bold">{th1}</th>
-        <th className="text-left px-4 py-2 text-sm font-bold">{th2}</th>
-        <th className="text-left px-4 py-2 text-sm font-bold">{th3}</th>
-        <th className="text-left px-4 py-2 text-sm font-bold">{th4}</th>
-      </tr>
-    </thead>
+    <TableHead>
+      <TableRow className={` ${themeMode === 'light' ? 'bg-white' : 'bg-slate-100'}`}>
+        <TableCell className="text-left px-4 py-2 text-2xl font-bold">{th1}</TableCell>
+        <TableCell className="text-left px-4 py-2 text-sm font-bold">{th2}</TableCell>
+        <TableCell className="text-left px-4 py-2 text-sm font-bold">{th3}</TableCell>
+        <TableCell className="text-left px-4 py-2 text-sm font-bold">{th4}</TableCell>
+      </TableRow>
+    </TableHead>
   );
 };
 

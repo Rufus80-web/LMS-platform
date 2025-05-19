@@ -7,6 +7,7 @@ import {
 //Layout imports
 import AppLayout from "./outlet";
 import TeacherLayout from "./TeacherLayout";
+import StudentLayout from "./StudentLayout";
 
 // Auths imports
 import LoginForm from "../pages/Auths/LoginForm";
@@ -29,6 +30,9 @@ import ClassMarks from "../pages/Teachers/ClassMarks";
 import AllClasses from "../pages/Teachers/AllClasses";
 import UploadExercise from "../pages/Teachers/UploadExercise";
 
+//admin
+import AdminDashboard from "../pages/Admin/dashoard";
+
 
 export const router = BrowserRouter(
   RouteElement(
@@ -36,7 +40,7 @@ export const router = BrowserRouter(
       <Route index element={<LoginForm />}></Route>
       <Route path="/signup" element={<RegistrationForm />}></Route>
 
-      <Route path="/student">
+      <Route path="/student" element={<StudentLayout />}>
         <Route path="dashboard" element={<StudentDashboard />}></Route>
         <Route path="timetable" element={<TimeTable />}></Route>
         <Route path="exams" element={<Exam />}></Route>
@@ -52,6 +56,10 @@ export const router = BrowserRouter(
         <Route path="class-mark" element={<ClassMarks />}></Route>
         <Route path="all-classes" element={<AllClasses />}></Route>
         <Route path="upload-exercise" element={<UploadExercise />}></Route>
+      </Route>
+
+      <Route path="/admin">
+        <Route path="dashboard" element={<AdminDashboard />}></Route>
       </Route>
     </Route>
   )

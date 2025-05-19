@@ -1,6 +1,6 @@
 import {} from 'react'
 
-import { useTeacherSidebarContext } from '../../../context/TeacherSidebarContext'
+import { useTeacherSidebarContext } from '../../../context/sidebarContext'
 import { useTheme } from '../../../context/ThemeContext'
 
 const ClassRecordGraph = () => {
@@ -18,7 +18,9 @@ const ClassRecordGraph = () => {
           </div>
        </div>
        {/* graph container  */}
-       <div></div>
+       <div className=''>
+         {/* <ChartComponent /> */}
+       </div>
     </div>
   )
 }

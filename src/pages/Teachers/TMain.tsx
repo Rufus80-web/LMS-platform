@@ -11,7 +11,7 @@ import _TableHeaders from "./components/talble/TableHeaders";
 import _TableBody from "./components/talble/TableBody";
 
 // context imports
-import { useTeacherSidebarContext } from "../../context/TeacherSidebarContext";
+import { useTeacherSidebarContext } from "../../context/sidebarContext";
 
 // static impaort
 import { rows } from "../../static/utils";

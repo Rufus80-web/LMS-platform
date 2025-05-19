@@ -3,9 +3,9 @@ import { FC, useState } from "react";
 import { Sidebar } from "./TSidebar";
 import Navbar from "./components/navbar/Navbar";
 import {
-  TeacherSidebarContext,
+  SidebarContext,
   useTeacherSidebarContext,
-} from "../../context/TeacherSidebarContext";
+} from "../../context/sidebarContext";
 import { Paper, Table, TableContainer, TablePagination } from "@mui/material";
 import DashHeader from "./components/DashHeader";
 import _TableBody from "./components/talble/TableBody";
@@ -38,7 +38,7 @@ const StudentList: FC = () => {
 
   return (
     <div className={`w-screen min-h-screen flex select-none ${themeMode === 'dark' ? 'bg-content-dark' : 'bg-white'}`}>
-      <TeacherSidebarContext.Provider
+      <SidebarContext.Provider
         value={{ isOpen: isOpenSidebar, shouldOpen: handleSidebarWidth }}
       >
         <Sidebar />
@@ -84,7 +84,7 @@ const StudentList: FC = () => {
             </div>
           </div>
         </div>
-      </TeacherSidebarContext.Provider>
+      </SidebarContext.Provider>
     </div>
   );
 };

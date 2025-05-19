@@ -28,3 +28,10 @@ export type TableContextProps = {
   changePage: (event: any, newPage: number) => void,
   changeRowPerPage: (event: ChangeEvent | any) => void
 }
+
+export type tableRowType = {
+  td1: string;
+  td2: string;
+  td3: string;
+  td4: string;
+};

@@ -1,5 +1,5 @@
-import Seachbar from "./seachbar";
-import NavList from "./navList";
+import Seachbar from "./Seachbar";
+import NavList from "./NavList";
 
 const Navbar = () => {
   return (

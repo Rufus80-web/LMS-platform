@@ -1,4 +1,4 @@
-import { useTeacherSidebarContext } from "../../context/TeacherSidebarContext";
+import { useTeacherSidebarContext } from "../../context/sidebarContext";
 import { useTheme } from "../../context/ThemeContext";
 
 import teacher2 from "../../assets/images/profile-2.jpeg";

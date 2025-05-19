@@ -1,8 +1,8 @@
 import { FC, useState } from "react";
 import {
-  TeacherSidebarContext,
+  SidebarContext,
   useTeacherSidebarContext,
-} from "../../context/TeacherSidebarContext";
+} from "../../context/sidebarContext";
 import DashHeader from "./components/DashHeader";
 import Navbar from "./components/navbar/Navbar";
 import { Sidebar } from "./TSidebar";
@@ -22,7 +22,7 @@ const ClassMarks: FC = () => {
 
   return (
     <div className="w-screen min-h-screen flex select-none">
-      <TeacherSidebarContext.Provider
+      <SidebarContext.Provider
         value={{ isOpen: isOpenSidebar, shouldOpen: handleSidebarWidth }}
       >
         <Sidebar />
@@ -42,7 +42,7 @@ const ClassMarks: FC = () => {
             </div>
           </div>
         </div>
-      </TeacherSidebarContext.Provider>
+      </SidebarContext.Provider>
     </div>
   );
 };

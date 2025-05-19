@@ -1,4 +1,5 @@
 import { ReactNode, JSX } from "react"
+import { TableBody as TBody } from '@mui/material'
 
 type TableBodyProps<T> = {
     data: T[],
@@ -7,9 +8,9 @@ type TableBodyProps<T> = {
 
 const TableBody = <T,>( {data, render}: TableBodyProps<T> ): JSX.Element => {
   return (
-    <tbody className="divide-y divide-gray-600">
+    <TBody className="divide-y divide-gray-600">
        {data?.map((row, index) => render(row, index))}
-    </tbody>
+    </TBody>
   )
 }
 

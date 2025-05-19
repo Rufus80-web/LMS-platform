@@ -6,6 +6,9 @@ import TableHeading from "./components/table/TableHeading";
 import TableHeader from "./components/table/TableHeader";
 import TableRow from "./components/table/TableRow";
 import TableBody from "./components/table/TableBody";
+import { Table } from "@mui/material";
+import { ArrowBack, ArrowForward } from '@mui/icons-material'
+import { useTheme } from "../../context/ThemeContext";
 
 type tableRowType = {
   td1: string;
@@ -36,8 +39,9 @@ const TableRows: tableRowType[] = [
 ];
 
 const TimeTable: React.FC = () => {
+  const {themeMode} = useTheme()
   return (
-    <div className="w-screen min-h-screen bg-[#f6f6f9]">
+    <div className={`w-screen min-h-screen ${themeMode === 'light' ? 'bg-[#f6f6f9]' : 'bg-sidebar-dark'}`}>
       {/* sidebar section  */}
       <Sidebar />
 
@@ -49,21 +53,21 @@ const TimeTable: React.FC = () => {
         {/* Time's table content  */}
         <div className="absolute bottom-0 w-[82vw] h-full flex flex-col justify-center items-center gap-3 pt-20 pl-2">
           <div className="flex items-center justify-center gap-40">
-            <ArrowNav name="backward" icon="fas fa-arrow-left" />
+            <ArrowNav name="backward" icon={<ArrowBack />} />
             <TableHeading header="Today's Timetable" />
-            <ArrowNav name="foward" icon="fas fa-arrow-right" />
+            <ArrowNav name="foward" icon={<ArrowForward />} />
           </div>
 
           {/* timetable  */}
-          <div className="overflow-x-auto rounded-2xl">
-            <table className="w-[55vw] table-auto">
+          <div className="overflow-x-auto rounded-2xl w-[60vw]">
+            <Table className="w-full table-auto">
               <TableHeader th1="Time" th2="Room No." th3="Course" />
               {/* On fetch API will return an array and we will change the prop value  */}
               <TableBody
                 data={TableRows}
                 render={(data, index) => <TableRow item={data} key={index} />}
               />
-            </table>
+            </Table>
           </div>
         </div>
       </div>

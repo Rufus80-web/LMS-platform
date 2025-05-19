@@ -1,12 +1,16 @@
 import { FC } from "react";
+import { Table, TableHead, TableCell, TableBody, TableRow } from "@mui/material";
+import { useTheme } from "../../../../context/ThemeContext";
 
 import Navbar from "../navbar/Navbar";
 import Attendance from "./Attendance";
 import Announce_Teacher from "../Announce_Teacher/Announce_Teacher";
+import HeaderMain from "./HeaderMain";
 
 const Main: FC = () => {
+  const {themeMode} = useTheme()
   return (
-    <div className="w-[82vw] min-h-screen absolute right-0 flex flex-col">
+    <div className={`w-[82vw] min-h-screen absolute right-0 flex flex-col ${themeMode === 'dark' ? 'bg-sidebar-dark' : 'bg-[#f6f6f9]'}`}>
       <Navbar />
 
       {/* Container for attendance-announcements  */}
@@ -14,7 +18,7 @@ const Main: FC = () => {
         <div className="w-[64vw] h-full flex flex-col">
           <div className="w-full h-[46vh] mt-13 pl-5">
             {/* attendances  */}
-            <h2 className="text-2xl ml-[0.5em]">Attendance</h2>
+            <HeaderMain title="Attendance" />
             <div className="w-full grid grid-cols-4">
               <Attendance />
               <Attendance />
@@ -22,31 +26,33 @@ const Main: FC = () => {
           </div>
 
           <div className="w-full h-[46vh] p-2 pl-5">{/* time table  */}
-             <h2 className="text-2xl ml-[0.5em] pt-2">Today's Timetable</h2>
-             <table className="w-[98%] bg-white mt-4 rounded-xl">
-                <thead className="text-center p-14 font-semibold table-header-group">
-                    <tr className="table-row">
-                        <th>Time</th>
-                        <th>RoomNo</th>
-                        <th>Subject</th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody className="text-[15px] text-dark-bg">
-                    <tr>
-                        <td className="text-center">10-11AM</td>
-                        <td className="text-center">33-309</td>
-                        <td className="text-center">MEC103</td>
-                        <td className="text-center">Lecture</td>
-                    </tr>
-                    <tr>
-                        <td className="text-center">10-11AM</td>
-                        <td className="text-center">33-309</td>
-                        <td className="text-center">MEC103</td>
-                        <td className="text-center">Lecture</td>
-                    </tr>
-                </tbody>
-             </table>
+             <HeaderMain title="Today's Timetable" />
+             <div>
+             <Table className="w-[98%] bg-white mt-4 rounded-xl">
+                <TableHead className="text-center p-14 font-semibold table-header-group">
+                    <TableRow className="table-row">
+                        <TableCell>Time</TableCell>
+                        <TableCell>RoomNo</TableCell>
+                        <TableCell>Subject</TableCell>
+                        <TableCell></TableCell>
+                    </TableRow>
+                </TableHead>
+                <TableBody className="text-[15px] text-dark-bg">
+                    <TableRow>
+                        <TableCell className="text-center">10-11AM</TableCell>
+                        <TableCell className="text-center">33-309</TableCell>
+                        <TableCell className="text-center">MEC103</TableCell>
+                        <TableCell className="text-center">Lecture</TableCell>
+                    </TableRow>
+                    <TableRow>
+                        <TableCell className="text-center">10-11AM</TableCell>
+                        <TableCell className="text-center">33-309</TableCell>
+                        <TableCell className="text-center">MEC103</TableCell>
+                        <TableCell className="text-center">Lecture</TableCell>
+                    </TableRow>
+                </TableBody>
+             </Table>
+             </div>
           </div>
         </div>
         <Announce_Teacher  />
