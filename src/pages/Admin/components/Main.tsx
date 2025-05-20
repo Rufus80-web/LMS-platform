@@ -66,7 +66,7 @@ export const Main: React.FC = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            <TableRow
+            <TableRow 
               className={`${
                 themeMode === "light" ? "bg-[#f2f0f0] " : "bg-white"
               }`}
