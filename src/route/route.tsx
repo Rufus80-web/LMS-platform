@@ -6,7 +6,7 @@ import {
 
 //Layout imports
 import AppLayout from "./outlet";
-import TeacherLayout from "./TeacherLayout";
+import ThemeLayout from "./ThemeLayout";
 import StudentLayout from "./StudentLayout";
 
 // Auths imports
@@ -32,7 +32,13 @@ import UploadExercise from "../pages/Teachers/UploadExercise";
 
 //admin
 import AdminDashboard from "../pages/Admin/dashoard";
-
+import Teachers from "../pages/Admin/components/Teachers";
+import CreateTeacher from "../pages/Admin/CreateTeacher";
+import Students from "../pages/Admin/components/Students";
+import CreateStudent from "../pages/Admin/CreateStudent";
+import Courses from "../pages/Admin/components/Courses";
+import CreateCourse from "../pages/Admin/CreateCourse";
+import DisplayTeacherInfo from "../pages/Admin/DisplayTeacherInfo";
 
 export const router = BrowserRouter(
   RouteElement(
@@ -47,19 +53,30 @@ export const router = BrowserRouter(
         <Route path="update_pass" element={<UpdatePassword />}></Route>
         {/* <Route path="exam" element={<StudentExam />}></Route> */}
       </Route>
-      <Route path="/teacher" element={<TeacherLayout />}>
-        <Route path="dashboard" element={<TDashboard />}></Route>
-        <Route path="students" element={<StudentList />}></Route>
-        <Route path="student-admission" element={<NewAdmission />}></Route>
-        <Route path="timetable" element={<TimeTableTeacher />}></Route>
-        <Route path="class-progress" element={<ClassProgress />}></Route>
-        <Route path="class-mark" element={<ClassMarks />}></Route>
-        <Route path="all-classes" element={<AllClasses />}></Route>
-        <Route path="upload-exercise" element={<UploadExercise />}></Route>
-      </Route>
 
-      <Route path="/admin">
-        <Route path="dashboard" element={<AdminDashboard />}></Route>
+      <Route element={<ThemeLayout />}>
+        <Route path="/teacher">
+          <Route path="dashboard" element={<TDashboard />}></Route>
+          <Route path="students" element={<StudentList />}></Route>
+          <Route path="student-admission" element={<NewAdmission />}></Route>
+          <Route path="timetable" element={<TimeTableTeacher />}></Route>
+          <Route path="class-progress" element={<ClassProgress />}></Route>
+          <Route path="class-mark" element={<ClassMarks />}></Route>
+          <Route path="all-classes" element={<AllClasses />}></Route>
+          <Route path="upload-exercise" element={<UploadExercise />}></Route>
+        </Route>
+
+        {/* Admin */}
+        <Route path="/admin">
+          <Route path="dashboard" element={<AdminDashboard />}></Route>
+          <Route path="manage.teachers" element={<Teachers />}></Route>
+          <Route path="manage.students" element={<Students />}></Route>
+          <Route path="manage-courses" element={<Courses />}></Route>
+          <Route path="create-teacher" element={<CreateTeacher />}></Route>
+          <Route path="create-student" element={<CreateStudent />}></Route>
+          <Route path="create-course" element={<CreateCourse />}></Route>
+          <Route path="info-teacher" element={<DisplayTeacherInfo />}></Route>
+        </Route>
       </Route>
     </Route>
   )

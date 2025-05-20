@@ -15,6 +15,10 @@ import {
   Lock,
   ExitToApp,
   BookOnline,
+  DataArray,
+  DataThresholding,
+  GolfCourse,
+  Announcement, FileUpload, Logout, Photo
 } from "@mui/icons-material";
 
 export const navItems = [
@@ -98,8 +102,9 @@ export const adminSidebar = {
   closed: {
     icons: [
       { id: 1, name: <Home />, url: "dashboard" },
-      { id: 2, name: <InfoOutline />, url: "students" },
-      { id: 3, name: <UploadFile />, url: "upload-exercise" },
+      { id: 2, name: <DataArray />, url: "manage.teachers" },
+      { id: 3, name: <DataThresholding />, url: "manage.students" },
+      { id: 4, name: <GolfCourse />, url: "manage.courses" },
     ],
   },
   open: {
@@ -109,11 +114,55 @@ export const adminSidebar = {
         title: "",
         children: [{ icon: <Home />, name: "Dashnoard", goto: "dashboard" }],
       },
+      {
+        id: 2,
+        title: "Data",
+        children: [
+          { icon: <DataArray />, name: "Teachers", goto: "manage.teachers" },
+          {
+            icon: <DataThresholding />,
+            name: "Students",
+            goto: "manage.students",
+          },
+          {
+            icon: <GolfCourse />,
+            name: "Courses",
+            goto: "manage-courses",
+          },
+        ],
+      },
+      {
+        id: 3,
+        title: "",
+        children: [{ icon: <Announcement />, name: "Announcements", goto: "announcement" }],
+      },
+      {
+        id: 4,
+        title: "Administrator",
+        children: [
+          {
+            icon: <Photo />,
+            name: "Profile",
+            goto: "profile",
+          },
+          { icon: <Logout />, name: "Logout", goto: "/login" },
+        ],
+      },
+      {
+        id: 5,
+        title: "Accounts",
+        children: [
+          {
+            icon: <Person />,
+            name: "Users",
+            goto: "users.account",
+          },
+          { icon: <FileUpload />, name: "Logs", goto: "users.logs" },
+        ],
+      },
     ],
   },
 };
-
-
 
 export const tNavbarItems = [
   { id: 1, icon: "fas fa-sun", url: "" },

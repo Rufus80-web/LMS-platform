@@ -2,14 +2,20 @@ import adminImg from "../../../assets/images/profile-3.jpg";
 import { useTeacherSidebarContext } from "../../../context/sidebarContext";
 import { useTheme } from "../../../context/ThemeContext";
 
-import TeacherProfile from "../../Teachers/components/TeacherProfile";
+import SidebarProfile from "./SideBarProfile";
 import AdminSidebarItems from "./AdminSideBarItems";
 
 export const AdminSidebar = () => {
   const { themeMode } = useTheme();
   const { isOpen, shouldOpen } = useTeacherSidebarContext();
   return (
-    <div className={`select-none overflow-hidden h-screen flex`}>
+    <div
+      className={`select-none overflow-hidden h-screen flex  ${
+        isOpen
+          ? "duration-300 transition-all ease-linear w-64"
+          : "duration-300 transition-all ease-linear w-12"
+      }`}
+    >
       <aside
         className={`${
           isOpen
@@ -36,7 +42,7 @@ export const AdminSidebar = () => {
         </div>
 
         {/* teacher profile  */}
-        {isOpen && <TeacherProfile profile={adminImg} />}
+        {isOpen && <SidebarProfile profile={adminImg} />}
 
         {/* sidebar navigation pages  */}
         <AdminSidebarItems />

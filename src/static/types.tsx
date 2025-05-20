@@ -35,3 +35,12 @@ export type tableRowType = {
   td3: string;
   td4: string;
 };
+
+export type CustomTableBodyProps = {
+  id: string,
+  name: string,
+  email: string,
+  address: string,
+  course: string[],
+  date: string
+}

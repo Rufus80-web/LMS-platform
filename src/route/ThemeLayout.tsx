@@ -8,7 +8,7 @@ import TableContextProdiver from "../context/TableActionContext";
 
 type ThemeMode = 'light' | 'dark'
 
-const TeacherLayout = () => {
+const ThemeLayout = () => {
   const [themeMode, setThemeMode] = useState<ThemeMode>('light')
   const darkTheme = () => {
     setThemeMode('dark')
@@ -34,4 +34,4 @@ const TeacherLayout = () => {
   );
 };
 
-export default TeacherLayout;
+export default ThemeLayout;
