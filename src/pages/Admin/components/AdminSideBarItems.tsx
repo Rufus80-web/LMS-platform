@@ -20,11 +20,11 @@ const AdminSidebarItems = () => {
               </h2>
               {item?.children?.map((el, i) => (
                 <ul key={i} className="list-none flex flex-col gap-x-2">
-                  <Link to={`/admin/${el.goto}`} className="decoration-0 mt-2">
+                  <Link to={`${el.goto}`} className="decoration-0 mt-2">
                     <li
                       className={`w-full ml-[1.15em]
-                      ${location.pathname === `/admin/${el.goto}` && themeMode === 'light' && 'bg-gray-300'}
-                      ${location.pathname === `/admin/${el.goto}` && themeMode === 'dark' && 'bg-dark-bg'}
+                      ${location.pathname === `${el.goto}` && themeMode === 'light' && 'bg-gray-300'}
+                      ${location.pathname === `${el.goto}` && themeMode === 'dark' && 'bg-dark-bg'}
                       cursor-pointer  h-[7vh] flex items-center justify-start pl-7 gap-2 text-[13px]`}
                     >
                       <span>{el.icon}</span>
@@ -41,7 +41,7 @@ const AdminSidebarItems = () => {
             {adminSidebar?.closed.icons?.map((item) => (
               <Link
                 key={item.id}
-                to={`/admin/${item.url}`}
+                to={`${item.url}`}
                 className={`w-full ${
                   location.pathname === item.url && "bg-[#0000005e]"
                 } p-3 flex justify-center items-center hover:bg-[#0000005e]`}

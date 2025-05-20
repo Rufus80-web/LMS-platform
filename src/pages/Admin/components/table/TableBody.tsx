@@ -4,17 +4,18 @@ import { CustomTableBodyProps } from '../../../../static/types'
 import { Link } from 'react-router-dom'
 
 type DataArray = {
-    data: CustomTableBodyProps[]
+    data: CustomTableBodyProps[],
+    url: string
 }
 
-const TableBody = ( { data }: DataArray) => {
+const TableBody = ( { data, url }: DataArray) => {
   return (
     <BodyTable>
       { 
         data && data.map((item: CustomTableBodyProps) => (
             <TableRow>
                 <TableCell>{item.id}</TableCell>
-                <TableCell><Link to='/admin/info-teacher' className='text-sky-600 cursor-pointer'>{item.name}</Link></TableCell>
+                <TableCell style={{textDecoration:'underline'}}><Link to={{pathname: url}} className='text-sky-600 cursor-pointer'>{item.name}</Link></TableCell>
                 <TableCell>{item.email}</TableCell>
                 <TableCell>{item.address}</TableCell>
                 <TableCell>{item.course[0]}</TableCell>

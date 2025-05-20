@@ -44,3 +44,11 @@ export type CustomTableBodyProps = {
   course: string[],
   date: string
 }
+
+export type AnnouncementHeaderProps = {
+  id: string,
+  title: string,
+  description: string,
+  createdBy: string,
+  date: string
+}

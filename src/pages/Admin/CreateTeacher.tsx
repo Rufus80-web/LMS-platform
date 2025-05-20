@@ -117,25 +117,8 @@ const CreateTeacher = () => {
                 style="long-input"
               />
             </section>
-            <section className="flex gap-2 mt-6">
-              <Input
-                type="text"
-                name="fname"
-                value={formData.fname}
-                placeholder="First Name"
-                onChange={OnChange}
-                style="small-input"
-              />
-              <Input
-                type="text"
-                name="lname"
-                value={formData.lname}
-                placeholder="Last Name"
-                onChange={OnChange}
-                style="small-input"
-              />
-            </section>
-            <section className="absolute right-3 bottom-4">
+            
+            <section className="absolute right-3 bottom-22">
               <Button variant="contained" className="uppercase">
                 Submit
               </Button>

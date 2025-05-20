@@ -9,23 +9,21 @@ import Navbar from "../Teachers/components/navbar/Navbar";
 import DashHeader from "../Teachers/components/DashHeader";
 import Input from "./components/Input";
 import { Button } from "@mui/material";
-
+import FormSelect from "./components/FormSelect";
 
 type SidebarType = () => void;
 
-const CreateStudent = () => {
+const CreateAnnouncement = () => {
   const { themeMode } = useTheme();
   const { isOpen } = useTeacherSidebarContext();
   const [formData, setFormData] = useState({
-    fname: "",
-    lname: "",
-    email: "",
-    contact: "",
-    address1: "",
-    address2: "",
+    announcement_title: "",
+    announcement_description: "",
+    announcement_to: "",
+    announcement_send_date: "",
   });
 
-  const OnChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const OnChange = (e: ChangeEvent<HTMLSelectElement | HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((data) => {
       return {
@@ -40,10 +38,10 @@ const CreateStudent = () => {
     console.log(e);
   };
 
-   const [isOpenSidebar, setIsOpenSidebar] = useState(true);
-    const handleSidebarWidth = (): ReturnType<SidebarType> => {
-      setIsOpenSidebar((prev) => !prev);
-    };
+  const [isOpenSidebar, setIsOpenSidebar] = useState(true);
+  const handleSidebarWidth = (): ReturnType<SidebarType> => {
+    setIsOpenSidebar((prev) => !prev);
+  };
 
   return (
     <SidebarContext.Provider
@@ -58,7 +56,10 @@ const CreateStudent = () => {
           } ${themeMode === "dark" ? "bg-content-dark" : "bg-white"}`}
         >
           <Navbar />
-          <DashHeader title="New Student" message="Create a new Teacher" />
+          <DashHeader
+            title="New Announcement"
+            message="Create a new Announcement"
+          />
 
           <hr className="mt-3 border-[#85838336] border-solid border-1" />
 
@@ -68,58 +69,41 @@ const CreateStudent = () => {
             <section className="flex gap-2 mt-2">
               <Input
                 type="text"
-                name="fname"
-                value={formData.fname}
-                placeholder="First Name"
+                name="announcement_title"
+                value={formData.announcement_title}
+                placeholder="Announcement Title"
                 onChange={OnChange}
                 style="small-input"
               />
               <Input
                 type="text"
-                name="lname"
-                value={formData.lname}
-                placeholder="Last Name"
+                name="announcement_description"
+                value={formData.announcement_description}
+                placeholder="Announcement Description"
                 onChange={OnChange}
                 style="small-input"
               />
             </section>
             <section className="pt-6 flex flex-col gap-6">
               <Input
-                type="email"
-                name="email"
-                value={formData.email}
-                placeholder="Email "
+                type="date"
+                name="announcement_send_date"
+                value={formData.announcement_send_date}
+                placeholder="Announcement Description"
                 onChange={OnChange}
-                style="long-input"
+                style="small-input"
               />
-              <Input
-                type="text"
-                name="contact"
-                value={formData.contact}
-                placeholder="Contact Number"
-                onChange={OnChange}
-                style="long-input"
-              />
-              <Input
-                type="text"
-                name="address1"
-                value={formData.address1}
-                placeholder="Address 1"
-                onChange={OnChange}
-                style="long-input"
-              />
-              <Input
-                type="text"
-                name="address2"
-                value={formData.address2}
-                placeholder="Address 2"
+              <FormSelect
+                name="announcement_to"
+                value={formData.announcement_to}
+                placeholder="Send announcement to--"
                 onChange={OnChange}
                 style="long-input"
               />
             </section>
-            <section className="absolute right-3 bottom-22">
+            <section className="absolute right-3 bottom-60">
               <Button variant="contained" className="uppercase">
-                Submit
+                Create
               </Button>
             </section>
           </form>
@@ -129,4 +113,4 @@ const CreateStudent = () => {
   );
 };
 
-export default CreateStudent;
+export default CreateAnnouncement;

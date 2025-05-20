@@ -9,9 +9,8 @@ import { AdminSidebar } from "./AdminSidebar";
 import Navbar from "../../Teachers/components/navbar/Navbar";
 import DashHeader from "../../Teachers/components/DashHeader";
 import IconButton from "./IconButton";
-import { Print, Add } from "@mui/icons-material";
+import { Print, Add, ChevronLeft, ChevronRight } from "@mui/icons-material";
 import { Paper, Table } from "@mui/material";
-import { ArrowBack, ArrowForward } from "@mui/icons-material";
 import TableHeader from "./table/TableHeader";
 import TableBody from "./table/TableBody";
 import { CustomTableBodyProps } from "../../../static/types";
@@ -64,20 +63,20 @@ const Courses: React.FC = () => {
                 name="Create"
                 url="/admin/create-course"
               />
-              <IconButton icon={<Print />} name="Print" />
+              <IconButton icon={<Print />} name="Print" url="" />
             </div>
 
             <Table component={Paper} className="w-full p-3">
               <TableHeader />
-              <TableBody data={data} />
+              <TableBody data={data} url="/admin/info-course" />
 
               <div className="mt-6 border-none flex justify-start gap-3 items-center pb-1">
                 <button className="w-8 h-8 bg-sky-400 text-white cursor-pointer">
-                  <ArrowBack />
+                  <ChevronLeft />
                 </button>
                 <span>1</span>
                 <button className="w-8 h-8 bg-green-400 cursor-pointer text-white">
-                  <ArrowForward />
+                  <ChevronRight />
                 </button>
               </div>
             </Table>

@@ -8,11 +8,11 @@ import Navbar from "../Teachers/components/navbar/Navbar";
 import DashHeader from "../Teachers/components/DashHeader";
 import { Button } from "@mui/material";
 
-import img from "../../assets/images/profile-3.jpg";
+import img from "../../assets/images/profile-4.jpg";
 
 type SidebarType = () => void;
 
-const DisplayTeacherInfo: React.FC = () => {
+const DisplayStudentInfo: React.FC = () => {
   const { themeMode } = useTheme();
   const { isOpen } = useTeacherSidebarContext();
 
@@ -34,7 +34,7 @@ const DisplayTeacherInfo: React.FC = () => {
           } ${themeMode === "dark" ? "bg-content-dark" : "bg-white"}`}
         >
           <Navbar />
-          <DashHeader title="Teacher's Data" message="Account Information" />
+          <DashHeader title="Student's Data" message="Account Information" />
 
           <hr className="mt-3 border-[#85838336] border-solid border-1" />
 
@@ -43,11 +43,11 @@ const DisplayTeacherInfo: React.FC = () => {
             <section className="grid grid-cols-3 items-center">
               <div className="flex flex-col gap-3 w-60 h-15">
                 <span>First Name:</span>
-                <span>Ralf</span>
+                <span>Tom</span>
               </div>
               <div className="flex flex-col gap-3 w-60 h-15">
                 <span>Last Name:</span>
-                <span>Tony</span>
+                <span>Fabile</span>
               </div>
               <div className="flex flex-col gap-3 w-60 h-15">
                 {/* <span>Photo:</span> */}
@@ -64,19 +64,12 @@ const DisplayTeacherInfo: React.FC = () => {
             <section className="grid grid-cols-3 items-center">
               <div className="flex flex-col gap-3 w-60 h-15">
                 <span>Email:</span>
-                <span>ralf112@gmail.com</span>
+                <span>tomfabile@gmail.com</span>
               </div>
               <div className="flex flex-col gap-3 w-60 h-15">
                 <span>Address:</span>
-                <span>Pont de Valle</span>
+                <span>Luxembourg</span>
               </div>
-              <div className="flex flex-col gap-3 w-60 h-15">
-                <span>Courses:</span>
-                <span>[UML, Merisse, GIS]</span>
-              </div>
-            </section>
-            <hr className="mt-3 border-[#85838336] border-solid border-1" />
-            <section className="grid grid-cols-3 items-center">
               <div className="flex flex-col gap-3 w-60 h-15">
                 <span>Gender:</span>
                 <span>Male</span>
@@ -101,4 +94,4 @@ const DisplayTeacherInfo: React.FC = () => {
   );
 };
 
-export default DisplayTeacherInfo;
+export default DisplayStudentInfo;

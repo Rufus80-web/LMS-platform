@@ -6,13 +6,13 @@ import { SidebarContext } from "../../context/sidebarContext";
 import { AdminSidebar } from "./components/AdminSidebar";
 import Navbar from "../Teachers/components/navbar/Navbar";
 import DashHeader from "../Teachers/components/DashHeader";
-import { Button } from "@mui/material";
+import {Button} from '@mui/material'
 
-import img from "../../assets/images/profile-3.jpg";
+import img from "../../assets/images/profile-4.jpg";
 
 type SidebarType = () => void;
 
-const DisplayTeacherInfo: React.FC = () => {
+const DisplayCourseInfo: React.FC = () => {
   const { themeMode } = useTheme();
   const { isOpen } = useTeacherSidebarContext();
 
@@ -34,23 +34,23 @@ const DisplayTeacherInfo: React.FC = () => {
           } ${themeMode === "dark" ? "bg-content-dark" : "bg-white"}`}
         >
           <Navbar />
-          <DashHeader title="Teacher's Data" message="Account Information" />
+          <DashHeader title="Course's Data" message="Course Information" />
 
           <hr className="mt-3 border-[#85838336] border-solid border-1" />
 
           {/* Table displaying only teacher data  */}
-          <div className="w-full h-max mt-6 flex flex-col gap-3">
+          <div className="w-full h-max mt-6 flex flex-col gap-6">
             <section className="grid grid-cols-3 items-center">
               <div className="flex flex-col gap-3 w-60 h-15">
-                <span>First Name:</span>
-                <span>Ralf</span>
+                <span>Course Name:</span>
+                <span>PHP - Laravel</span>
               </div>
               <div className="flex flex-col gap-3 w-60 h-15">
-                <span>Last Name:</span>
-                <span>Tony</span>
+                <span>Course Code:</span>
+                <span>Fabile</span>
               </div>
               <div className="flex flex-col gap-3 w-60 h-15">
-                {/* <span>Photo:</span> */}
+                <span>Attachment:</span>
                 <div className="w-15 h-15 rounded-full">
                   <img
                     className="w-full h-full rounded-full"
@@ -60,39 +60,21 @@ const DisplayTeacherInfo: React.FC = () => {
                 </div>
               </div>
             </section>
-            <hr className="mt-3 border-[#85838336] border-solid border-1" />
-            <section className="grid grid-cols-3 items-center">
+            <hr className="mt-5 border-[#85838336] border-solid border-1" />
+            <section className="grid grid-cols-2 items-center">
               <div className="flex flex-col gap-3 w-60 h-15">
-                <span>Email:</span>
-                <span>ralf112@gmail.com</span>
+                <span>Course Instructor:</span>
+                <span>Mr Ndonglap Jesky</span>
               </div>
               <div className="flex flex-col gap-3 w-60 h-15">
-                <span>Address:</span>
-                <span>Pont de Valle</span>
-              </div>
-              <div className="flex flex-col gap-3 w-60 h-15">
-                <span>Courses:</span>
-                <span>[UML, Merisse, GIS]</span>
-              </div>
-            </section>
-            <hr className="mt-3 border-[#85838336] border-solid border-1" />
-            <section className="grid grid-cols-3 items-center">
-              <div className="flex flex-col gap-3 w-60 h-15">
-                <span>Gender:</span>
-                <span>Male</span>
+                <span>Course Duration:</span>
+                <span>30 hrs</span>
               </div>
             </section>
             <hr className="mt-3 border-[#85838336] border-solid border-1" />
             <section className="mt-4 flex gap-4">
-              <Button
-                variant="contained"
-                style={{ backgroundColor: "#dada11d7" }}
-              >
-                Edit
-              </Button>
-              <Button variant="contained" style={{ backgroundColor: "red" }}>
-                Delete
-              </Button>
+              <Button variant="contained" style={{backgroundColor:'#dada11d7'}}>Edit</Button>
+              <Button variant="contained" style={{backgroundColor:'red'}}>Delete</Button>
             </section>
           </div>
         </div>
@@ -101,4 +83,4 @@ const DisplayTeacherInfo: React.FC = () => {
   );
 };
 
-export default DisplayTeacherInfo;
+export default DisplayCourseInfo;

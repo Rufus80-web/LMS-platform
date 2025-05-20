@@ -8,17 +8,15 @@ import {
 import AppLayout from "./outlet";
 import ThemeLayout from "./ThemeLayout";
 import StudentLayout from "./StudentLayout";
-
 // Auths imports
 import LoginForm from "../pages/Auths/LoginForm";
 import RegistrationForm from "../pages/Auths/RegistrationForm";
-
 // student views
 import StudentDashboard from "../pages/students/Dashboard";
 import TimeTable from "../pages/students/TimeTable";
 import Exam from "../pages/students/Exam";
 import UpdatePassword from "../pages/students/UpdatePassword";
-import StudentExam from "../pages/students/StudentExam";
+// import StudentExam from "../pages/students/StudentExam";
 
 //Teacher views
 import TDashboard from "../pages/Teachers/TDashboard";
@@ -29,7 +27,6 @@ import ClassProgress from "../pages/Teachers/ClassProgress";
 import ClassMarks from "../pages/Teachers/ClassMarks";
 import AllClasses from "../pages/Teachers/AllClasses";
 import UploadExercise from "../pages/Teachers/UploadExercise";
-
 //admin
 import AdminDashboard from "../pages/Admin/dashoard";
 import Teachers from "../pages/Admin/components/Teachers";
@@ -39,13 +36,24 @@ import CreateStudent from "../pages/Admin/CreateStudent";
 import Courses from "../pages/Admin/components/Courses";
 import CreateCourse from "../pages/Admin/CreateCourse";
 import DisplayTeacherInfo from "../pages/Admin/DisplayTeacherInfo";
+import DisplayStudentInfo from "../pages/Admin/DisplayStudentInfo";
+import DisplayCourseInfo from "../pages/Admin/DisplayCourseInfo";
+import Announcement from "../pages/Admin/components/Announcement";
+import DisplayAnnouncementInfo from "../pages/Admin/DisplayAnnouncement";
+import CreateAnnouncement from "../pages/Admin/CreateAnnouncement";
+import AdminProfile from "../pages/Admin/AdminProfile";
+import Logs from "../pages/Admin/Logs";
+
+
 
 export const router = BrowserRouter(
   RouteElement(
     <Route path="/" element={<AppLayout />}>
       <Route index element={<LoginForm />}></Route>
-      <Route path="/signup" element={<RegistrationForm />}></Route>
-
+      <Route path="/auths">
+        <Route path="login" element={<LoginForm />}></Route>
+        <Route path="signup" element={<RegistrationForm />}></Route>
+      </Route>
       <Route path="/student" element={<StudentLayout />}>
         <Route path="dashboard" element={<StudentDashboard />}></Route>
         <Route path="timetable" element={<TimeTable />}></Route>
@@ -53,7 +61,6 @@ export const router = BrowserRouter(
         <Route path="update_pass" element={<UpdatePassword />}></Route>
         {/* <Route path="exam" element={<StudentExam />}></Route> */}
       </Route>
-
       <Route element={<ThemeLayout />}>
         <Route path="/teacher">
           <Route path="dashboard" element={<TDashboard />}></Route>
@@ -65,17 +72,29 @@ export const router = BrowserRouter(
           <Route path="all-classes" element={<AllClasses />}></Route>
           <Route path="upload-exercise" element={<UploadExercise />}></Route>
         </Route>
-
         {/* Admin */}
         <Route path="/admin">
           <Route path="dashboard" element={<AdminDashboard />}></Route>
           <Route path="manage.teachers" element={<Teachers />}></Route>
           <Route path="manage.students" element={<Students />}></Route>
           <Route path="manage-courses" element={<Courses />}></Route>
+          <Route path="announcement" element={<Announcement />}></Route>
           <Route path="create-teacher" element={<CreateTeacher />}></Route>
           <Route path="create-student" element={<CreateStudent />}></Route>
+          <Route
+            path="create-announcement"
+            element={<CreateAnnouncement />}
+          ></Route>
           <Route path="create-course" element={<CreateCourse />}></Route>
           <Route path="info-teacher" element={<DisplayTeacherInfo />}></Route>
+          <Route path="info-student" element={<DisplayStudentInfo />}></Route>
+          <Route path="info-course" element={<DisplayCourseInfo />}></Route>
+          <Route
+            path="info-announcement"
+            element={<DisplayAnnouncementInfo />}
+          ></Route>
+          <Route path="profile" element={<AdminProfile />}></Route>
+          <Route path="log-info" element={<Logs />}></Route>
         </Route>
       </Route>
     </Route>

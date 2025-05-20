@@ -101,10 +101,10 @@ export const teacherSidebarItems = {
 export const adminSidebar = {
   closed: {
     icons: [
-      { id: 1, name: <Home />, url: "dashboard" },
-      { id: 2, name: <DataArray />, url: "manage.teachers" },
-      { id: 3, name: <DataThresholding />, url: "manage.students" },
-      { id: 4, name: <GolfCourse />, url: "manage.courses" },
+      { id: 1, name: <Home />, url: "/admin/dashboard" },
+      { id: 2, name: <DataArray />, url: "/admin/manage.teachers" },
+      { id: 3, name: <DataThresholding />, url: "/admin/manage.students" },
+      { id: 4, name: <GolfCourse />, url: "/admin/manage.courses" },
     ],
   },
   open: {
@@ -112,29 +112,29 @@ export const adminSidebar = {
       {
         id: 1,
         title: "",
-        children: [{ icon: <Home />, name: "Dashnoard", goto: "dashboard" }],
+        children: [{ icon: <Home />, name: "Dashnoard", goto: "/admin/dashboard" }],
       },
       {
         id: 2,
         title: "Data",
         children: [
-          { icon: <DataArray />, name: "Teachers", goto: "manage.teachers" },
+          { icon: <DataArray />, name: "Teachers", goto: "/admin/manage.teachers" },
           {
             icon: <DataThresholding />,
             name: "Students",
-            goto: "manage.students",
+            goto: "/admin/manage.students",
           },
           {
             icon: <GolfCourse />,
             name: "Courses",
-            goto: "manage-courses",
+            goto: "/admin/manage-courses",
           },
         ],
       },
       {
         id: 3,
         title: "",
-        children: [{ icon: <Announcement />, name: "Announcements", goto: "announcement" }],
+        children: [{ icon: <Announcement />, name: "Announcements", goto: "/admin/announcement" }],
       },
       {
         id: 4,
@@ -143,9 +143,9 @@ export const adminSidebar = {
           {
             icon: <Photo />,
             name: "Profile",
-            goto: "profile",
+            goto: "/admin/profile",
           },
-          { icon: <Logout />, name: "Logout", goto: "/login" },
+          { icon: <Logout />, name: "Logout", goto: "/auths/login" },
         ],
       },
       {
@@ -155,9 +155,9 @@ export const adminSidebar = {
           {
             icon: <Person />,
             name: "Users",
-            goto: "users.account",
+            goto: "/admin/users.account",
           },
-          { icon: <FileUpload />, name: "Logs", goto: "users.logs" },
+          { icon: <FileUpload />, name: "Logs", goto: "/admin/log-info" },
         ],
       },
     ],
