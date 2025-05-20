@@ -18,7 +18,7 @@ import {
   DataArray,
   DataThresholding,
   GolfCourse,
-  Announcement, FileUpload, Logout, Photo
+  Announcement, FileUpload, Logout, Photo, RollerShades
 } from "@mui/icons-material";
 
 export const navItems = [
@@ -156,6 +156,11 @@ export const adminSidebar = {
             icon: <Person />,
             name: "Users",
             goto: "/admin/users.account",
+          },
+          {
+            icon: <RollerShades />,
+            name: "Roles",
+            goto: "/admin/users.role",
           },
           { icon: <FileUpload />, name: "Logs", goto: "/admin/log-info" },
         ],

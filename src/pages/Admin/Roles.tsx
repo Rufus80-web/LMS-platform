@@ -19,10 +19,11 @@ import {
   TableHead,
 } from "@mui/material";
 import { ChevronLeft, ChevronRight } from "@mui/icons-material";
+import { Link } from "react-router-dom";
 
 type SidebarType = () => void;
 
-const Logs: React.FC = () => {
+const Roles: React.FC = () => {
   const { themeMode } = useTheme();
   const { isOpen } = useTeacherSidebarContext();
 
@@ -44,7 +45,7 @@ const Logs: React.FC = () => {
           } ${themeMode === "dark" ? "bg-content-dark" : "bg-white"}`}
         >
           <Navbar />
-          <DashHeader title="Logs" message="Logs details" />
+          <DashHeader title="Role" message="Role Management" />
 
           <hr className="mt-3 border-[#85838336] border-solid border-1" />
 
@@ -57,18 +58,21 @@ const Logs: React.FC = () => {
             <Table component={Paper} className="w-full p-3">
               <TableHead style={{ backgroundColor: "#272829" }}>
                 <TableRow>
-                  <TableCell style={{ color: "whitesmoke" }}>
-                    Description
-                  </TableCell>
-                  <TableCell style={{ color: "whitesmoke" }}>Date</TableCell>
+                  <TableCell style={{ color: "whitesmoke" }}>#</TableCell>
+                  <TableCell style={{ color: "whitesmoke" }}>Role</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
                 <TableRow>
+                  <TableCell>10</TableCell>
                   <TableCell>
-                    Administrator created a recruitment titled 'rresc'
+                    <Link
+                      to="/admin/users.roles/list"
+                      className="text-sky-400 underline cursor-pointer"
+                    >
+                      Teacher
+                    </Link>
                   </TableCell>
-                  <TableCell>2020-09-23</TableCell>
                 </TableRow>
               </TableBody>
             </Table>
@@ -76,7 +80,7 @@ const Logs: React.FC = () => {
               <button className="w-8 h-8 bg-sky-400 text-white cursor-pointer">
                 <ChevronLeft />
               </button>
-              <span className={`${themeMode === 'dark' && 'text-slate-50'}`}>1</span>
+              <span className={`${themeMode === "dark" && "text-slate-50"}`}>1</span>
               <button className="w-8 h-8 bg-green-400 cursor-pointer text-white">
                 <ChevronRight />
               </button>
@@ -88,4 +92,4 @@ const Logs: React.FC = () => {
   );
 };
 
-export default Logs;
+export default Roles;

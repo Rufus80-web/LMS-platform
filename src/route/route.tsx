@@ -43,6 +43,14 @@ import DisplayAnnouncementInfo from "../pages/Admin/DisplayAnnouncement";
 import CreateAnnouncement from "../pages/Admin/CreateAnnouncement";
 import AdminProfile from "../pages/Admin/AdminProfile";
 import Logs from "../pages/Admin/Logs";
+import Users from "../pages/Admin/components/Users";
+import Roles from "../pages/Admin/Roles";
+import EditTeacherInfo from "../pages/Admin/EditTeacherInfo";
+import EditStudentInfo from "../pages/Admin/EditStudentInfo";
+import EditCourseInfo from "../pages/Admin/EditCourseInfo";
+import EditAnnouncement from "../pages/Admin/EditAnnouncement";
+import UserRoleList from "../pages/Admin/UserRoleList";
+import EditUserRole from "../pages/Admin/EditUserRole";
 
 
 
@@ -95,6 +103,16 @@ export const router = BrowserRouter(
           ></Route>
           <Route path="profile" element={<AdminProfile />}></Route>
           <Route path="log-info" element={<Logs />}></Route>
+          <Route path="users.account" element={<Users />}></Route>
+          <Route path="users.role" element={<Roles />}></Route>
+          <Route path="edit">
+             <Route path="teacher" element={<EditTeacherInfo />}></Route>
+             <Route path="student" element={<EditStudentInfo />}></Route>
+             <Route path="course" element={<EditCourseInfo />}></Route>
+             <Route path="announcement" element={<EditAnnouncement />}></Route>
+          </Route>
+          <Route path="users.roles/list" element={<UserRoleList />}></Route>
+          <Route path="users-role/edit" element={<EditUserRole />}></Route>
         </Route>
       </Route>
     </Route>

@@ -9,12 +9,14 @@ import DashHeader from "../Teachers/components/DashHeader";
 import {Button} from '@mui/material'
 
 import img from "../../assets/images/profile-4.jpg";
+import { useNavigate } from "react-router-dom";
 
 type SidebarType = () => void;
 
 const DisplayCourseInfo: React.FC = () => {
   const { themeMode } = useTheme();
   const { isOpen } = useTeacherSidebarContext();
+  const navigate = useNavigate()
 
   const [isOpenSidebar, setIsOpenSidebar] = useState(true);
   const handleSidebarWidth = (): ReturnType<SidebarType> => {
@@ -39,7 +41,7 @@ const DisplayCourseInfo: React.FC = () => {
           <hr className="mt-3 border-[#85838336] border-solid border-1" />
 
           {/* Table displaying only teacher data  */}
-          <div className="w-full h-max mt-6 flex flex-col gap-6">
+          <div className={`w-full h-max mt-6 flex flex-col gap-6 ${themeMode === 'dark' ? 'text-[#f6f6f67e]' : 'text-black'}`}>
             <section className="grid grid-cols-3 items-center">
               <div className="flex flex-col gap-3 w-60 h-15">
                 <span>Course Name:</span>
@@ -73,7 +75,7 @@ const DisplayCourseInfo: React.FC = () => {
             </section>
             <hr className="mt-3 border-[#85838336] border-solid border-1" />
             <section className="mt-4 flex gap-4">
-              <Button variant="contained" style={{backgroundColor:'#dada11d7'}}>Edit</Button>
+              <Button variant="contained" style={{backgroundColor:'#dada11d7'}} onClick={() => navigate('/admin/edit/course')}>Edit</Button>
               <Button variant="contained" style={{backgroundColor:'red'}}>Delete</Button>
             </section>
           </div>

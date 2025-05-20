@@ -10,21 +10,15 @@ import Navbar from "../Teachers/components/navbar/Navbar";
 import DashHeader from "../Teachers/components/DashHeader";
 import IconButton from "./components/IconButton";
 import { Print } from "@mui/icons-material";
-import {
-  Paper,
-  Table,
-  TableRow,
-  TableCell,
-  TableBody,
-  TableHead,
-} from "@mui/material";
-import { ChevronLeft, ChevronRight } from "@mui/icons-material";
+import { Button } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 type SidebarType = () => void;
 
-const Logs: React.FC = () => {
+const UserRoleList: React.FC = () => {
   const { themeMode } = useTheme();
   const { isOpen } = useTeacherSidebarContext();
+  const route = useNavigate()
 
   const [isOpenSidebar, setIsOpenSidebar] = useState(true);
   const handleSidebarWidth = (): ReturnType<SidebarType> => {
@@ -44,43 +38,43 @@ const Logs: React.FC = () => {
           } ${themeMode === "dark" ? "bg-content-dark" : "bg-white"}`}
         >
           <Navbar />
-          <DashHeader title="Logs" message="Logs details" />
+          <DashHeader
+            title="Grant / Denied"
+            message="Role Management Detail List"
+          />
 
           <hr className="mt-3 border-[#85838336] border-solid border-1" />
 
           {/* Table displaying only log data  */}
-          <div className="w-full h-max mt-3 rounded-lg border-[#85838336]">
+          <div className={`w-full h-max mt-3 rounded-lg border-[#85838336] ${themeMode === 'dark' ? 'text-[#f6f6f67e]' : 'text-black'}`}>
             <div className="w-full p-2 h-max flex justify-between ">
               <IconButton icon={<Print />} name="Print" url="" />
             </div>
-
-            <Table component={Paper} className="w-full p-3">
-              <TableHead style={{ backgroundColor: "#272829" }}>
-                <TableRow>
-                  <TableCell style={{ color: "whitesmoke" }}>
-                    Description
-                  </TableCell>
-                  <TableCell style={{ color: "whitesmoke" }}>Date</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                <TableRow>
-                  <TableCell>
-                    Administrator created a recruitment titled 'rresc'
-                  </TableCell>
-                  <TableCell>2020-09-23</TableCell>
-                </TableRow>
-              </TableBody>
-            </Table>
-            <div className="mt-6 border-none flex justify-start gap-3 items-center pb-1">
-              <button className="w-8 h-8 bg-sky-400 text-white cursor-pointer">
-                <ChevronLeft />
-              </button>
-              <span className={`${themeMode === 'dark' && 'text-slate-50'}`}>1</span>
-              <button className="w-8 h-8 bg-green-400 cursor-pointer text-white">
-                <ChevronRight />
-              </button>
+            <div className="flex flex-col gap-3 text-md pl-2 pt-4">
+              <div className="flex flex-col gap-1.5">
+                <span>Name:</span>
+                <span>Teacher</span>
+              </div>
+              <hr className="mt-2 border-[#85838336] border-solid border-1" />
+              <div className="flex flex-col gap-1.5">
+                <span>Is Superuser:</span>
+                <span>No</span>
+              </div>
+              <hr className="mt-2 border-[#85838336] border-solid border-1" />
             </div>
+
+            <section className="mt-4 flex gap-4">
+              <Button
+                variant="contained"
+                style={{ backgroundColor: "#dada11d7" }}
+                onClick={() => route("/admin/users-role/edit")}
+              >
+                Edit
+              </Button>
+              <Button variant="contained" disabled style={{ backgroundColor: "#4543" }}>
+                Delete
+              </Button>
+            </section>
           </div>
         </div>
       </div>
@@ -88,4 +82,4 @@ const Logs: React.FC = () => {
   );
 };
 
-export default Logs;
+export default UserRoleList;

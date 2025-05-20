@@ -75,7 +75,7 @@ const AdminProfile: React.FC = () => {
           {/* Table displaying only teacher data  */}
           <div className="w-full h-max mt-6 flex flex-col gap-3">
             <section className="w-full h-50 flex flex-col gap-1 justify-center items-center pb-2">
-              <h2 className="text-2xl">Profile Picture</h2>
+              <h2 className={`text-2xl ${themeMode === "dark" && 'text-slate-50'}`}>Profile Picture</h2>
               <div className="w-30 h-30 rounded-full">
                 <img
                   src={profile}
@@ -176,20 +176,14 @@ const AdminProfile: React.FC = () => {
                     style="long-input"
                   />
                 </section>
-                <section className="absolute right-3 bottom-4">
-                  <Button variant="contained" className="uppercase">
-                    Submit
-                  </Button>
-                </section>
               </form>
             </section>
 
             <section className="mt-4 flex gap-4">
               <Button
                 variant="contained"
-                style={{ backgroundColor: "#342" }}
               >
-                Update
+                Submit
               </Button>
             </section>
           </div>

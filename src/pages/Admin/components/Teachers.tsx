@@ -56,8 +56,8 @@ const Teachers: React.FC = () => {
           <hr className="mt-3 border-[#85838336] border-solid border-1" />
 
           {/* Table displaying only teacher data  */}
-          <div className="w-full h-max mt-3 border-1 border-solid rounded-lg border-[#85838336]">
-            <div className="w-full p-2 h-max flex justify-between ">
+          <div className={`w-full mt-3 ${themeMode === 'light' ? 'bg-transparent' : 'bg-[#141b2d]'}`}>
+            <div className={`w-full p-2 h-max flex justify-between `}>
               <IconButton
                 icon={<Add />}
                 name="Create"
@@ -70,16 +70,16 @@ const Teachers: React.FC = () => {
               <TableHeader />
               <TableBody data={data} url="/admin/info-teacher" />
 
+            </Table>
               <div className="mt-6 border-none flex justify-start gap-3 items-center pb-1">
                 <button className="w-8 h-8 bg-sky-400 text-white cursor-pointer">
                   <ChevronLeft />
                 </button>
-                <span>1</span>
+                <span className={`${themeMode === 'dark' && 'text-white'}`}>1</span>
                 <button className="w-8 h-8 bg-green-400 cursor-pointer text-white">
                   <ChevronRight />
                 </button>
               </div>
-            </Table>
           </div>
         </div>
       </div>

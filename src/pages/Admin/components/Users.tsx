@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 
-import { useTheme } from "../../context/ThemeContext";
+import { useTheme } from "../../../context/ThemeContext";
 import {
   SidebarContext,
   useTeacherSidebarContext,
-} from "../../context/sidebarContext";
-import { AdminSidebar } from "./components/AdminSidebar";
-import Navbar from "../Teachers/components/navbar/Navbar";
-import DashHeader from "../Teachers/components/DashHeader";
-import IconButton from "./components/IconButton";
+} from "../../../context/sidebarContext";
+import { AdminSidebar } from "../components/AdminSidebar";
+import Navbar from "../../Teachers/components/navbar/Navbar";
+import DashHeader from "../../Teachers/components/DashHeader";
+import IconButton from "../components/IconButton";
 import { Print } from "@mui/icons-material";
 import {
   Paper,
@@ -19,16 +19,27 @@ import {
   TableHead,
 } from "@mui/material";
 import { ChevronLeft, ChevronRight } from "@mui/icons-material";
+import { Link } from "react-router-dom";
 
 type SidebarType = () => void;
 
-const Logs: React.FC = () => {
+const Users: React.FC = () => {
   const { themeMode } = useTheme();
   const { isOpen } = useTeacherSidebarContext();
 
   const [isOpenSidebar, setIsOpenSidebar] = useState(true);
   const handleSidebarWidth = (): ReturnType<SidebarType> => {
     setIsOpenSidebar((prev) => !prev);
+  };
+
+  const NavigateBasedOnUserRole = (role: string): string => {
+    let url: string = "/admin/edit/student";
+    if (role === "teacher") {
+      url = "/admin/edit/teacher";
+    } else if (role === "student") {
+      url = "/admin/edit/student";
+    }
+    return url;
   };
 
   return (
@@ -44,7 +55,7 @@ const Logs: React.FC = () => {
           } ${themeMode === "dark" ? "bg-content-dark" : "bg-white"}`}
         >
           <Navbar />
-          <DashHeader title="Logs" message="Logs details" />
+          <DashHeader title="Users" message="user's details" />
 
           <hr className="mt-3 border-[#85838336] border-solid border-1" />
 
@@ -57,18 +68,35 @@ const Logs: React.FC = () => {
             <Table component={Paper} className="w-full p-3">
               <TableHead style={{ backgroundColor: "#272829" }}>
                 <TableRow>
-                  <TableCell style={{ color: "whitesmoke" }}>
-                    Description
-                  </TableCell>
-                  <TableCell style={{ color: "whitesmoke" }}>Date</TableCell>
+                  <TableCell style={{ color: "whitesmoke" }}>#</TableCell>
+                  <TableCell style={{ color: "whitesmoke" }}>Name</TableCell>
+                  <TableCell style={{ color: "whitesmoke" }}>Email</TableCell>
+                  <TableCell style={{ color: "whitesmoke" }}>Active</TableCell>
+                  <TableCell style={{ color: "whitesmoke" }}>Role</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
-                <TableRow>
-                  <TableCell>
-                    Administrator created a recruitment titled 'rresc'
+                <TableRow className="">
+                  <TableCell style={{ fontWeight: "bold", fontSize: "14px" }}>
+                    1
                   </TableCell>
-                  <TableCell>2020-09-23</TableCell>
+                  <TableCell>
+                    <Link
+                      to={NavigateBasedOnUserRole("student")}
+                      className="text-sky-600 cursor-pointer"
+                    >
+                      John Smith
+                    </Link>
+                  </TableCell>
+                  <TableCell>johnsmith@gmail.com</TableCell>
+                  <TableCell>
+                    <input
+                      type="checkbox"
+                      name=""
+                      className="w-4 h-4 rounded-sm"
+                    />
+                  </TableCell>
+                  <TableCell>Student</TableCell>
                 </TableRow>
               </TableBody>
             </Table>
@@ -88,4 +116,4 @@ const Logs: React.FC = () => {
   );
 };
 
-export default Logs;
+export default Users;

@@ -55,7 +55,7 @@ const Announcement: React.FC = () => {
           <hr className="mt-3 border-[#85838336] border-solid border-1" />
 
           {/* Table displaying only teacher data  */}
-          <div className="w-full h-max mt-3 border-1 border-solid rounded-lg border-[#85838336]">
+          <div className="w-full h-max mt-3">
             <div className="w-full p-2 h-max flex justify-between ">
               <IconButton
                 icon={<Add />}
@@ -67,18 +67,20 @@ const Announcement: React.FC = () => {
 
             <Table component={Paper} className="w-full p-3">
               <AnnouncementHeader />
-              <AnnouncementTableBody data={data} url="/admin/info-announcement" />
-
-              <div className="mt-6 border-none flex justify-start gap-3 items-center pb-1">
-                <button className="w-8 h-8 bg-sky-400 text-white cursor-pointer">
-                  <ChevronLeft />
-                </button>
-                <span>1</span>
-                <button className="w-8 h-8 bg-green-400 cursor-pointer text-white">
-                  <ChevronRight />
-                </button>
-              </div>
+              <AnnouncementTableBody
+                data={data}
+                url="/admin/info-announcement"
+              />
             </Table>
+            <div className="mt-6 border-none flex justify-start gap-3 items-center pb-1">
+              <button className="w-8 h-8 bg-sky-400 text-white cursor-pointer">
+                <ChevronLeft />
+              </button>
+              <span className={`${themeMode === 'dark' && 'text-slate-50'}`}>1</span>
+              <button className="w-8 h-8 bg-green-400 cursor-pointer text-white">
+                <ChevronRight />
+              </button>
+            </div>
           </div>
         </div>
       </div>
