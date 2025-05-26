@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FormEvent, useState } from "react";
+import React, { ChangeEvent, FormEvent, useEffect, useState } from "react";
 
 import { useTheme } from "../../context/ThemeContext";
 import { useTeacherSidebarContext } from "../../context/sidebarContext";
@@ -6,14 +6,15 @@ import { SidebarContext } from "../../context/sidebarContext";
 import { AdminSidebar } from "./components/AdminSidebar";
 import Navbar from "../Teachers/components/navbar/Navbar";
 import DashHeader from "../Teachers/components/DashHeader";
-import { Button } from "@mui/material";
+import { Alert, Button } from "@mui/material";
 import FormSelect from "./components/FormSelect";
 import Input from "./components/Input";
+import { useNavigate, useParams } from "react-router-dom";
+import { Announcement } from "../../static/Interface";
+import { getAnnouncement, updateAnnouncement } from "../../api/admin.api";
+import toast from "react-hot-toast";
 
 type SidebarType = () => void;
-
-
-
 
 const EditAnnouncement: React.FC = () => {
   const { themeMode } = useTheme();
@@ -24,28 +25,106 @@ const EditAnnouncement: React.FC = () => {
     setIsOpenSidebar((prev) => !prev);
   };
 
-    const [formData, setFormData] = useState({
-      announcement_title: "",
-      announcement_description: "",
-      announcement_to: "",
-      announcement_send_date: "",
+  const route = useNavigate();
+  const [announcement, setAnnouncement] = useState<Announcement>({
+    title: "",
+    content: "",
+    receivers: "",
+    sendOn: "",
+    sender: "",
+  });
+  const [isEditing, setIsEditing] = useState<boolean>(true);
+  const [btnName, setBtnName] = useState("Update");
+
+  const { announId } = useParams();
+
+  const OnChange = (e: ChangeEvent<HTMLSelectElement | HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setAnnouncement((data) => {
+      return {
+        ...data,
+        [name]: value,
+      };
     });
-  
-    const OnChange = (e: ChangeEvent<HTMLSelectElement | HTMLInputElement>) => {
-      const { name, value } = e.target;
-      setFormData((data) => {
-        return {
-          ...data,
-          [name]: value,
-        };
-      });
-    };
-  
-    const handleSubmit = (e: FormEvent) => {
-      e.preventDefault();
-      console.log(e);
+  };
+
+  const handleAnnouncementUpdate = async (e: FormEvent) => {
+    e.preventDefault();
+    setIsEditing(false);
+    setBtnName("Save");
+
+    if (!isEditing) {
+      try {
+        const response = await updateAnnouncement(
+          announId as string,
+          announcement
+        );
+        const {
+          data: { status, message, updatedAnnoucement },
+        } = response;
+
+        if (status === "error") {
+          toast.error("Oops! " + message);
+          // throw new Error(message);
+        } else {
+          toast.success(message);
+          const { title, content, sender } = updatedAnnoucement;
+          // const format: string = new Date(sendOn).toDateString();
+          setAnnouncement({
+            title: title,
+            content: content,
+            // receivers: receivers,
+            // sendOn: format,
+            sender: sender,
+          });
+
+          // Disable back form inputs
+          setIsEditing(true);
+
+          // Reset submit button name
+          setBtnName("Update");
+          route("/admin/announcement");
+        }
+      } catch (error: any) {
+        console.log(error.message);
+      }
+    }
+  };
+
+  const formatDate = (date: string): string => {
+    const originalDate: Date = new Date(date);
+    const formatted: string = originalDate.toISOString().split("T")[0]; // "YYYY-MM-DD"
+    return formatted;
+  };
+
+  useEffect(() => {
+    const getAnnouncementDetail = async () => {
+      try {
+        const {
+          data: { announcement, status, message },
+        } = await getAnnouncement(announId as string);
+        if (status === "error") {
+          throw new Error(message);
+        } else {
+          const { title, content, sendOn, sender, receivers } = announcement;
+
+          setAnnouncement({
+            title: title,
+            content: content,
+            sendOn: formatDate(sendOn),
+            sender: sender,
+            receivers: receivers
+          });
+        }
+      } catch (error: any) {
+        console.error(error);
+      }
     };
 
+    getAnnouncementDetail();
+  }, []);
+
+  // UI component
   return (
     <SidebarContext.Provider
       value={{ isOpen: isOpenSidebar, shouldOpen: handleSidebarWidth }}
@@ -65,49 +144,56 @@ const EditAnnouncement: React.FC = () => {
 
           {/* Table displaying only teacher data  */}
           <div className="w-full h-max mt-6 flex flex-col gap-3">
-            
-          <form onSubmit={handleSubmit} className="w-full h-[65vh] p-0">
-            <section className="flex gap-2 mt-2">
-              <Input
-                type="text"
-                name="announcement_title"
-                value={formData.announcement_title}
-                placeholder="Announcement Title"
-                onChange={OnChange}
-                style="small-input"
-              />
-              <Input
-                type="text"
-                name="announcement_description"
-                value={formData.announcement_description}
-                placeholder="Announcement Description"
-                onChange={OnChange}
-                style="small-input"
-              />
-            </section>
-            <section className="pt-6 flex flex-col gap-6">
-              <Input
-                type="date"
-                name="announcement_send_date"
-                value={formData.announcement_send_date}
-                placeholder="Announcement Description"
-                onChange={OnChange}
-                style="small-input"
-              />
-              <FormSelect
-                name="announcement_to"
-                value={formData.announcement_to}
-                placeholder="Send announcement to--"
-                onChange={OnChange}
-                style="long-input"
-              />
-            </section>
-            <section className="absolute right-3 bottom-53">
-              <Button variant="contained" className="uppercase">
-                Update
-              </Button>
-            </section>
-          </form>
+            <form
+              onSubmit={handleAnnouncementUpdate}
+              className="w-full h-[65vh] p-0"
+            >
+              <section className="flex gap-2 mt-2">
+                <Input
+                  type="text"
+                  name="title"
+                  value={announcement.title}
+                  placeholder="Announcement Title"
+                  onChange={OnChange}
+                  disable={isEditing}
+                  style="small-input"
+                />
+                <Input
+                  type="text"
+                  name="content"
+                  value={announcement.content}
+                  placeholder="Announcement Description"
+                  onChange={OnChange}
+                  disable={isEditing}
+                  style="small-input"
+                />
+              </section>
+              <section className="pt-6 flex flex-col gap-6">
+                <Input
+                  type="date"
+                  name="sendOn"
+                  value={announcement.sendOn as string}
+                  placeholder="Announcement Date creation"
+                  onChange={OnChange}
+                  disable={isEditing}
+                  style="small-input"
+                />
+                <FormSelect
+                  name="receivers"
+                  value={announcement.receivers as string}
+                  placeholder="Send announcement to--"
+                  onChange={OnChange}
+                  style="long-input"
+                  options={["ALL", "Teacher", "Student"]}
+                />
+              </section>
+              <section className="absolute right-3 bottom-22 flex justify-center items-center gap-2">
+                {!isEditing && <Alert>Form fields enabled</Alert>}
+                <Button type="submit" variant="contained" className="uppercase">
+                  <span>{btnName}</span>&nbsp;
+                </Button>
+              </section>
+            </form>
           </div>
         </div>
       </div>

@@ -1,20 +1,20 @@
 import {} from "react";
-import { TableRow, TableCell, TableBody as BodyTable } from "@mui/material";
-import { CustomTableBodyProps, TeacherFormData } from "../../../../static/types";
+import { TableRow, TableCell, TableBody } from "@mui/material";
+import { Course } from "../../../../static/types";
 import { Link } from "react-router-dom";
 import { useTheme } from "../../../../context/ThemeContext";
 
 type DataArray = {
-  data: CustomTableBodyProps[];
+  data: Course[];
   url: string;
 };
 
-const TableBody = ({ data, url }: DataArray) => {
+const CourseTableBody = ({ data, url }: DataArray) => {
   const { themeMode } = useTheme();
   return (
-    <BodyTable>
+    <TableBody>
       {data.length > 0 ?
-        data.map((item: CustomTableBodyProps, i: number) => (
+        data.map((item: Course, i: number) => (
           <TableRow
           key={i}
             style={{
@@ -24,25 +24,30 @@ const TableBody = ({ data, url }: DataArray) => {
             <TableCell
               style={{ color: themeMode === "light" ? "#000" : "#f5f5f5" }}
             >
-              {item.id?.slice(0, 8)}<span title={item.id}>...</span>
+              {item.courseId?.slice(0, 8)}<span title={item.courseId}>...</span>
             </TableCell>
             <TableCell style={{ textDecoration: "underline" }}>
               <Link
-                to={{ pathname:`${url}/${item.id}` }}
+                to={{ pathname:`${url}/${item.courseId}` }}
                 className="text-sky-600 cursor-pointer"
               >
-                {item.firstname}
+                {item.courseName}
               </Link>
             </TableCell>
             <TableCell
               style={{ color: themeMode === "light" ? "#000" : "#f5f5f5" }}
             >
-              {item.email}
+              {item.courseCode}
             </TableCell>
             <TableCell
               style={{ color: themeMode === "light" ? "#000" : "#f5f5f5" }}
             >
-              {item.address}
+              {item.courseInstructor}
+            </TableCell>
+            <TableCell
+              style={{ color: themeMode === "light" ? "#000" : "#f5f5f5" }}
+            >
+              {item.courseHours}
             </TableCell>
             <TableCell
               style={{ color: themeMode === "light" ? "#000" : "#f5f5f5" }}
@@ -51,8 +56,8 @@ const TableBody = ({ data, url }: DataArray) => {
             </TableCell>
           </TableRow>
         )) : null}
-    </BodyTable>
+    </TableBody>
   );
 };
 
-export default TableBody;
+export default CourseTableBody;

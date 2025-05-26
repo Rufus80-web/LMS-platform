@@ -2,20 +2,20 @@ import { JSX } from "react";
 
 import { navItems } from "../../../../static/utils";
 import { Link, useLocation } from "react-router-dom";
-import { Button } from "@mui/material";
+// import { Button } from "@mui/material";
 import { useTheme } from "../../../../context/ThemeContext";
 
 const Navbar = (): JSX.Element => {
   const { pathname } = useLocation();
-  const { themeMode, lightTheme, darkTheme } = useTheme();
+  const { themeMode } = useTheme();
 
-  const toggleThemeMode = () => {
-    if (themeMode === "light") {
-      darkTheme();
-    } else {
-      lightTheme();
-    }
-  };
+  // const toggleThemeMode = () => {
+  //   if (themeMode === "light") {
+  //     darkTheme();
+  //   } else {
+  //     lightTheme();
+  //   }
+  // };
 
   return (
     <nav
@@ -40,13 +40,13 @@ const Navbar = (): JSX.Element => {
           </Link>
         ))}
         <li>
-          <Button
+          {/* <Button
             variant="contained"
             style={{ fontSize: "10px" }}
             onClick={toggleThemeMode}
           >
             {themeMode === 'light' ? 'Light' : 'Dark'}
-          </Button>
+          </Button> */}
         </li>
       </ul>
     </nav>

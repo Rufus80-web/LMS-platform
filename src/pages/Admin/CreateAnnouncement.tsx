@@ -10,17 +10,23 @@ import DashHeader from "../Teachers/components/DashHeader";
 import Input from "./components/Input";
 import { Button } from "@mui/material";
 import FormSelect from "./components/FormSelect";
+import { addAnnouncementRequest } from "../../api/admin.api";
+import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 type SidebarType = () => void;
 
 const CreateAnnouncement = () => {
   const { themeMode } = useTheme();
   const { isOpen } = useTeacherSidebarContext();
+  const route = useNavigate()
   const [formData, setFormData] = useState({
-    announcement_title: "",
-    announcement_description: "",
-    announcement_to: "",
-    announcement_send_date: "",
+    title: "",
+    content: "",
+    receivers: "",
+    sendOn: "",
+    sender: "",
+    email: ""
   });
 
   const OnChange = (e: ChangeEvent<HTMLSelectElement | HTMLInputElement>) => {
@@ -33,9 +39,32 @@ const CreateAnnouncement = () => {
     });
   };
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleCreateAnnouncement = async (e: FormEvent) => {
     e.preventDefault();
-    console.log(e);
+
+    const configs = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'charset': 'utf-8'
+      },
+      body: JSON.stringify(formData)
+    }
+    
+    try {
+      const response= await addAnnouncementRequest(configs)
+      const {status, content} = await response.json()
+
+      if(status === 'error'){
+        toast.error(content)
+        throw new Error(content)
+      } else {
+        toast.success(content)
+        route('/admin/announcement')
+      }
+    } catch (err: any) {
+      throw new Error(err.content)
+    }
   };
 
   const [isOpenSidebar, setIsOpenSidebar] = useState(true);
@@ -65,45 +94,60 @@ const CreateAnnouncement = () => {
 
           {/* Table displaying only teacher data  */}
 
-          <form onSubmit={handleSubmit} className="w-full h-[65vh] p-0">
+          <form onSubmit={handleCreateAnnouncement} className="w-full h-[65vh] p-0">
             <section className="flex gap-2 mt-2">
               <Input
                 type="text"
-                name="announcement_title"
-                value={formData.announcement_title}
+                name="title"
+                value={formData.title}
                 placeholder="Announcement Title"
                 onChange={OnChange}
+                disable={false}
                 style="small-input"
               />
               <Input
                 type="text"
-                name="announcement_description"
-                value={formData.announcement_description}
+                name="content"
+                value={formData.content}
                 placeholder="Announcement Description"
                 onChange={OnChange}
+                disable={false}
                 style="small-input"
               />
             </section>
-            <section className="pt-6 flex flex-col gap-6">
+            <section className="pt-6 flex gap-6">
               <Input
-                type="date"
-                name="announcement_send_date"
-                value={formData.announcement_send_date}
+                type="sendOn"
+                name="sendOn"
+                value={formData.sendOn}
                 placeholder="Announcement Description"
                 onChange={OnChange}
+                disable={false}
                 style="small-input"
               />
               <FormSelect
-                name="announcement_to"
-                value={formData.announcement_to}
+                name="receivers"
+                value={formData.receivers}
                 placeholder="Send announcement to--"
                 onChange={OnChange}
+                style="small-input"
+                options={["Teachers", "Students", "ALL"]}
+              />
+            </section>
+            <section className="pt-6 flex gap-6">
+              <Input
+                type="email"
+                name="email"
+                value={formData.email}
+                placeholder="Specify a specific email"
+                onChange={OnChange}
+                disable={false}
                 style="long-input"
               />
             </section>
             <section className="absolute right-3 bottom-60">
-              <Button variant="contained" className="uppercase">
-                Create
+              <Button type="submit" variant="contained" className="uppercase">
+                Save
               </Button>
             </section>
           </form>

@@ -76,7 +76,9 @@ const Logs: React.FC = () => {
               <button className="w-8 h-8 bg-sky-400 text-white cursor-pointer">
                 <ChevronLeft />
               </button>
-              <span className={`${themeMode === 'dark' && 'text-slate-50'}`}>1</span>
+              <span className={`${themeMode === "dark" && "text-slate-50"}`}>
+                1
+              </span>
               <button className="w-8 h-8 bg-green-400 cursor-pointer text-white">
                 <ChevronRight />
               </button>

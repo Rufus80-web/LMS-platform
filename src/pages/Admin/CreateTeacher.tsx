@@ -9,23 +9,32 @@ import Navbar from "../Teachers/components/navbar/Navbar";
 import DashHeader from "../Teachers/components/DashHeader";
 import Input from "./components/Input";
 import { Button } from "@mui/material";
+import FormSelect from "./components/FormSelect";
+import { TeacherFormData } from "../../static/types";
 
+import { addTeacherRequest } from "../../api/admin.api";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
+import IsLoading from "./components/IsLoading";
 
 type SidebarType = () => void;
 
 const CreateTeacher = () => {
   const { themeMode } = useTheme();
   const { isOpen } = useTeacherSidebarContext();
-  const [formData, setFormData] = useState({
-    fname: "",
-    lname: "",
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [formData, setFormData] = useState<TeacherFormData>({
+    firstname: "",
+    lastname: "",
     email: "",
     contact: "",
-    address1: "",
-    address2: "",
+    address: "",
+    roles: '',
+    gender: "",
+    password: "",
   });
 
-  const OnChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const OnChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setFormData((data) => {
       return {
@@ -35,16 +44,74 @@ const CreateTeacher = () => {
     });
   };
 
-  const handleSubmit = (e: FormEvent) => {
+  // This function send user-data to the server to perform post request i.e Function to add a new Teacher to the DB
+  const addNewTeacher = async (e: FormEvent) => {
     e.preventDefault();
-    console.log(e);
+
+    try {
+      const configs = {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      };
+
+      // Send request to server
+      const response = await addTeacherRequest(configs);
+
+      // Jsonify the server response
+      const { error, message } = await response.json();
+
+      if (!error) {
+        toast.success(message);
+
+        // Clear the Form Input after successfull registration
+        cleanTheForm();
+
+        // Then Redirect
+        route("/admin/manage.teachers");
+      } else {
+        // Set Loader
+        setIsLoading(true);
+        // Display error message
+        setTimeout(() => {
+          setIsLoading(false)
+          toast.error(message);
+        }, 1200)
+
+        // clearTimeout(timer)
+      }
+    } catch (err: any) {
+      console.log(err.message);
+    }
   };
 
-   const [isOpenSidebar, setIsOpenSidebar] = useState(true);
-    const handleSidebarWidth = (): ReturnType<SidebarType> => {
-      setIsOpenSidebar((prev) => !prev);
-    };
+  // Clean the form
+  const cleanTheForm = (): void => {
+    setFormData({
+      firstname: "",
+      lastname: "",
+      email: "",
+      password: "",
+      contact: "",
+      address: "",
+      roles: '',
+      gender: "",
+    });
+  };
 
+  // Route to path
+  const route = useNavigate();
+
+  const [isOpenSidebar, setIsOpenSidebar] = useState(true);
+
+  // Handle toggle sidebar functionality (open/close)
+  const handleSidebarWidth = (): ReturnType<SidebarType> => {
+    setIsOpenSidebar((prev) => !prev);
+  };
+
+  // Return UI Component
   return (
     <SidebarContext.Provider
       value={{ isOpen: isOpenSidebar, shouldOpen: handleSidebarWidth }}
@@ -64,22 +131,28 @@ const CreateTeacher = () => {
 
           {/* Table displaying only teacher data  */}
 
-          <form onSubmit={handleSubmit} className="w-full h-[65vh] p-0">
+          {/* Loader component rendered conditionaly  */}
+
+          {isLoading && <IsLoading />}
+
+          <form onSubmit={addNewTeacher} className="w-full h-[65vh] p-0">
             <section className="flex gap-2 mt-2">
               <Input
                 type="text"
-                name="fname"
-                value={formData.fname}
+                name="firstname"
+                value={formData.firstname}
                 placeholder="First Name"
                 onChange={OnChange}
+                disable={false}
                 style="small-input"
               />
               <Input
                 type="text"
-                name="lname"
-                value={formData.lname}
+                name="lastname"
+                value={formData.lastname}
                 placeholder="Last Name"
                 onChange={OnChange}
+                disable={false}
                 style="small-input"
               />
             </section>
@@ -90,6 +163,7 @@ const CreateTeacher = () => {
                 value={formData.email}
                 placeholder="Email "
                 onChange={OnChange}
+                disable={false}
                 style="long-input"
               />
               <Input
@@ -98,28 +172,49 @@ const CreateTeacher = () => {
                 value={formData.contact}
                 placeholder="Contact Number"
                 onChange={OnChange}
+                disable={false}
                 style="long-input"
               />
               <Input
                 type="text"
-                name="address1"
-                value={formData.address1}
+                name="address"
+                value={formData.address}
                 placeholder="Address 1"
                 onChange={OnChange}
-                style="long-input"
-              />
-              <Input
-                type="text"
-                name="address2"
-                value={formData.address2}
-                placeholder="Address 2"
-                onChange={OnChange}
+                disable={false}
                 style="long-input"
               />
             </section>
-            
-            <section className="absolute right-3 bottom-22">
-              <Button variant="contained" className="uppercase">
+            <section className="pt-6 flex gap-6">
+              <FormSelect
+                name="gender"
+                value={formData.gender}
+                placeholder="Gender"
+                onChange={OnChange}
+                style="small-input"
+                options={["Male", "Female"]}
+              />
+              <FormSelect
+                name="roles"
+                value={formData.roles as string}
+                placeholder="User Role"
+                onChange={OnChange}
+                style="small-input"
+                options={["User", "Teacher", "Administrator"]}
+              />
+              <Input
+                type="password"
+                name="password"
+                value={formData.password as string}
+                placeholder="User Password"
+                onChange={OnChange}
+                disable={false}
+                style="long-input"
+              />
+            </section>
+
+            <section className="absolute right-3 bottom-21">
+              <Button type="submit" variant="contained" className="uppercase">
                 Submit
               </Button>
             </section>

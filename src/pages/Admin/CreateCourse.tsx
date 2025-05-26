@@ -1,4 +1,4 @@
-import { ChangeEvent, FormEvent, useState } from "react";
+import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { AdminSidebar } from "./components/AdminSidebar";
 import { useTheme } from "../../context/ThemeContext";
 import {
@@ -9,6 +9,13 @@ import Navbar from "../Teachers/components/navbar/Navbar";
 import DashHeader from "../Teachers/components/DashHeader";
 import Input from "./components/Input";
 import { Button } from "@mui/material";
+import { Course } from "../../static/types";
+import { addCourseRequest } from "../../api/admin.api";
+import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
+import { useAppDispatch, useAppSelector, RootState } from "../../Redux/configureStrore";
+import FormSelect from "./components/FormSelect";
+import { courseReducer } from "../../Redux/Slices/adminSlice";
 
 
 type SidebarType = () => void;
@@ -16,16 +23,16 @@ type SidebarType = () => void;
 const CreateCourse = () => {
   const { themeMode } = useTheme();
   const { isOpen } = useTeacherSidebarContext();
-  const [formData, setFormData] = useState({
+  const [courseData, setCourseData] = useState<Course>({
     courseName: "",
     courseCode: "",
     courseInstructor: "",
-    courseDuration: "",
+    courseHours: "",
   });
 
-  const OnChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const OnChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
-    setFormData((data) => {
+    setCourseData((data) => {
       return {
         ...data,
         [name]: value,
@@ -33,16 +40,83 @@ const CreateCourse = () => {
     });
   };
 
-  const handleSubmit = (e: FormEvent) => {
+  const [isOpenSidebar, setIsOpenSidebar] = useState(true);
+  const handleSidebarWidth = (): ReturnType<SidebarType> => {
+    setIsOpenSidebar((prev) => !prev);
+  };
+  const {
+    users: { courses },
+  } = useAppSelector((state: RootState) => state.courseArray);
+  const dispatch = useAppDispatch();
+
+  // This function send user-data to the server to perform post request i.e Function to add a new Teacher to the DB
+  const handleAddNewCourse = async (e: FormEvent) => {
     e.preventDefault();
-    console.log(e);
+
+    try {
+      const configs = {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(courseData),
+      };
+
+      // Send request to server
+      const response = await addCourseRequest(configs);
+
+      // Jsonify the server response
+      const { status, message } = await response.json();
+
+      if (status === "error") {
+        toast.error(message);
+        // Clear the Form Input after successfull registration
+        cleanTheForm();
+      } else {
+        // Display error message
+        toast.success(message);
+        // Then Redirect
+        route("/admin/manage-courses");
+      }
+    } catch (err: any) {
+      console.log(err.message);
+    }
   };
 
-   const [isOpenSidebar, setIsOpenSidebar] = useState(true);
-    const handleSidebarWidth = (): ReturnType<SidebarType> => {
-      setIsOpenSidebar((prev) => !prev);
-    };
+  // Clean the form
+  const cleanTheForm = (): void => {
+    setCourseData({
+      courseName: "",
+      courseCode: "",
+      courseInstructor: "",
+      courseHours: "",
+      createdAt: "",
+    });
+  };
 
+  // Route to path
+  const route = useNavigate();
+
+  useEffect(() => {
+    // dispatch data from the store
+    dispatch(courseReducer());
+  }, []);
+
+  // Retrieve all teacher's names
+  const getTeacherNames = (): string[] => {
+    const arrayNames: Array<string> = [];
+    if (courses && courses.length > 0) {
+      for (const data of courses) {
+        let name: string = `${data["courseInstructor"]}`;
+        arrayNames.push(name);
+      }
+    } else {
+      throw new Error("Course array is possibly empty");
+    }
+    return arrayNames;
+  };
+
+  // Returning UI component
   return (
     <SidebarContext.Provider
       value={{ isOpen: isOpenSidebar, shouldOpen: handleSidebarWidth }}
@@ -62,45 +136,48 @@ const CreateCourse = () => {
 
           {/* Table displaying only teacher data  */}
 
-          <form onSubmit={handleSubmit} className="w-full h-[65vh] p-0">
+          <form onSubmit={handleAddNewCourse} className="w-full h-[65vh] p-0">
             <section className="flex gap-2 mt-2">
               <Input
                 type="text"
                 name="courseName"
-                value={formData.courseName}
+                value={courseData.courseName}
                 placeholder="Course Name"
                 onChange={OnChange}
+                disable={false}
                 style="small-input"
               />
               <Input
                 type="text"
                 name="courseCode"
-                value={formData.courseCode}
+                value={courseData.courseCode}
                 placeholder="Course Code"
                 onChange={OnChange}
+                disable={false}
                 style="small-input"
               />
             </section>
             <section className="pt-6 flex flex-col gap-6">
-              <Input
-                type="courseInstructor"
+              <FormSelect
                 name="courseInstructor"
-                value={formData.courseInstructor}
+                value={courseData.courseInstructor}
                 placeholder="Course Instructor "
                 onChange={OnChange}
                 style="long-input"
+                options={getTeacherNames()}
               />
               <Input
                 type="text"
-                name="courseDuration"
-                value={formData.courseDuration}
+                name="courseHours"
+                value={courseData.courseHours as string}
                 placeholder="Course Duration"
                 onChange={OnChange}
+                disable={false}
                 style="long-input"
               />
             </section>
             <section className="absolute right-3 bottom-60">
-              <Button variant="contained" className="uppercase">
+              <Button type="submit" variant="contained" className="uppercase">
                 Submit
               </Button>
             </section>

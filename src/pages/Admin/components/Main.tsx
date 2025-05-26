@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import { useTheme } from "../../../context/ThemeContext";
 import { useTeacherSidebarContext } from "../../../context/sidebarContext";
@@ -13,10 +13,46 @@ import {
   TableCell,
 } from "@mui/material";
 import { Link } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from "../../../Redux/configureStrore";
+import {
+  studentsReducer,
+  fetchTeachersReducer,
+  announcementReducer,
+  courseReducer,
+} from "../../../Redux/Slices/adminSlice";
+import { Announcement } from "../../../static/Interface";
 
 export const Main: React.FC = () => {
   const { themeMode } = useTheme();
   const { isOpen } = useTeacherSidebarContext();
+  const dispatch = useAppDispatch();
+  const {
+    users: { announcementList },
+  } = useAppSelector((state) => state.announArray);
+  const {
+    users: { teachers },
+  } = useAppSelector((state) => state.teachers);
+  const {
+    users: { students },
+  } = useAppSelector((state) => state.students);
+  const {
+    users: { courses },
+  } = useAppSelector((state) => state.courseArray);
+
+  const arrayLength = announcementList && announcementList.length;
+  const _8StepBackward = arrayLength - 5;
+  const lastFiveAnnouncement =
+    announcementList && announcementList.slice(_8StepBackward, arrayLength);
+
+
+  useEffect(() => {
+    dispatch(announcementReducer());
+    dispatch(fetchTeachersReducer());
+    dispatch(studentsReducer());
+    dispatch(courseReducer());
+  }, []);
+
+  // Return component UI
   return (
     <div
       className={`w-screen min-h-screen pb-[2em] select-none ${
@@ -27,9 +63,18 @@ export const Main: React.FC = () => {
       <DashHeader title="Dashboard" message="Welcome to your Dashboard" />
 
       <div className="w-[78.7vw] h-[40vh] flex p-1 justify-evenly gap-1 mt-2 mr-[0.6rem]">
-        <TotalRecord title="Total Teachers" count={30} />
-        <TotalRecord title="Total Students" count={12} />
-        <TotalRecord title="Total Courses" count={21} />
+        <TotalRecord
+          title="Teachers"
+          count={teachers.length === 0 ? 0 : teachers.length}
+        />
+        <TotalRecord
+          title="Students"
+          count={students.length === 0 ? 0 : students.length}
+        />
+        <TotalRecord
+          title="Courses"
+          count={courses.length === 0 ? 0 : courses.length}
+        />
       </div>
 
       <div className="w-[78.7vw] mt-6">
@@ -66,20 +111,33 @@ export const Main: React.FC = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            <TableRow 
-              className={`${
-                themeMode === "light" ? "bg-[#f2f0f0] " : "bg-white"
-              }`}
-            >
-              <TableCell>1</TableCell>
-              <TableCell>
-                <Link to="" className="text-blue-400 cursor-pointer">
-                  Important Announcement
-                </Link>
-              </TableCell>
-              <TableCell>Administrator</TableCell>
-              <TableCell>19-05-2025 13:20:58</TableCell>
-            </TableRow>
+            {lastFiveAnnouncement.length > 0
+              ? lastFiveAnnouncement.map((item: Announcement) => (
+                  <TableRow
+                    className={`${
+                      themeMode === "light" ? "bg-[#f2f0f0] " : "bg-white"
+                    }`}
+                  >
+                    <TableCell>{item.announId?.slice(0, 8)}</TableCell>
+                    <TableCell>
+                      <Link
+                        to="/admin/announcement"
+                        className="text-blue-400 cursor-pointer"
+                      >
+                        {item.title}
+                      </Link>
+                    </TableCell>
+                    <TableCell>{item.sender}</TableCell>
+                    <TableCell>
+                      {new Date(item.sendOn).toLocaleDateString("en-GS", {
+                        day: "2-digit",
+                        month: "2-digit",
+                        year: "numeric",
+                      })}
+                    </TableCell>
+                  </TableRow>
+                ))
+              : null}
           </TableBody>
         </Table>
       </div>

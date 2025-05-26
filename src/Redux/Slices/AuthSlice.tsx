@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { AuthSliceProps } from "../../static/Interface";
-import { handleUserLogin } from "../reducer";
+import { handleUserLogin } from "../reducers/authsReducer";
 
 const initState: AuthSliceProps = {
   name: "Auths",

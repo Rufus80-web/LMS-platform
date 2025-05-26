@@ -8,6 +8,7 @@ type InputProps = {
   readonly placeholder?: string;
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
   style: string;
+  disable: boolean
 };
 
 const Input = ({
@@ -17,6 +18,7 @@ const Input = ({
   placeholder,
   onChange,
   style,
+  disable
 }: InputProps) => {
   const {themeMode} = useTheme()
   return (
@@ -26,7 +28,8 @@ const Input = ({
       value={value}
       placeholder={placeholder}
       onChange={onChange}
-      className={`${style} ${themeMode === 'dark' ? 'bg-[#43495779] placeholder:text-slate-50 text-white' : 'bg-[#eeeeee7c]'}`}
+      disabled={disable}
+      className={`${style} ${themeMode === 'dark' ? 'bg-[#43495779] placeholder:text-slate-50 text-white' : 'bg-[#eeeeee7c]'} select-none $`}
     />
   );
 };

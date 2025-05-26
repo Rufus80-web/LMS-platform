@@ -52,8 +52,6 @@ import EditAnnouncement from "../pages/Admin/EditAnnouncement";
 import UserRoleList from "../pages/Admin/UserRoleList";
 import EditUserRole from "../pages/Admin/EditUserRole";
 
-
-
 export const router = BrowserRouter(
   RouteElement(
     <Route path="/" element={<AppLayout />}>
@@ -94,11 +92,11 @@ export const router = BrowserRouter(
             element={<CreateAnnouncement />}
           ></Route>
           <Route path="create-course" element={<CreateCourse />}></Route>
-          <Route path="info-teacher" element={<DisplayTeacherInfo />}></Route>
-          <Route path="info-student" element={<DisplayStudentInfo />}></Route>
-          <Route path="info-course" element={<DisplayCourseInfo />}></Route>
+          <Route path="info-teacher/:userID" element={<DisplayTeacherInfo />}></Route>
+          <Route path="info-student/:sid" element={<DisplayStudentInfo />}></Route>
+          <Route path="info-course/:courseId" element={<DisplayCourseInfo />}></Route>
           <Route
-            path="info-announcement"
+            path="info-announcement/:announId"
             element={<DisplayAnnouncementInfo />}
           ></Route>
           <Route path="profile" element={<AdminProfile />}></Route>
@@ -106,13 +104,13 @@ export const router = BrowserRouter(
           <Route path="users.account" element={<Users />}></Route>
           <Route path="users.role" element={<Roles />}></Route>
           <Route path="edit">
-             <Route path="teacher" element={<EditTeacherInfo />}></Route>
-             <Route path="student" element={<EditStudentInfo />}></Route>
-             <Route path="course" element={<EditCourseInfo />}></Route>
-             <Route path="announcement" element={<EditAnnouncement />}></Route>
+            <Route path="teacher/:id" element={<EditTeacherInfo />}></Route>
+            <Route path="student/:sid" element={<EditStudentInfo />}></Route>
+            <Route path="course/:courseId" element={<EditCourseInfo />}></Route>
+            <Route path="announcement/:announId" element={<EditAnnouncement />}></Route>
           </Route>
-          <Route path="users.roles/list" element={<UserRoleList />}></Route>
-          <Route path="users-role/edit" element={<EditUserRole />}></Route>
+          <Route path="users.roles/list/:id" element={<UserRoleList />}></Route>
+          <Route path="users-role/edit/:id" element={<EditUserRole />}></Route>
         </Route>
       </Route>
     </Route>

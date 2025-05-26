@@ -1,4 +1,5 @@
 import { ChangeEvent } from "react";
+import { Announcement } from "./Interface";
 
 type TableSorting = (property: string) => void;
 
@@ -38,17 +39,66 @@ export type tableRowType = {
 
 export type CustomTableBodyProps = {
   id: string,
-  name: string,
+  firstname: string,
   email: string,
   address: string,
   course: string[],
-  date: string
+  createdAt: string
 }
 
-export type AnnouncementHeaderProps = {
-  id: string,
-  title: string,
+export type TeacherFormData = {
+  readonly id?: string
+  firstname: string,
+  lastname: string,
+  email: string,
+  contact: string,
+  address: string,
+  gender: string,
+  roles: string | string[],
+  password?: string,
+  [index: number]: number
+}
+
+export type FormData = {
+  readonly id?: string
+  firstname: string,
+  lastname: string,
+  email: string,
+  contact: string,
+  address: string,
+  gender: string,
+}
+
+export type Users = FormData & {
+  password?: string,
+  roles: string[]
+}
+
+export type Course = {
+  readonly courseId?: string,
+  courseName: string,
+  courseCode: string,
+  courseInstructor: string,
+  courseHours?: string,
+  courseProgression?: string,
+  createdAt?: string
+}
+
+export type Log = {
   description: string,
   createdBy: string,
-  date: string
+  createdOn: string
+}
+
+export type AdminSliceInitState = {
+  users: {
+    teachers: TeacherFormData[],
+    students: TeacherFormData[],
+    allUsers: Users[],
+    teacherData: Object,
+    courses: Course[],
+    announcementList: Announcement[],
+    logs: Log[]
+  },
+  isLoading?: boolean
 }

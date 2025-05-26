@@ -10,18 +10,19 @@ import { Button } from "@mui/material";
 
 import profile from "../../assets/images/profile-1.jpg";
 import Input from "./components/Input";
+import { Adminprofile } from "../../static/Interface";
 
 type SidebarType = () => void;
 
 const AdminProfile: React.FC = () => {
   const { themeMode } = useTheme();
   const { isOpen } = useTeacherSidebarContext();
-  const [formData, setFormData] = useState({
-    fname: "",
-    lname: "",
+  const [formData, setFormData] = useState<Adminprofile>({
+    firstname: "",
+    lastname: "",
     email: "",
     contact: "",
-    address1: "",
+    address: "",
     password: "",
     newPassword: "",
     confirm_new_password: ""
@@ -107,18 +108,20 @@ const AdminProfile: React.FC = () => {
                 <section className="flex gap-2 mt-2">
                   <Input
                     type="text"
-                    name="fname"
-                    value={formData.fname}
+                    name="firstname"
+                    value={formData.firstname}
                     placeholder="First Name"
                     onChange={OnChange}
+                    disable={false}
                     style="small-input"
                   />
                   <Input
                     type="text"
-                    name="lname"
-                    value={formData.lname}
+                    name="lastname"
+                    value={formData.lastname}
                     placeholder="Last Name"
                     onChange={OnChange}
+                    disable={false}
                     style="small-input"
                   />
                 </section>
@@ -129,6 +132,7 @@ const AdminProfile: React.FC = () => {
                     value={formData.email}
                     placeholder="Email "
                     onChange={OnChange}
+                    disable={false}
                     style="long-input"
                   />
                   <Input
@@ -137,14 +141,16 @@ const AdminProfile: React.FC = () => {
                     value={formData.contact}
                     placeholder="Contact Number"
                     onChange={OnChange}
+                    disable={false}
                     style="long-input"
                   />
                   <Input
                     type="text"
-                    name="address1"
-                    value={formData.address1}
+                    name="address"
+                    value={formData.address}
                     placeholder="Address 1"
                     onChange={OnChange}
+                    disable={false}
                     style="long-input"
                   />
                 </section>
@@ -152,17 +158,19 @@ const AdminProfile: React.FC = () => {
                   <Input
                     type="password"
                     name="password"
-                    value={formData.password}
+                    value={formData.password as string}
                     placeholder="Enter Current Password"
                     onChange={OnChange}
+                    disable={true}
                     style="small-input"
                   />
                   <Input
                     type="password"
                     name="newPassword"
-                    value={formData.newPassword}
+                    value={formData.newPassword as string}
                     placeholder="Enter your new Password"
                     onChange={OnChange}
+                    disable={true}
                     style="small-input"
                   />
                 </section>
@@ -170,9 +178,10 @@ const AdminProfile: React.FC = () => {
                   <Input
                     type="password"
                     name="confirm_new_password"
-                    value={formData.confirm_new_password}
+                    value={formData.confirm_new_password as string}
                     placeholder="Confirm New Password"
                     onChange={OnChange}
+                    disable={true}
                     style="long-input"
                   />
                 </section>

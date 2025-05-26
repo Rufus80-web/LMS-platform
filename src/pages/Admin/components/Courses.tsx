@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { useTheme } from "../../../context/ThemeContext";
 import {
@@ -12,32 +12,54 @@ import IconButton from "./IconButton";
 import { Print, Add, ChevronLeft, ChevronRight } from "@mui/icons-material";
 import { Paper, Table } from "@mui/material";
 import TableHeader from "./table/TableHeader";
-import TableBody from "./table/TableBody";
-import { CustomTableBodyProps } from "../../../static/types";
-
-const tableData = [
-  {
-    id: "1",
-    name: "UML",
-    email: "student1@gmail.com",
-    address: "Nkoabang",
-    course: ["Merisse"],
-    date: "2023-06-09",
-  },
-];
+import { useAppDispatch, useAppSelector } from "../../../Redux/configureStrore";
+import { courseReducer } from "../../../Redux/Slices/adminSlice";
+import CourseTableBody from "./table/CourseTableBody";
 
 type SidebarType = () => void;
 
 const Courses: React.FC = () => {
   const { themeMode } = useTheme();
   const { isOpen } = useTeacherSidebarContext();
-  const [data, _setData] = useState<CustomTableBodyProps[]>(tableData);
 
   const [isOpenSidebar, setIsOpenSidebar] = useState(true);
   const handleSidebarWidth = (): ReturnType<SidebarType> => {
     setIsOpenSidebar((prev) => !prev);
   };
+  const dispatch = useAppDispatch();
 
+  // Get courseArray data from the store
+  const {
+    users: { courses },
+  } = useAppSelector((state) => state.courseArray);
+
+  // Current page of the table
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  //Number of items to be rendered per page
+  const renderPerPage: number = 4;
+  // calculating indices for slicing the data array
+  const lastIndex: number = currentPage * renderPerPage;
+  const firstIndex: number = lastIndex - renderPerPage;
+  // Calculate the total number of pages
+  const totalPages = Math.ceil(courses?.length / renderPerPage);
+  // Finally slice the data into blocks partitions
+  const slicedData = courses && courses.slice(firstIndex, lastIndex);
+
+  // Function to move to the next page
+  const nextPage = () => {
+    setCurrentPage(currentPage === slicedData.length ? 1 : currentPage + 1);
+  };
+
+  // Function to move to the previous page
+  const prevPage = () => {
+    setCurrentPage(currentPage === 1 ? totalPages : currentPage - 1);
+  };
+
+  useEffect(() => {
+    dispatch(courseReducer());
+  }, []);
+
+  // Return UI
   return (
     <SidebarContext.Provider
       value={{ isOpen: isOpenSidebar, shouldOpen: handleSidebarWidth }}
@@ -68,16 +90,27 @@ const Courses: React.FC = () => {
 
             <Table component={Paper} className="w-full p-3">
               <TableHeader />
-              <TableBody data={data} url="/admin/info-course" />
+              <CourseTableBody data={slicedData} url="/admin/info-course" />
             </Table>
-            <div className="mt-6 border-none flex justify-start gap-3 items-center pb-1">
-              <button className="w-8 h-8 bg-sky-400 text-white cursor-pointer">
-                <ChevronLeft />
-              </button>
-              <span className={`${themeMode == 'dark' && 'text-slate-50'}`}>1</span>
-              <button className="w-8 h-8 bg-green-400 cursor-pointer text-white">
-                <ChevronRight />
-              </button>
+            <div className="mt-6 border-none flex justify-between gap-3 items-center pb-1">
+              <div>
+                <button
+                  className="w-8 h-8 bg-sky-400 text-white cursor-pointer"
+                  onClick={prevPage}
+                >
+                  <ChevronLeft />
+                </button>
+                <span className={`${themeMode == "dark" && "text-slate-50"}`}>
+                  &nbsp; {currentPage} of {!totalPages ? 1 : totalPages} &nbsp;
+                </span>
+                <button
+                  className="w-8 h-8 bg-green-400 cursor-pointer text-white"
+                  onClick={nextPage}
+                >
+                  <ChevronRight />
+                </button>
+              </div>
+              <div className="text-white text-md">Total: <span>{courses?.length > 0 ? courses?.length : 0}</span></div>
             </div>
           </div>
         </div>
