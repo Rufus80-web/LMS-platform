@@ -13,49 +13,62 @@ const CourseTableBody = ({ data, url }: DataArray) => {
   const { themeMode } = useTheme();
   return (
     <TableBody>
-      {data.length > 0 ?
-        data.map((item: Course, i: number) => (
-          <TableRow
-          key={i}
-            style={{
-              backgroundColor: themeMode === "light" ? "#a19f9f3b" : "#141b2d",
-            }}
-          >
-            <TableCell
-              style={{ color: themeMode === "light" ? "#000" : "#f5f5f5" }}
+      {data.length > 0
+        ? data.map((item: Course, i: number) => (
+            <TableRow
+              key={i}
+              style={{
+                backgroundColor:
+                  themeMode === "light" ? "transparent" : "#141b2d",
+              }}
             >
-              {item.courseId?.slice(0, 8)}<span title={item.courseId}>...</span>
-            </TableCell>
-            <TableCell style={{ textDecoration: "underline" }}>
-              <Link
-                to={{ pathname:`${url}/${item.courseId}` }}
-                className="text-sky-600 cursor-pointer"
+              <TableCell
+                style={{
+                  color: themeMode === "light" ? "#00000083" : "#adabab78",
+                }}
               >
-                {item.courseName}
-              </Link>
-            </TableCell>
-            <TableCell
-              style={{ color: themeMode === "light" ? "#000" : "#f5f5f5" }}
-            >
-              {item.courseCode}
-            </TableCell>
-            <TableCell
-              style={{ color: themeMode === "light" ? "#000" : "#f5f5f5" }}
-            >
-              {item.courseInstructor}
-            </TableCell>
-            <TableCell
-              style={{ color: themeMode === "light" ? "#000" : "#f5f5f5" }}
-            >
-              {item.courseHours}
-            </TableCell>
-            <TableCell
-              style={{ color: themeMode === "light" ? "#000" : "#f5f5f5" }}
-            >
-              {item.createdAt}
-            </TableCell>
-          </TableRow>
-        )) : null}
+                {item.courseId?.slice(0, 8)}
+                <span title={item.courseId}>...</span>
+              </TableCell>
+              <TableCell style={{ textDecoration: "underline" }}>
+                <Link
+                  to={{ pathname: `${url}/${item.courseId}` }}
+                  className="text-sky-600 cursor-pointer"
+                >
+                  {item.courseName}
+                </Link>
+              </TableCell>
+              <TableCell
+                style={{
+                  color: themeMode === "light" ? "#00000083" : "#adabab78",
+                }}
+              >
+                {item.courseCode}
+              </TableCell>
+              <TableCell
+                style={{
+                  color: themeMode === "light" ? "#00000083" : "#adabab78",
+                }}
+              >
+                {item.courseInstructor}
+              </TableCell>
+              <TableCell
+                style={{
+                  color: themeMode === "light" ? "#00000083" : "#adabab78",
+                }}
+              >
+                {item.courseHours}
+              </TableCell>
+              <TableCell
+                style={{
+                  color: themeMode === "light" ? "#00000083" : "#adabab78",
+                }}
+              >
+                {item.createdAt}
+              </TableCell>
+            </TableRow>
+          ))
+        : null}
     </TableBody>
   );
 };

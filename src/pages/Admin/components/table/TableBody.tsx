@@ -1,6 +1,6 @@
 import {} from "react";
 import { TableRow, TableCell, TableBody as BodyTable } from "@mui/material";
-import { CustomTableBodyProps, TeacherFormData } from "../../../../static/types";
+import { CustomTableBodyProps } from "../../../../static/types";
 import { Link } from "react-router-dom";
 import { useTheme } from "../../../../context/ThemeContext";
 
@@ -18,11 +18,13 @@ const TableBody = ({ data, url }: DataArray) => {
           <TableRow
           key={i}
             style={{
-              backgroundColor: themeMode === "light" ? "#a19f9f3b" : "#141b2d",
+              backgroundColor: themeMode === "light" ? "transparent" : "#141b2d",
             }}
           >
             <TableCell
-              style={{ color: themeMode === "light" ? "#000" : "#f5f5f5" }}
+              style={{
+                          color: themeMode === "light" ? "#00000083" : "#adabab78",
+                        }}
             >
               {item.id?.slice(0, 8)}<span title={item.id}>...</span>
             </TableCell>
@@ -35,17 +37,23 @@ const TableBody = ({ data, url }: DataArray) => {
               </Link>
             </TableCell>
             <TableCell
-              style={{ color: themeMode === "light" ? "#000" : "#f5f5f5" }}
+              style={{
+                          color: themeMode === "light" ? "#00000083" : "#adabab78",
+                        }}
             >
               {item.email}
             </TableCell>
             <TableCell
-              style={{ color: themeMode === "light" ? "#000" : "#f5f5f5" }}
+              style={{
+                          color: themeMode === "light" ? "#00000083" : "#adabab78",
+                        }}
             >
               {item.address}
             </TableCell>
             <TableCell
-              style={{ color: themeMode === "light" ? "#000" : "#f5f5f5" }}
+              style={{
+                          color: themeMode === "light" ? "#00000083" : "#adabab78",
+                        }}
             >
               {item.createdAt}
             </TableCell>

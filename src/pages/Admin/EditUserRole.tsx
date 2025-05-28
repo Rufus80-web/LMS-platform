@@ -12,7 +12,7 @@ import { Button } from "@mui/material";
 import { useNavigate, useParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../Redux/configureStrore";
 import { usersReducer } from "../../Redux/Slices/adminSlice";
-import { User } from "../../static/Interface";
+import { SemiUser } from "../../static/Interface";
 import FormSelect from "./components/FormSelect";
 import { upadteUserRolerequest } from "../../api/admin.api";
 import toast from "react-hot-toast";
@@ -24,10 +24,10 @@ const EditUserRole = () => {
   const { isOpen } = useTeacherSidebarContext();
   const { id } = useParams();
   const route = useNavigate()
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<SemiUser>({
     name: "",
     isSuperUser: "",
-    role: ""
+    roles: ""
   });
 
 
@@ -44,7 +44,7 @@ const EditUserRole = () => {
   const handleUserRoleUpdate = async (e: FormEvent) => {
     e.preventDefault();
     try {
-       const { data: {status, message}} = await upadteUserRolerequest(id as string, formData.role)
+       const { data: {status, message}} = await upadteUserRolerequest(id as string, formData.roles)
 
        if(status === 'error'){
         toast.error(message)
@@ -72,16 +72,16 @@ const EditUserRole = () => {
       dispatch(usersReducer());
 
       if (allUsers && allUsers.length > 0) {
-        const filterRole = allUsers.filter((user) => {
-          if (user.id === id) {
-            return user;
+        for(const user of allUsers){
+          if(user['id'] === id){
+            setFormData({
+              name: user['name'],
+              roles: user['roles'],
+              isSuperUser: user['roles'] !== 'Administrator' ? 'NO' : 'YES'
+            })
           }
-        });
-        // setFormData({
-        //   name: filterRole[0]?.name,
-        //   isSuperUser: filterRole[0]?.role[0] !== 'Administrator' ? "No" : "Yes",
-        //   role: filterRole[0]?.role[0]
-        // })
+        }
+        
       }
     } catch (error) {
       throw new Error("User data Expired");
@@ -119,8 +119,8 @@ const EditUserRole = () => {
                 style="long-input"
               />
               <FormSelect
-                name="role"
-                value={formData.role}
+                name="roles"
+                value={formData.roles}
                 placeholder="Is user a super user? No"
                 onChange={OnChange}
                 style="long-input"

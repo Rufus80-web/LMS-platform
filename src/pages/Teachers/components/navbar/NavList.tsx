@@ -1,15 +1,28 @@
 import { tNavbarItems } from "../../../../static/utils";
 import { useTheme } from "../../../../context/ThemeContext";
+import { DarkMode, LightMode } from "@mui/icons-material";
 
 const NavList = () => {
   const {themeMode, lightTheme, darkTheme} = useTheme()
   const setThemeMode = (iconName: string) => {
-    if(iconName === 'fas fa-sun' && typeof iconName === 'string'){
+    if(iconName === 'themeMode' && typeof iconName === 'string'){
       if(themeMode === 'dark'){
         lightTheme()
       } else {
         darkTheme()
       }
+    }
+  }
+
+  const displayThemeIcon = <T,>({name, icon}: {name: string, icon: T}) => {
+    if(name === 'themeMode'){
+      if(themeMode === "light"){
+        return <LightMode />
+      } else {
+        return <DarkMode />
+      }
+    } else {
+     return icon
     }
   }
   return (
@@ -18,9 +31,9 @@ const NavList = () => {
         {tNavbarItems.map((el) => (
           <li
             key={el.id}
-            className="w-8 h-8 rounded-full hover:bg-gray-200 hover:cursor-pointer flex justify-center items-center"
+            className="w-8 h-8 rounded-full hover:bg-black hover:animate-pulse hover:cursor-pointer flex justify-center items-center"
           >
-            <span className={`${el.icon} text-gray-400 text-sm`} onClick={() => setThemeMode(el.icon)}></span>
+            <span className={`text-[grey] text-sm`} onClick={() => setThemeMode(el.name)}>{displayThemeIcon({name: el.name, icon: el.icon})}</span>
           </li>
         ))}
       </ul>

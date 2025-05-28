@@ -1,5 +1,5 @@
 import { adminSidebar } from "../../../static/utils";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useTheme } from "../../../context/ThemeContext";
 import {Fragment} from 'react'
 
@@ -8,7 +8,12 @@ import { useTeacherSidebarContext } from "../../../context/sidebarContext";
 const AdminSidebarItems = () => {
   const location = useLocation()
   const {themeMode} = useTheme()
-  const {isOpen } = useTeacherSidebarContext()
+  const {isOpen, shouldOpen } = useTeacherSidebarContext()
+  const route = useNavigate()
+
+  const navigateToURL = (url: string) => {
+      route(url)
+  }
 
   return (
     <div className="w-full pt-4">
@@ -39,19 +44,19 @@ const AdminSidebarItems = () => {
           // Displayed if sidebar width = 6vw (6%)
           <ul className="flex flex-col justify-center items-center gap-0">
             {adminSidebar?.closed.icons?.map((item) => (
-              <Link
+              <a
                 key={item.id}
-                to={`${item.url}`}
+                onClick={() => navigateToURL(item.url)}
                 className={`w-full ${
-                  location.pathname === item.url && "bg-[#0000005e]"
-                } p-3 flex justify-center items-center hover:bg-[#0000005e]`}
+                  location.pathname === item.url && "bg-[#fff] animate-pulse"
+                } p-3 flex justify-center items-center hover:bg-[#0000005e] cursor-pointer`}
               >
                 <span
-                  className={`text-[20px] text-[#7a7a7afb] ${
+                  className={`text-[20px] text-[#07092cfb] ${
                     location.pathname === item.url && "text-black"
                   }`}
                 >{item.name}</span>
-              </Link>
+              </a>
             ))}
           </ul>
         )}

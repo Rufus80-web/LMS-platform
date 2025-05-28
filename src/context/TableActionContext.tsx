@@ -1,6 +1,6 @@
 import React, { ChangeEvent, createContext, useContext, useState } from "react";
 import { TableContextProps } from "../static/types";
-import { rows } from "../static/utils";
+// import { rows } from "../static/utils";
 
 const tableDataProps: TableContextProps = {
   _order: "asc",
@@ -45,6 +45,8 @@ const TableContextProdiver = ({ children }: TableChildrenProps) => {
     setRowPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
+
+  const rows:any = []
 
   const sortedRows = [...rows].sort((a, b) => {
     if (orderBy === "name") {

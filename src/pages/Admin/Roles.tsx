@@ -135,25 +135,26 @@ const Roles: React.FC = () => {
                           to={`/admin/users.roles/list/${user.id}`}
                           className="text-sky-200 underline cursor-pointer"
                         >
-                          {user.role.join("-")}
+                          {user.roles}
                         </Link>
                       </TableCell>
                     </TableRow>
                   ))
                 ) : (
-                  <div className="text-white flex flex-col justift-center items-center gap-2 mt-10">
-                    <div className="w-40 h-40 rounded-full animate-bounce">
-                      <img
-                        src={_404_}
-                        alt="no-data"
-                        className="w-full h-full rounded-full"
-                      />
-                    </div>
-                    <div className="flex flex-col justify-center items-center">
-                      <h2 className="text-3xl">404</h2>
-                      <small>Create one to view student details</small>
-                    </div>
-                  </div>
+                  // <div className="text-white flex flex-col justift-center items-center gap-2 mt-10">
+                  //   <div className="w-40 h-40 rounded-full animate-bounce">
+                  //     <img
+                  //       src={_404_}
+                  //       alt="no-data"
+                  //       className="w-full h-full rounded-full"
+                  //     />
+                  //   </div>
+                  //   <div className="flex flex-col justify-center items-center">
+                  //     <h2 className="text-3xl">404</h2>
+                  //     <small>Create one to view student details</small>
+                  //   </div>
+                  // </div>
+                  null
                 )}
               </TableBody>
             </Table>

@@ -14,7 +14,7 @@ import _TableBody from "./components/talble/TableBody";
 import { useTeacherSidebarContext } from "../../context/sidebarContext";
 
 // static impaort
-import { rows } from "../../static/utils";
+// import { rows } from "../../static/utils";
 
 // image imports
 import classRoom from "../../assets/images/class2.png";
@@ -79,7 +79,7 @@ const MainContent: React.FC = () => {
             <TablePagination
               rowsPerPageOptions={[3, 5, 10]}
               component="div"
-              count={rows?.length}
+              count={[]?.length}
               rowsPerPage={_rowPerPage}
               page={_page}
               onPageChange={changePage}

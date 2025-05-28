@@ -43,10 +43,12 @@
 .btn-save-update-pass {
     @apply flex w-[6vw] justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm focus:outline-none focus:ring-2 hover:bg-white hover:border-1 hover:border-indigo-500 hover:text-black focus:ring-offset-2 hover:cursor-pointer
 }
+
 .small-input {
-    @apply w-[50%] h-13 border-b-1 border-gray-400 outline-none focus:border-b-2 focus:border-indigo-400 focus:ring-indigo-400 indent-4 rounded-lg 
+    @apply w-[50%] h-13 border-b-1 border-gray-400 outline-none focus:border-b-2 focus:border-indigo-400 focus:ring-indigo-400 indent-4 rounded-lg
 }
-.long-input{
+
+.long-input {
     @apply w-full h-13 border-b-1 border-gray-400 outline-none focus:border-b-2 focus:border-indigo-400 focus:ring-indigo-400 indent-4 rounded-lg
 }
 
@@ -60,10 +62,10 @@ body {
     overflow-x: hidden;
 }
 
-table {
+/* table {
     padding: 10px;
     border-collapse: collapse;
-    /* color: #10101036; */
+    color: #00000083;
 }
 
 table thead tr th {
@@ -74,8 +76,26 @@ table thead tr th,
 table tbody tr,
 table tbody tr td {
     padding: 10px;
+} */
+
+@keyframes circular {
+    0% {
+        transform: rotate(-360deg);
+    }
+}
+@keyframes anti-circular {
+    0% {
+        transform: rotate(360deg);
+    }
 }
 
+.rotate-full {
+    animation: circular linear 0.7s infinite;
+}
+
+.rotate-back-full {
+    animation: anti-circular linear 0.7s infinite;
+}
 
 .remove-scroll::-webkit-scrollbar {
     width: 3px;

@@ -13,7 +13,7 @@ const AnnouncementTableBody = ({ data, url }: AnnouncementTable) => {
     <BodyTable>
       {data &&
         data.map((item: Announcement) => {
-          let createdAt: string = item.sendOn;
+          let createdAt: string = item.sendOn as string;
           const format = new Date(createdAt).toLocaleDateString("en-GB", {
             day: "2-digit",
             month: "2-digit",

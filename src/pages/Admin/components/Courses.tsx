@@ -88,7 +88,7 @@ const Courses: React.FC = () => {
               <IconButton icon={<Print />} name="Print" url="" />
             </div>
 
-            <Table component={Paper} className="w-full p-3">
+            <Table component={Paper} className="w-full p-3 mt-3">
               <TableHeader />
               <CourseTableBody data={slicedData} url="/admin/info-course" />
             </Table>

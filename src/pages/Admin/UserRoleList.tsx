@@ -88,7 +88,7 @@ const UserRoleList: React.FC = () => {
               <hr className="mt-2 border-[#85838336] border-solid border-1" />
               <div className="flex flex-col gap-1.5">
                 <span>Is Superuser:</span>
-                <span>{filteredRole[0]?.role[0] !== 'Administrator' ? 'No' : 'Yes'}</span>
+                <span>{filteredRole[0]?.roles !== 'Administrator' ? 'No' : 'Yes'}</span>
               </div>
               <hr className="mt-2 border-[#85838336] border-solid border-1" />
             </div>

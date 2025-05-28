@@ -11,6 +11,8 @@ import StudentLayout from "./StudentLayout";
 // Auths imports
 import LoginForm from "../pages/Auths/LoginForm";
 import RegistrationForm from "../pages/Auths/RegistrationForm";
+import Unauthorized from "../pages/401/Unauthorized";
+import ProtectedRoute from "./ProtectRoute";
 // student views
 import StudentDashboard from "../pages/students/Dashboard";
 import TimeTable from "../pages/students/TimeTable";
@@ -55,63 +57,103 @@ import EditUserRole from "../pages/Admin/EditUserRole";
 export const router = BrowserRouter(
   RouteElement(
     <Route path="/" element={<AppLayout />}>
+      <Route path="/unauthorized" element={<Unauthorized />}></Route>
       <Route index element={<LoginForm />}></Route>
       <Route path="/auths">
         <Route path="login" element={<LoginForm />}></Route>
         <Route path="signup" element={<RegistrationForm />}></Route>
       </Route>
-      <Route path="/student" element={<StudentLayout />}>
+      {/***************************************************************** STUDENT ROUTES********************************************************** */}
+      <Route
+        path="/student"
+        element={
+          // Securing students routes (client-side)
+          <ProtectedRoute allowedRoles={["Student", "Administrator"]}>
+            <StudentLayout />
+          </ProtectedRoute>
+        }
+      >
         <Route path="dashboard" element={<StudentDashboard />}></Route>
         <Route path="timetable" element={<TimeTable />}></Route>
         <Route path="exams" element={<Exam />}></Route>
         <Route path="update_pass" element={<UpdatePassword />}></Route>
         {/* <Route path="exam" element={<StudentExam />}></Route> */}
       </Route>
-      <Route element={<ThemeLayout />}>
-        <Route path="/teacher">
-          <Route path="dashboard" element={<TDashboard />}></Route>
-          <Route path="students" element={<StudentList />}></Route>
-          <Route path="student-admission" element={<NewAdmission />}></Route>
-          <Route path="timetable" element={<TimeTableTeacher />}></Route>
-          <Route path="class-progress" element={<ClassProgress />}></Route>
-          <Route path="class-mark" element={<ClassMarks />}></Route>
-          <Route path="all-classes" element={<AllClasses />}></Route>
-          <Route path="upload-exercise" element={<UploadExercise />}></Route>
-        </Route>
+      {/***************************************************************** TEACHERS ROUTES********************************************************** */}
+      <Route
+        path="/teacher"
+        element={
+          // Securing teachers routes (client-side)
+          <ProtectedRoute allowedRoles={["Teacher", "Administrator"]}>
+            {/* Creating a layout for the application theme mode  */}
+            <ThemeLayout />
+          </ProtectedRoute>
+        }
+      >
+        <Route path="dashboard" element={<TDashboard />}></Route>
+        <Route path="students" element={<StudentList />}></Route>
+        <Route path="student-admission" element={<NewAdmission />}></Route>
+        <Route path="timetable" element={<TimeTableTeacher />}></Route>
+        <Route path="class-progress" element={<ClassProgress />}></Route>
+        <Route path="class-mark" element={<ClassMarks />}></Route>
+        <Route path="all-classes" element={<AllClasses />}></Route>
+        <Route path="upload-exercise" element={<UploadExercise />}></Route>
+      </Route>
+      {/***************************************************************** ADMIN ROUTES********************************************************** */}
+      <Route
+        path="/admin"
+        element={
+          // Securing admin routes (client-side)
+          <ProtectedRoute allowedRoles={["Administrator"]}>
+            {/* Creating a layout for the application theme mode  */}
+            <ThemeLayout />
+          </ProtectedRoute>
+        }
+      >
         {/* Admin */}
-        <Route path="/admin">
-          <Route path="dashboard" element={<AdminDashboard />}></Route>
-          <Route path="manage.teachers" element={<Teachers />}></Route>
-          <Route path="manage.students" element={<Students />}></Route>
-          <Route path="manage-courses" element={<Courses />}></Route>
-          <Route path="announcement" element={<Announcement />}></Route>
-          <Route path="create-teacher" element={<CreateTeacher />}></Route>
-          <Route path="create-student" element={<CreateStudent />}></Route>
+        <Route path="dashboard" element={<AdminDashboard />}></Route>
+        <Route path="manage.teachers" element={<Teachers />}></Route>
+        <Route path="manage.students" element={<Students />}></Route>
+        <Route path="manage-courses" element={<Courses />}></Route>
+        <Route path="announcement" element={<Announcement />}></Route>
+        <Route path="create-teacher" element={<CreateTeacher />}></Route>
+        <Route path="create-student" element={<CreateStudent />}></Route>
+        <Route
+          path="create-announcement"
+          element={<CreateAnnouncement />}
+        ></Route>
+        <Route path="create-course" element={<CreateCourse />}></Route>
+        <Route
+          path="info-teacher/:userID"
+          element={<DisplayTeacherInfo />}
+        ></Route>
+        <Route
+          path="info-student/:sid"
+          element={<DisplayStudentInfo />}
+        ></Route>
+        <Route
+          path="info-course/:courseId"
+          element={<DisplayCourseInfo />}
+        ></Route>
+        <Route
+          path="info-announcement/:announId"
+          element={<DisplayAnnouncementInfo />}
+        ></Route>
+        <Route path="profile" element={<AdminProfile />}></Route>
+        <Route path="log-info" element={<Logs />}></Route>
+        <Route path="users.account" element={<Users />}></Route>
+        <Route path="users.role" element={<Roles />}></Route>
+        <Route path="edit">
+          <Route path="teacher/:id" element={<EditTeacherInfo />}></Route>
+          <Route path="student/:sid" element={<EditStudentInfo />}></Route>
+          <Route path="course/:courseId" element={<EditCourseInfo />}></Route>
           <Route
-            path="create-announcement"
-            element={<CreateAnnouncement />}
+            path="announcement/:announId"
+            element={<EditAnnouncement />}
           ></Route>
-          <Route path="create-course" element={<CreateCourse />}></Route>
-          <Route path="info-teacher/:userID" element={<DisplayTeacherInfo />}></Route>
-          <Route path="info-student/:sid" element={<DisplayStudentInfo />}></Route>
-          <Route path="info-course/:courseId" element={<DisplayCourseInfo />}></Route>
-          <Route
-            path="info-announcement/:announId"
-            element={<DisplayAnnouncementInfo />}
-          ></Route>
-          <Route path="profile" element={<AdminProfile />}></Route>
-          <Route path="log-info" element={<Logs />}></Route>
-          <Route path="users.account" element={<Users />}></Route>
-          <Route path="users.role" element={<Roles />}></Route>
-          <Route path="edit">
-            <Route path="teacher/:id" element={<EditTeacherInfo />}></Route>
-            <Route path="student/:sid" element={<EditStudentInfo />}></Route>
-            <Route path="course/:courseId" element={<EditCourseInfo />}></Route>
-            <Route path="announcement/:announId" element={<EditAnnouncement />}></Route>
-          </Route>
-          <Route path="users.roles/list/:id" element={<UserRoleList />}></Route>
-          <Route path="users-role/edit/:id" element={<EditUserRole />}></Route>
         </Route>
+        <Route path="users.roles/list/:id" element={<UserRoleList />}></Route>
+        <Route path="users-role/edit/:id" element={<EditUserRole />}></Route>
       </Route>
     </Route>
   )

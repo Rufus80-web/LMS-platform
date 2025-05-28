@@ -88,7 +88,7 @@ const Students: React.FC = () => {
             </div>
 
             {students.length > 0 ? (
-              <Table component={Paper} className="w-full p-3">
+              <Table component={Paper} className="w-full p-3 mt-3">
                 <HeaderTable />
                 <TableBody data={slicedData} url="/admin/info-student" />
               </Table>

@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FormEvent, useState } from "react";
+import React, { ChangeEvent, FormEvent, useEffect, useState } from "react";
 
 import { useTheme } from "../../context/ThemeContext";
 import { useTeacherSidebarContext } from "../../context/sidebarContext";
@@ -8,15 +8,17 @@ import Navbar from "../Teachers/components/navbar/Navbar";
 import DashHeader from "../Teachers/components/DashHeader";
 import { Button } from "@mui/material";
 
-import profile from "../../assets/images/profile-1.jpg";
 import Input from "./components/Input";
 import { Adminprofile } from "../../static/Interface";
+import { adminProfileUpdate, getUser } from "../../api/admin.api";
+import { toast } from "react-toastify";
 
 type SidebarType = () => void;
 
 const AdminProfile: React.FC = () => {
   const { themeMode } = useTheme();
   const { isOpen } = useTeacherSidebarContext();
+  const defaultProfile = "http://localhost:8000/static/images/user.webp";
   const [formData, setFormData] = useState<Adminprofile>({
     firstname: "",
     lastname: "",
@@ -24,10 +26,12 @@ const AdminProfile: React.FC = () => {
     contact: "",
     address: "",
     password: "",
+    profile: "",
     newPassword: "",
-    confirm_new_password: ""
+    confirm_new_password: "",
   });
-  const [_uploadedFile, _setUploadedFile] = useState<Array<File>>([])
+  const [uploadedFile, setUploadedFile] = useState<File | null>(null);
+  const [disable, setDisable] = useState(true);
 
   const OnChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -49,13 +53,101 @@ const AdminProfile: React.FC = () => {
     setIsOpenSidebar((prev) => !prev);
   };
 
+  // Handle file upload
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const {files} = e.target 
-    if (typeof files !== null){
-      
-    } 
-  }
+    const { files } = e.target;
+    if (files && files.length > 0) {
+      setUploadedFile(files[0]);
+      console.log("File Selected: ", files[0]);
+    }
+  };
 
+  // Handle profile update
+  const updateAdminProfile = async () => {
+    const formdata = new FormData();
+    const storage = localStorage.getItem("user-data");
+    if (storage) {
+      const parseData = JSON.parse(storage)["user"];
+      const userId = parseData["id"];
+
+      formdata.append("firstname", formData.firstname);
+      formdata.append("lastname", formData.lastname);
+      formdata.append("email", formData.email);
+      formdata.append("contact", formData.contact);
+      formdata.append("address", formData.address);
+
+      if (uploadedFile) {
+        formdata.append("profilePic", formData.profile);
+      }
+
+      const configs = {
+        method: "PUT",
+        body: formdata,
+      };
+
+      try {
+        const response = await adminProfileUpdate(userId, configs);
+        const result = await response.json();
+
+        const { status, message, userProfile } = result;
+
+        if (status === "error") {
+          toast.error(message);
+        } else {
+          setFormData({
+            firstname: userProfile.firstname,
+            lastname: userProfile.lastname,
+            email: userProfile.email,
+            contact: userProfile.contact,
+            address: userProfile.address,
+            profile: userProfile.profile,
+          });
+        }
+      } catch (error: any) {
+        console.error("Upload Failed: " + error);
+        throw new Error(error.message);
+      }
+    } else {
+      console.error("Could not get userId from local storage");
+    }
+  };
+
+  // Get user data and set user profile information
+  useEffect(() => {
+    const getAccountInfo = async () => {
+      const storage = localStorage.getItem("user-data");
+      if (storage) {
+        const parseData = JSON.parse(storage)["user"];
+        const userId = parseData["id"];
+
+        try {
+          const response = await getUser(userId);
+          const { status, message, user } = response.data;
+
+          if (status === "error") {
+            throw new Error(message);
+          } else {
+            setFormData({
+              firstname: user.firstname,
+              lastname: user.lastname,
+              email: user.email,
+              contact: user.contact,
+              address: user.address,
+              profile: user.profile,
+            });
+          }
+        } catch (error: any) {
+          console.error(error.message);
+          throw new Error(error);
+        }
+      } else {
+        throw new Error("localStorage is empty");
+      }
+    };
+    getAccountInfo();
+  }, []);
+
+  // Return component UI
   return (
     <SidebarContext.Provider
       value={{ isOpen: isOpenSidebar, shouldOpen: handleSidebarWidth }}
@@ -76,10 +168,20 @@ const AdminProfile: React.FC = () => {
           {/* Table displaying only teacher data  */}
           <div className="w-full h-max mt-6 flex flex-col gap-3">
             <section className="w-full h-50 flex flex-col gap-1 justify-center items-center pb-2">
-              <h2 className={`text-2xl ${themeMode === "dark" && 'text-slate-50'}`}>Profile Picture</h2>
+              <h2
+                className={`text-2xl ${
+                  themeMode === "dark" && "text-slate-50"
+                }`}
+              >
+                Profile Picture
+              </h2>
               <div className="w-30 h-30 rounded-full">
                 <img
-                  src={profile}
+                  src={
+                    formData.profile === null
+                      ? defaultProfile
+                      : formData.profile
+                  }
                   alt="profile-picture"
                   className="w-full h-full rounded-full"
                 />
@@ -90,6 +192,7 @@ const AdminProfile: React.FC = () => {
                   type="file"
                   name="uploadedFile"
                   id="profile"
+                  accept="image/*"
                   onChange={handleFileChange}
                 />
                 <button className="w-30 h-8 bg-slate-300 hover:cursor-pointer">
@@ -100,6 +203,8 @@ const AdminProfile: React.FC = () => {
                     Choose a File
                   </label>
                 </button>
+                &nbsp;
+                {uploadedFile && uploadedFile.name}
               </div>
             </section>
 
@@ -112,7 +217,7 @@ const AdminProfile: React.FC = () => {
                     value={formData.firstname}
                     placeholder="First Name"
                     onChange={OnChange}
-                    disable={false}
+                    disable={disable}
                     style="small-input"
                   />
                   <Input
@@ -121,7 +226,7 @@ const AdminProfile: React.FC = () => {
                     value={formData.lastname}
                     placeholder="Last Name"
                     onChange={OnChange}
-                    disable={false}
+                    disable={disable}
                     style="small-input"
                   />
                 </section>
@@ -132,7 +237,7 @@ const AdminProfile: React.FC = () => {
                     value={formData.email}
                     placeholder="Email "
                     onChange={OnChange}
-                    disable={false}
+                    disable={disable}
                     style="long-input"
                   />
                   <Input
@@ -141,16 +246,16 @@ const AdminProfile: React.FC = () => {
                     value={formData.contact}
                     placeholder="Contact Number"
                     onChange={OnChange}
-                    disable={false}
+                    disable={disable}
                     style="long-input"
                   />
                   <Input
                     type="text"
                     name="address"
                     value={formData.address}
-                    placeholder="Address 1"
+                    placeholder="Address "
                     onChange={OnChange}
-                    disable={false}
+                    disable={disable}
                     style="long-input"
                   />
                 </section>
@@ -161,7 +266,7 @@ const AdminProfile: React.FC = () => {
                     value={formData.password as string}
                     placeholder="Enter Current Password"
                     onChange={OnChange}
-                    disable={true}
+                    disable={disable}
                     style="small-input"
                   />
                   <Input
@@ -170,7 +275,7 @@ const AdminProfile: React.FC = () => {
                     value={formData.newPassword as string}
                     placeholder="Enter your new Password"
                     onChange={OnChange}
-                    disable={true}
+                    disable={disable}
                     style="small-input"
                   />
                 </section>
@@ -181,7 +286,7 @@ const AdminProfile: React.FC = () => {
                     value={formData.confirm_new_password as string}
                     placeholder="Confirm New Password"
                     onChange={OnChange}
-                    disable={true}
+                    disable={disable}
                     style="long-input"
                   />
                 </section>
@@ -191,8 +296,18 @@ const AdminProfile: React.FC = () => {
             <section className="mt-4 flex gap-4">
               <Button
                 variant="contained"
+                disabled={!disable}
+                onClick={() => setDisable((prev) => !prev)}
               >
-                Submit
+                Edit
+              </Button>
+              <Button
+                style={{ backgroundColor: "green" }}
+                variant="contained"
+                disabled={disable}
+                onClick={updateAdminProfile}
+              >
+                Save
               </Button>
             </section>
           </div>

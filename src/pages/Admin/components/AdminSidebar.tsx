@@ -4,9 +4,12 @@ import { useTheme } from "../../../context/ThemeContext";
 
 import SidebarProfile from "./SideBarProfile";
 import AdminSidebarItems from "./AdminSideBarItems";
+import { useState } from "react";
 
 export const AdminSidebar = () => {
   const { themeMode } = useTheme();
+  const [open, setOpen] = useState(true)
+  
   const { isOpen, shouldOpen } = useTeacherSidebarContext();
   return (
     <div

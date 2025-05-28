@@ -122,12 +122,12 @@ export const usersReducer = createAsyncThunk(
       } else {
         const users: User[] = []
         for(const user of data){
-          let userObj: User = {id: '', name: '', email: '', isActive: null, role: []}
+          let userObj: User = {id: '', name: '', email: '', isActive: false, roles: ''}
            userObj.id = user['id']
            userObj.name = user['firstname']
            userObj.email = user['email']
            userObj.isActive = user['isActive']
-           userObj.role = user['roles']
+           userObj.roles = user['roles']
 
            users.unshift(userObj)
         }
@@ -156,9 +156,6 @@ export const logReducer = createAsyncThunk(
     }
   }
 );
-
-
-
 
 
 

@@ -71,7 +71,8 @@ export type FormData = {
 
 export type Users = FormData & {
   password?: string,
-  roles: string[]
+  roles: string
+  name: string,
 }
 
 export type Course = {
@@ -85,9 +86,11 @@ export type Course = {
 }
 
 export type Log = {
+  readonly _id?: string,
   description: string,
   createdBy: string,
-  createdOn: string
+  createdOn: string,
+  createdAt?: string
 }
 
 export type AdminSliceInitState = {
@@ -102,3 +105,12 @@ export type AdminSliceInitState = {
   },
   isLoading?: boolean
 }
+
+export const Roles = {
+  STUDENT: 'Student',
+  TEACHER: 'Teacher',
+  ADMIN: 'Administrator',
+  SUPERADMIN: 'SuperAdmin'
+}
+
+

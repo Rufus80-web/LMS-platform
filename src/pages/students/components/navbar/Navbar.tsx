@@ -1,13 +1,25 @@
 import { JSX } from "react";
 
 import { navItems } from "../../../../static/utils";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 // import { Button } from "@mui/material";
 import { useTheme } from "../../../../context/ThemeContext";
+import { useAppDispatch } from "../../../../Redux/configureStrore";
+import { logout } from "../../../../Redux/Slices/AuthSlice";
 
 const Navbar = (): JSX.Element => {
   const { pathname } = useLocation();
   const { themeMode } = useTheme();
+  const navigate = useNavigate()
+  const dispatch = useAppDispatch();
+
+  const route = (url: string) => {
+    if (url === "/auths/login" || url === "/") {
+      dispatch(logout());
+      navigate(url)
+    }
+    navigate(url)
+  };
 
   // const toggleThemeMode = () => {
   //   if (themeMode === "light") {
@@ -25,8 +37,8 @@ const Navbar = (): JSX.Element => {
     >
       <ul className="flex justify-end items-center gap-4 text-[14px] pr-[18em]">
         {navItems?.map((item) => (
-          <Link
-            to={item.url}
+          <a
+            onClick={() => route(item.url)}
             key={item.id}
             className={`decoration-none text-black hover:cursor-pointer ${
               pathname === item.url &&
@@ -35,9 +47,15 @@ const Navbar = (): JSX.Element => {
           >
             <li className="flex justify-center items-center gap-0">
               <span className="text-dark-varient">{item.icon}</span>
-              <span className={`${themeMode === 'dark' ? 'text-slate-50' : 'text-dark'}`}>{item.name}</span>
+              <span
+                className={`${
+                  themeMode === "dark" ? "text-slate-50" : "text-dark"
+                }`}
+              >
+                {item.name}
+              </span>
             </li>
-          </Link>
+          </a>
         ))}
         <li>
           {/* <Button

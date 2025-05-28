@@ -1,6 +1,6 @@
 import {configureStore} from '@reduxjs/toolkit'
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux'
-import isLoggedIn from "./Slices/AuthSlice"
+import authReducer from "./Slices/AuthSlice"
 import  studentsReducer  from './Slices/adminSlice';
 import  fetchTeachersReducer from './Slices/adminSlice';
 import teacherReducer from './Slices/adminSlice';
@@ -12,7 +12,7 @@ import logReducer from './Slices/adminSlice';
 
 const ReduxStore = configureStore({
    reducer: {
-     loginMiddleware: isLoggedIn,
+     auth: authReducer,
      teachers: fetchTeachersReducer,
      students: studentsReducer,
      teacherData: teacherReducer,

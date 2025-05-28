@@ -64,7 +64,7 @@ const Users: React.FC = () => {
 
   // Function to move to the next page
   const nextPage = () => {
-    setCurrentPage(currentPage === slicedData.length ? 1 : currentPage + 1);
+    setCurrentPage(currentPage === totalPages ? 1 : currentPage + 1);
   };
 
   // Function to move to the previous page
@@ -114,13 +114,13 @@ const Users: React.FC = () => {
                 {slicedData.length > 0
                   ? slicedData.map((item: User) => (
                       <TableRow
-                        style={{
-                          backgroundColor:
-                            themeMode === "light" ? "#a19f9f3b" : "#141b2d",
-                        }}
+                      key={item.id}
+                      style={{
+                        backgroundColor:
+                          themeMode === "light" ? "transparent" : "#141b2d",
+                      }}
                       >
                         <TableCell
-                          key={item.id}
                           style={{
                             color: themeMode === "light" ? "#000" : "#f5f5f5",
                             fontWeight: "bold",
@@ -131,12 +131,11 @@ const Users: React.FC = () => {
                         </TableCell>
                         <TableCell
                           style={{
-                            color: themeMode === "light" ? "#000" : "#f5f5f5",
-                            fontSize: "14px",
-                          }}
+                          color: themeMode === "light" ? "#00000083" : "#adabab78",
+                        }}
                         >
                           <Link
-                            to={{pathname: goto({role: item.role[0], id: item.id})}}
+                            to={{pathname: goto({role: item.roles, id: item.id})}}
                             className="text-sky-600 cursor-pointer underline"
                           >
                             {item.name}
@@ -144,27 +143,24 @@ const Users: React.FC = () => {
                         </TableCell>
                         <TableCell
                           style={{
-                            color: themeMode === "light" ? "#000" : "#f5f5f5",
-                            fontSize: "14px",
-                          }}
+                          color: themeMode === "light" ? "#00000083" : "#adabab78",
+                        }}
                         >
                           {item.email}
                         </TableCell>
                         <TableCell
                           style={{
-                            color: themeMode === "light" ? "#000" : "#f5f5f5",
-                            fontSize: "14px",
-                          }}
+                          color: themeMode === "light" ? "#00000083" : "#adabab78",
+                        }}
                         >
                           {item.isActive}
                         </TableCell>
                         <TableCell
                           style={{
-                            color: themeMode === "light" ? "#000" : "#f5f5f5",
-                            fontSize: "14px",
-                          }}
+                          color: themeMode === "light" ? "#00000083" : "#adabab78",
+                        }}
                         >
-                          {item.role}
+                          {item.roles}
                         </TableCell>
                       </TableRow>
                     ))

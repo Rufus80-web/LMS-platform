@@ -1,11 +1,9 @@
 import { TableDataProps } from "./types";
 import {
-  Home,
   InfoOutline,
   UploadFile,
   PatternSharp,
   TimeToLeaveTwoTone,
-  Person,
   ChatSharp,
   MarkUnreadChatAltTwoTone,
   PlusOne,
@@ -15,14 +13,25 @@ import {
   Lock,
   ExitToApp,
   BookOnline,
-  DataArray,
-  DataThresholding,
-  GolfCourse,
-  Announcement, FileUpload, Logout, Photo, RollerShades
+  Person,
+  MenuBook,
+  LightMode,
+  Logout,
+  NotificationImportant,
+  Person3,
+  PendingActions,
+  Dashboard,
+  School,
+  Group,
+  Campaign,
+  AccountCircle,
+  AdminPanelSettings,
+  People,
+  Login
 } from "@mui/icons-material";
 
 export const navItems = [
-  { id: 1, name: "Home", icon: <Home />, url: "/student/dashboard" },
+  { id: 1, name: "Home", icon: <Dashboard />, url: "/student/dashboard" },
   {
     id: 2,
     name: "Time Table",
@@ -31,13 +40,13 @@ export const navItems = [
   },
   { id: 3, name: "Exams", icon: <BookOnline />, url: "/student/exams" },
   { id: 4, name: "Password", icon: <Lock />, url: "/student/update_pass" },
-  { id: 5, name: "Logout", icon: <ExitToApp />, url: "/" },
+  { id: 5, name: "Logout", icon: <ExitToApp />, url: "/auths/login" },
 ];
 
 export const teacherSidebarItems = {
   closed: {
     icons: [
-      { id: 1, name: <Home />, url: "dashboard" },
+      { id: 1, name: <Dashboard />, url: "dashboard" },
       { id: 2, name: <InfoOutline />, url: "students" },
       { id: 3, name: <UploadFile />, url: "upload-exercise" },
       { id: 4, name: <PatternSharp />, url: "student-admission" },
@@ -52,7 +61,7 @@ export const teacherSidebarItems = {
       {
         id: 1,
         title: "",
-        children: [{ icon: <Home />, name: "Dashnoard", goto: "dashboard" }],
+        children: [{ icon: <Dashboard />, name: "Dashnoard", goto: "dashboard" }],
       },
       {
         id: 2,
@@ -101,10 +110,16 @@ export const teacherSidebarItems = {
 export const adminSidebar = {
   closed: {
     icons: [
-      { id: 1, name: <Home />, url: "/admin/dashboard" },
-      { id: 2, name: <DataArray />, url: "/admin/manage.teachers" },
-      { id: 3, name: <DataThresholding />, url: "/admin/manage.students" },
-      { id: 4, name: <GolfCourse />, url: "/admin/manage.courses" },
+      { id: 1, name: <Dashboard />, url: "/admin/dashboard" },
+      { id: 2, name: <School />, url: "/admin/manage.teachers" },
+      { id: 3, name: <Group />, url: "/admin/manage.students" },
+      { id: 4, name: <MenuBook />, url: "/admin/manage-courses" },
+      { id: 5, name: <Campaign />, url: "/admin/announcement" },
+      { id: 6, name: <AccountCircle />, url: "/admin/profile" },
+      { id: 7, name: <Logout />, url: "/auths/login" },
+      { id: 8, name: <People />, url: "/admin/users.account" },
+      { id: 9, name: <AdminPanelSettings />, url: "/admin/users.role" },
+      { id: 10, name: <Login />, url: "/admin/log-info" },
     ],
   },
   open: {
@@ -112,20 +127,26 @@ export const adminSidebar = {
       {
         id: 1,
         title: "",
-        children: [{ icon: <Home />, name: "Dashnoard", goto: "/admin/dashboard" }],
+        children: [
+          { icon: <Dashboard />, name: "Dashnoard", goto: "/admin/dashboard" },
+        ],
       },
       {
         id: 2,
         title: "Data",
         children: [
-          { icon: <DataArray />, name: "Teachers", goto: "/admin/manage.teachers" },
           {
-            icon: <DataThresholding />,
+            icon: <School />,
+            name: "Teachers",
+            goto: "/admin/manage.teachers",
+          },
+          {
+            icon: <Group />,
             name: "Students",
             goto: "/admin/manage.students",
           },
           {
-            icon: <GolfCourse />,
+            icon: <MenuBook />,
             name: "Courses",
             goto: "/admin/manage-courses",
           },
@@ -134,14 +155,20 @@ export const adminSidebar = {
       {
         id: 3,
         title: "",
-        children: [{ icon: <Announcement />, name: "Announcements", goto: "/admin/announcement" }],
+        children: [
+          {
+            icon: <Campaign />,
+            name: "Announcements",
+            goto: "/admin/announcement",
+          },
+        ],
       },
       {
         id: 4,
         title: "Administrator",
         children: [
           {
-            icon: <Photo />,
+            icon: <AccountCircle />,
             name: "Profile",
             goto: "/admin/profile",
           },
@@ -153,16 +180,16 @@ export const adminSidebar = {
         title: "Accounts",
         children: [
           {
-            icon: <Person />,
+            icon: <People />,
             name: "Users",
             goto: "/admin/users.account",
           },
           {
-            icon: <RollerShades />,
+            icon: <AdminPanelSettings />,
             name: "Roles",
             goto: "/admin/users.role",
           },
-          { icon: <FileUpload />, name: "Logs", goto: "/admin/log-info" },
+          { icon: <Login />, name: "Logs", goto: "/admin/log-info" },
         ],
       },
     ],
@@ -170,50 +197,8 @@ export const adminSidebar = {
 };
 
 export const tNavbarItems = [
-  { id: 1, icon: "fas fa-sun", url: "" },
-  { id: 2, icon: "fas fa-info", url: "" },
-  { id: 3, icon: "fas fa-pen", url: "" },
-  { id: 4, icon: "fas fa-user", url: "" },
-];
-
-const createData = (tdata: TableDataProps): TableDataProps => {
-  return { ...tdata };
-};
-
-export const rows = [
-  createData({
-    id: 1,
-    name: "John Snow",
-    age: 35,
-    phoneNumber: "(665)121-5890",
-    email: "johnsnow@gmail.com",
-  }),
-  createData({
-    id: 2,
-    name: "Meka Alice",
-    age: 22,
-    phoneNumber: "(665)121-5454",
-    email: "alicemeka@gmail.com",
-  }),
-  createData({
-    id: 3,
-    name: "Wenga Audrey",
-    age: 19,
-    phoneNumber: "(665)121-3456",
-    email: "awoulbesteph@gmail.com",
-  }),
-  createData({
-    id: 4,
-    name: "Awoulbe Stephan",
-    age: 26,
-    phoneNumber: "(665)121-0654",
-    email: "johnsnow@gmail.com",
-  }),
-  createData({
-    id: 5,
-    name: "Djiane Meganne",
-    age: 41,
-    phoneNumber: "(665)121-2345",
-    email: "djianemegan@gmail.com",
-  }),
+  { id: 1, icon: <LightMode />, url: "", name: 'themeMode', },
+  { id: 2, icon: <NotificationImportant />, url: "", name:'Notification Icon' },
+  { id: 3, icon: <PendingActions />, url: "", name: 'Pending Actions' },
+  { id: 4, icon: <Person3 />, url: "", name: 'Person icon' },
 ];

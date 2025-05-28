@@ -16,7 +16,6 @@ import { useAppDispatch, useAppSelector } from "../../../Redux/configureStrore";
 import { fetchTeachersReducer } from "../../../Redux/Slices/adminSlice";
 import HeaderTable from "./table/HeaderTable";
 
-
 type SidebarType = () => void;
 
 const Teachers: React.FC = () => {
@@ -30,35 +29,35 @@ const Teachers: React.FC = () => {
   };
 
   // Get users's data from redux store
-  const dispatch = useAppDispatch()
-  const { users: { teachers} } = useAppSelector((state: any) => state.teachers);
+  const dispatch = useAppDispatch();
+  const {
+    users: { teachers },
+  } = useAppSelector((state: any) => state.teachers);
   // Current page of the table
-  const [currentPage, setCurrentPage] = useState<number>(1)
+  const [currentPage, setCurrentPage] = useState<number>(1);
   //Number of items to be rendered per page
-  const renderPerPage: number = 4
+  const renderPerPage: number = 4;
   // calculating indices for slicing the data array
-  const lastIndex: number = currentPage * renderPerPage
-  const firstIndex: number = lastIndex - renderPerPage
+  const lastIndex: number = currentPage * renderPerPage;
+  const firstIndex: number = lastIndex - renderPerPage;
   // Calculate the total number of pages
-  const totalPages = Math.ceil(teachers?.length / renderPerPage)
+  const totalPages = Math.ceil(teachers?.length / renderPerPage);
   // Finally slice the data into blocks partitions
-  const slicedData = teachers && teachers.slice(firstIndex, lastIndex)
-
+  const slicedData = teachers && teachers.slice(firstIndex, lastIndex);
 
   // Function to move to the next page
   const nextPage = () => {
-    setCurrentPage(currentPage === slicedData.length ? 1 : currentPage + 1)
-  }
+    setCurrentPage(currentPage === totalPages ? 1 : currentPage + 1);
+  };
 
   // Function to move to the previous page
   const prevPage = () => {
-    setCurrentPage(currentPage === 1 ? totalPages: currentPage - 1)
-  }
-
+    setCurrentPage(currentPage === 1 ? totalPages : currentPage - 1);
+  };
 
   useEffect(() => {
-   dispatch(fetchTeachersReducer())
-  }, [teachers?.length])
+    dispatch(fetchTeachersReducer());
+  }, [teachers?.length]);
 
   // Return UI component
   return (
@@ -96,18 +95,24 @@ const Teachers: React.FC = () => {
               <IconButton icon={<Print />} name="Print" url="" />
             </div>
 
-            <Table component={Paper} className="w-full p-3">
+            <Table component={Paper} className="w-full p-3 mt-3">
               <HeaderTable />
               <TableBody data={slicedData} url="/admin/info-teacher" />
             </Table>
             <div className="mt-6 border-none flex justify-start gap-3 items-center pb-1">
-              <button className="w-8 h-8 bg-sky-400 text-white cursor-pointer" onClick={prevPage}>
+              <button
+                className="w-8 h-8 bg-sky-400 text-white cursor-pointer"
+                onClick={prevPage}
+              >
                 <ChevronLeft />
               </button>
               <span className={`${themeMode === "dark" && "text-white"}`}>
-                { currentPage } of { totalPages }
+                {currentPage} of {totalPages}
               </span>
-              <button className="w-8 h-8 bg-green-400 cursor-pointer text-white" onClick={nextPage}>
+              <button
+                className="w-8 h-8 bg-green-400 cursor-pointer text-white"
+                onClick={nextPage}
+              >
                 <ChevronRight />
               </button>
             </div>
