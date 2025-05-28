@@ -106,21 +106,19 @@ const Roles: React.FC = () => {
                       key={user.id}
                       style={{
                         backgroundColor:
-                          themeMode === "light" ? "#a19f9f3b" : "#141b2d",
+                          themeMode === "light" ? "transparent" : "#141b2d",
                       }}
                     >
                       <TableCell
                         style={{
-                          color: themeMode === "light" ? "#000" : "#f5f5f5",
-                          fontSize: "14px",
+                          color: themeMode === "light" ? "#00000083" : "#adabab78",
                         }}
                       >
                         {user.id?.slice(0, 5) + "..."}
                       </TableCell>
                       <TableCell
                         style={{
-                          color: themeMode === "light" ? "#000" : "#f5f5f5",
-                          fontSize: "14px",
+                          color: themeMode === "light" ? "#00000083" : "#adabab78",
                         }}
                       >
                         {user.name}
@@ -133,7 +131,7 @@ const Roles: React.FC = () => {
                       >
                         <Link
                           to={`/admin/users.roles/list/${user.id}`}
-                          className="text-sky-200 underline cursor-pointer"
+                          className="text-sky-400 underline cursor-pointer"
                         >
                           {user.roles}
                         </Link>

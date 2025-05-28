@@ -6,9 +6,8 @@ import { toast } from "react-hot-toast";
 import { loginRequest } from "../../api/auths.api";
 import { Credentials } from "../../static/Interface";
 import { Roles } from "../../static/types";
-import { useAppDispatch } from "../../Redux/configureStrore";
-import { setToken } from "../../Redux/Slices/AuthSlice";
 import { parseJWT } from "../../services/decode-token";
+import { motion, AnimatePresence } from "framer-motion";
 
 const LoginForm: FC = (): JSX.Element => {
   const [email, setEmail] = useState<string>("");
@@ -16,7 +15,6 @@ const LoginForm: FC = (): JSX.Element => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [message, setMessage] = useState<string>("");
   const [status, setStatus] = useState<string>("error");
-  const dispatch = useAppDispatch();
 
   const route = useNavigate();
 
@@ -55,12 +53,13 @@ const LoginForm: FC = (): JSX.Element => {
       body: JSON.stringify(payload),
     };
     setIsLoading(true);
-    setMessage('')
+    setMessage("");
 
     try {
       const response = await loginRequest(configs);
       // Extract server-response
-      const { userObj, status, message, accessToken } = await response.json();
+      const { userObj, status, message, accessToken, refreshToken } =
+        await response.json();
 
       // Handle error response
       if (status === "error") {
@@ -71,8 +70,12 @@ const LoginForm: FC = (): JSX.Element => {
         setStatus(status);
         // Send the token to authsRedux Slice
         // dispatch(setToken(accessToken));
-        localStorage.setItem("token", accessToken); //Persistent
-        localStorage.setItem("user-data", JSON.stringify(parseJWT(accessToken)));
+        localStorage.setItem("token", accessToken);
+        localStorage.setItem("refreshToken", refreshToken);
+        localStorage.setItem(
+          "user-data",
+          JSON.stringify(parseJWT(accessToken))
+        );
 
         // Navigate user to thier respective dashboard
         if (userRole === Roles["STUDENT"]) {
@@ -109,89 +112,100 @@ const LoginForm: FC = (): JSX.Element => {
         </div>
       )}
 
-      <div className="w-full max-w-md space-y-8 rounded-xl bg-white p-8 shadow-lg">
-        <h2 className="text-center text-2xl font-bold text-gray-900">
-          Sign In
-        </h2>
-
-        <form onSubmit={handleLogin} className="mt-6 space-y-6">
-          <div className="space-y-4">
-            {/* email field  */}
-            <InputField
-              id="email"
-              name="email"
-              value={email}
-              label="Email"
-              type="email"
-              onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                setEmail(e.target.value)
-              }
-            />
-            {/* password filed  */}
-            <InputField
-              id="password"
-              name="password"
-              value={password}
-              label="Password"
-              type="password"
-              onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                setPassword(e.target.value)
-              }
-            />
-          </div>
-
-          <div className="flex items-center justify-between">
-            <div className="flex items-center">
-              <CheckBox id="remember-me" name="remember-me" />
-              <label
-                htmlFor="remember-me"
-                className="ml-2 block text-sm text-gray-900"
-              >
-                Remember me
-              </label>
-            </div>
-            {/* signup or password page  */}
-            <div className="text-sm">
-              <Link
-                to={{ pathname: "" }}
-                className="font-medium text-indigo-600 hover:text-indigo-500"
-              >
-                Forgot your password?
-              </Link>
-            </div>
-          </div>
-
-          <p className="text-center">
-            No account?{" "}
-            <a
-              className="decoration-none text-indigo-500 hover:ring-amber-700 hover:text-orange-400 text-sm"
-              href="/signUp"
-            >
-              Sign Up
-            </a>
-          </p>
-
-          {/* Return message based on status */}
-          <div
-            className={`${
-              status === "error" ? "text-red-600" : "text-green-600"
-            } flex justify-center items-center text-md animate-pulse`}
-          >
-            {message}
-          </div>
-
-          {/* submit button  */}
+      <AnimatePresence>
+        <motion.div
+          initial={{ opacity: 0, x: "-60%" }}
+          animate={{ opacity: 1, x: 0 }}
+          exit={{ opacity: 0, x: "100%" }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4, delay: 0.3 }}
+          className="w-full max-w-md space-y-8 rounded-xl bg-white p-8 shadow-lg"
+        >
           <div>
-            <button
-              type="submit"
-              className="flex w-full justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 hover:cursor-pointer"
-              onClick={handleLogin}
-            >
-              Sign in
-            </button>
+            <h2 className="text-center text-2xl font-bold text-gray-900">
+              Sign In
+            </h2>
+
+            <form onSubmit={handleLogin} className="mt-6 space-y-6">
+              <div className="space-y-4">
+                {/* email field  */}
+                <InputField
+                  id="email"
+                  name="email"
+                  value={email}
+                  label="Email"
+                  type="email"
+                  onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                    setEmail(e.target.value)
+                  }
+                />
+                {/* password filed  */}
+                <InputField
+                  id="password"
+                  name="password"
+                  value={password}
+                  label="Password"
+                  type="password"
+                  onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                    setPassword(e.target.value)
+                  }
+                />
+              </div>
+
+              <div className="flex items-center justify-between">
+                <div className="flex items-center">
+                  <CheckBox id="remember-me" name="remember-me" />
+                  <label
+                    htmlFor="remember-me"
+                    className="ml-2 block text-sm text-gray-900"
+                  >
+                    Remember me
+                  </label>
+                </div>
+                {/* signup or password page  */}
+                <div className="text-sm">
+                  <Link
+                    to={{ pathname: "/auths/verify-email" }}
+                    className="font-medium text-indigo-600 hover:text-indigo-500"
+                  >
+                    Forgot your password?
+                  </Link>
+                </div>
+              </div>
+
+              <p className="text-center">
+                No account?{" "}
+                <a
+                  className="decoration-none text-indigo-500 hover:ring-amber-700 hover:text-orange-400 text-sm"
+                  href="/signUp"
+                >
+                  Sign Up
+                </a>
+              </p>
+
+              {/* Return message based on status */}
+              {/* <div
+                className={`${
+                  status === "error" ? "text-red-600" : "text-green-600"
+                } flex justify-center items-center text-md animate-pulse`}
+              >
+                {message}
+              </div> */}
+
+              {/* submit button  */}
+              <div>
+                <button
+                  type="submit"
+                  className="flex w-full justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 hover:cursor-pointer"
+                  onClick={handleLogin}
+                >
+                  Sign in
+                </button>
+              </div>
+            </form>
           </div>
-        </form>
-      </div>
+        </motion.div>
+      </AnimatePresence>
     </div>
   );
 };

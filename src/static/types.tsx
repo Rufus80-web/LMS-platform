@@ -113,4 +113,11 @@ export const Roles = {
   SUPERADMIN: 'SuperAdmin'
 }
 
+export type DecodedToken = {
+  exp: number,
+  iat: number,
+  roles: string,
+  [key: string]: any
+}
+
 

@@ -12,6 +12,12 @@ const AdminSidebarItems = () => {
   const route = useNavigate()
 
   const navigateToURL = (url: string) => {
+      if(url === '/auths/login'){
+        localStorage.removeItem('token')
+        // localStorage.removeItem('refreshToken')
+        localStorage.removeItem('user-data')
+        route(url)
+      }
       route(url)
   }
 
@@ -25,7 +31,7 @@ const AdminSidebarItems = () => {
               </h2>
               {item?.children?.map((el, i) => (
                 <ul key={i} className="list-none flex flex-col gap-x-2">
-                  <Link to={`${el.goto}`} className="decoration-0 mt-2">
+                  <a onClick={() => navigateToURL(el.goto)} className="decoration-0 mt-2 cursor-pointer">
                     <li
                       className={`w-full ml-[1.15em]
                       ${location.pathname === `${el.goto}` && themeMode === 'light' && 'bg-gray-300'}
@@ -35,7 +41,7 @@ const AdminSidebarItems = () => {
                       <span>{el.icon}</span>
                       <span>{el.name}</span>
                     </li>
-                  </Link>
+                  </a>
                 </ul>
               ))}
             </Fragment>

@@ -13,6 +13,9 @@ import LoginForm from "../pages/Auths/LoginForm";
 import RegistrationForm from "../pages/Auths/RegistrationForm";
 import Unauthorized from "../pages/401/Unauthorized";
 import ProtectedRoute from "./ProtectRoute";
+import PasswordResetEmailRequest from "../pages/Auths/PasswordResetEmailRequest";
+import HandlePasswordReset from "../pages/Auths/HandlePasswordReset";
+import AuthenticateVerificationcode from "../pages/Auths/AuthenticateVerificationcode";
 // student views
 import StudentDashboard from "../pages/students/Dashboard";
 import TimeTable from "../pages/students/TimeTable";
@@ -62,6 +65,9 @@ export const router = BrowserRouter(
       <Route path="/auths">
         <Route path="login" element={<LoginForm />}></Route>
         <Route path="signup" element={<RegistrationForm />}></Route>
+        <Route path="verify-email" element={<PasswordResetEmailRequest />}></Route>
+        <Route path="reset-password" element={<HandlePasswordReset />}></Route>
+        <Route path="verification-code" element={<AuthenticateVerificationcode />}></Route>
       </Route>
       {/***************************************************************** STUDENT ROUTES********************************************************** */}
       <Route

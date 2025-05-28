@@ -12,6 +12,8 @@ import Input from "./components/Input";
 import { Adminprofile } from "../../static/Interface";
 import { adminProfileUpdate, getUser } from "../../api/admin.api";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 type SidebarType = () => void;
 
@@ -32,6 +34,7 @@ const AdminProfile: React.FC = () => {
   });
   const [uploadedFile, setUploadedFile] = useState<File | null>(null);
   const [disable, setDisable] = useState(true);
+  const navigate = useNavigate()
 
   const OnChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -68,7 +71,7 @@ const AdminProfile: React.FC = () => {
     const storage = localStorage.getItem("user-data");
     if (storage) {
       const parseData = JSON.parse(storage)["user"];
-      const userId = parseData["id"];
+      const userId = parseData["_id"]; // send mongoDB _id to server and not our usual uuiv4() id,s
 
       formdata.append("firstname", formData.firstname);
       formdata.append("lastname", formData.lastname);
@@ -77,12 +80,16 @@ const AdminProfile: React.FC = () => {
       formdata.append("address", formData.address);
 
       if (uploadedFile) {
-        formdata.append("profilePic", formData.profile);
+        formdata.append("profilePic", uploadedFile);
       }
-
+      console.log(formdata)
+      const token = localStorage.getItem("token") || null;
       const configs = {
         method: "PUT",
         body: formdata,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       };
 
       try {
@@ -94,6 +101,7 @@ const AdminProfile: React.FC = () => {
         if (status === "error") {
           toast.error(message);
         } else {
+          toast.success(message)
           setFormData({
             firstname: userProfile.firstname,
             lastname: userProfile.lastname,
@@ -122,7 +130,15 @@ const AdminProfile: React.FC = () => {
 
         try {
           const response = await getUser(userId);
-          const { status, message, user } = response.data;
+          const { status, message, user, error } = response.data;
+
+          console.log(response.data)
+
+          if(error === 'error'){
+            Swal.fire('Ooups!!', message, 'info')
+            navigate('/auths/login')
+            return
+          }
 
           if (status === "error") {
             throw new Error(message);
