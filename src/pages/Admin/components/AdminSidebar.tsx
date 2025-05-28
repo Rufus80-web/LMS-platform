@@ -4,12 +4,27 @@ import { useTheme } from "../../../context/ThemeContext";
 
 import SidebarProfile from "./SideBarProfile";
 import AdminSidebarItems from "./AdminSideBarItems";
-import { useState } from "react";
 
 export const AdminSidebar = () => {
   const { themeMode } = useTheme();
-  const [open, setOpen] = useState(true)
-  
+
+  const adminInfo = () => {
+    try {
+      const storedData = localStorage.getItem("user-data");
+      if (!storedData) {
+        throw new Error("No data found in localStorage");
+      }
+      const data = JSON.parse(storedData)["user"];
+      return {
+        name: data["firstname"],
+        role: data["roles"],
+        profile: data["profile"],
+      };
+    } catch (error: any) {
+      throw new Error(error.message);
+    }
+  };
+
   const { isOpen, shouldOpen } = useTeacherSidebarContext();
   return (
     <div
@@ -45,7 +60,13 @@ export const AdminSidebar = () => {
         </div>
 
         {/* teacher profile  */}
-        {isOpen && <SidebarProfile profile={adminImg} />}
+        {isOpen && (
+          <SidebarProfile
+            profile={localStorage.getItem('admin-pro') as string}
+            name={adminInfo()["name"]}
+            role={adminInfo()["role"]}
+          />
+        )}
 
         {/* sidebar navigation pages  */}
         <AdminSidebarItems />

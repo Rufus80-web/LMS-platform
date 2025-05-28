@@ -74,7 +74,7 @@ const LoginForm: FC = (): JSX.Element => {
         localStorage.setItem("refreshToken", refreshToken);
         localStorage.setItem(
           "user-data",
-          JSON.stringify(parseJWT(accessToken))
+          JSON.stringify(parseJWT(accessToken)) // Decode the token before storing in localstorage
         );
 
         // Navigate user to thier respective dashboard

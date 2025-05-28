@@ -14,13 +14,13 @@ import { adminProfileUpdate, getUser } from "../../api/admin.api";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+import { ADMIN_PROFILE_URL, DEFAULT_PROFILE_URL } from "../../services/server-urls";
 
 type SidebarType = () => void;
 
 const AdminProfile: React.FC = () => {
   const { themeMode } = useTheme();
   const { isOpen } = useTeacherSidebarContext();
-  const defaultProfile = "http://localhost:8000/static/images/user.webp";
   const [formData, setFormData] = useState<Adminprofile>({
     firstname: "",
     lastname: "",
@@ -96,20 +96,25 @@ const AdminProfile: React.FC = () => {
         const response = await adminProfileUpdate(userId, configs);
         const result = await response.json();
 
-        const { status, message, userProfile } = result;
+        const { status, message, user } = result;
 
         if (status === "error") {
           toast.error(message);
         } else {
           toast.success(message)
+          //Reset localstorage user obj value to apply changes(profile picture) on user sidebar. But for this to work 
+          // Make user the response user object key(in this case key is user) from the server should match exactly same as 
+          // the one return from the login api endnpoint to avoid getting null values or errors from the localstorage
+          localStorage.setItem('admin-pro', user.profile)
           setFormData({
-            firstname: userProfile.firstname,
-            lastname: userProfile.lastname,
-            email: userProfile.email,
-            contact: userProfile.contact,
-            address: userProfile.address,
-            profile: userProfile.profile,
+            firstname: user.firstname,
+            lastname: user.lastname,
+            email: user.email,
+            contact: user.contact,
+            address: user.address,
+            profile: user.profile,
           });
+          navigate('/admin/profile')
         }
       } catch (error: any) {
         console.error("Upload Failed: " + error);
@@ -195,8 +200,8 @@ const AdminProfile: React.FC = () => {
                 <img
                   src={
                     formData.profile === null
-                      ? defaultProfile
-                      : formData.profile
+                      ? DEFAULT_PROFILE_URL
+                      : `${ADMIN_PROFILE_URL}/${formData.profile}`
                   }
                   alt="profile-picture"
                   className="w-full h-full rounded-full"
