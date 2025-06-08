@@ -38,7 +38,7 @@ const _TableHeaders = ({ orderBy, order, handleSort }: TableHeadProps) => {
             direction={orderBy === "age" ? order : "asc"}
             onClick={() => handleSort("age")}
           >
-            Age
+            martricule
           </TableSortLabel>
         </TableCell>
         <TableCell style={{ color: color }}>
@@ -60,7 +60,10 @@ const _TableHeaders = ({ orderBy, order, handleSort }: TableHeadProps) => {
           </TableSortLabel>
         </TableCell>
         <TableCell style={{ color: color }}>
-          Acess Level
+          State
+        </TableCell>
+        <TableCell style={{ color: color }}>
+          Gender
         </TableCell>
       </TableRow>
     </TableHead>

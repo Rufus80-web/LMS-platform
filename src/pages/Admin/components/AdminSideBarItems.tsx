@@ -65,13 +65,14 @@ const AdminSidebarItems = () => {
             <a
               key={item.id}
               onClick={() => navigateToURL(item.url)}
+              title={item.title}
               className={`w-full ${
-                location.pathname === item.url && "bg-[#fff] animate-pulse"
+                location.pathname === item.url && "bg-[#43a059] animate-pulse"
               } p-3 flex justify-center items-center hover:bg-[#0000005e] cursor-pointer`}
             >
               <span
                 className={`text-[20px] text-[#07092cfb] ${
-                  location.pathname === item.url && "text-black"
+                  location.pathname === item.url && "text-white"
                 }`}
               >
                 {item.name}

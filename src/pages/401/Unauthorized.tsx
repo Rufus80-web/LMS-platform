@@ -1,10 +1,11 @@
 import {} from "react";
-import { Button } from "@mui/material";
-import { Link } from "react-router-dom";
-import { Roles } from "../../static/types";
+// import { Button } from "@mui/material";
+// import { Link } from "react-router-dom";
+// import { Roles } from "../../static/types";
 
 const Unauthorized = () => {
   const authUserData = localStorage.getItem("user-data");
+  // const token: string | null = localStorage.getItem("token") as string
 
   const user = authUserData && JSON.parse(authUserData);
 
@@ -12,14 +13,14 @@ const Unauthorized = () => {
     throw new Error('User object is null')
   }
 
-  const goTo = () => {
-    if (user['user']["roles"] === Roles["STUDENT"]) {
-      return "/student/dashboard";
-    }
-    if (user['user']["roles"] === Roles["TEACHER"]) {
-      return "/teacher/dashboard";
-    }
-  };
+  // const goTo = () => {
+  //   if (user['user']["roles"] === Roles["STUDENT"]) {
+  //     return "/student/dashboard";
+  //   }
+  //   if (user['user']["roles"] === Roles["TEACHER"]) {
+  //     return "/teacher/dashboard";
+  //   }
+  // };
 
   return (
     <div className="min-w-screen h-screen bg-dark-bg text-slate-50">
@@ -31,10 +32,10 @@ const Unauthorized = () => {
         <div className="text-xl flex flex-col justify-center items-center">
           <p>You're not authorized to access this Page</p>
           <p className="mt-2">
-            Go back to your{" "}
-            <Link to={{ pathname: goTo() }}>
-              <Button variant="contained">Dashboard</Button>
-            </Link>
+            {/* You must Login first{" "}
+            <Link to={{ pathname: "/auths/login" }}>
+              <Button variant="contained">Login</Button>
+            </Link> */}
           </p>
         </div>
       </div>

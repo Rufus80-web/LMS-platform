@@ -21,17 +21,25 @@ import StudentDashboard from "../pages/students/Dashboard";
 import TimeTable from "../pages/students/TimeTable";
 import Exam from "../pages/students/Exam";
 import UpdatePassword from "../pages/students/UpdatePassword";
-// import StudentExam from "../pages/students/StudentExam";
+import ExercisePage from "../pages/students/ExercisePage";
 
 //Teacher views
 import TDashboard from "../pages/Teachers/TDashboard";
 import StudentList from "../pages/Teachers/StudentList";
 import NewAdmission from "../pages/Teachers/NewAdmission";
-import TimeTableTeacher from "../pages/Teachers/TimeTable";
+import TimeTableTeacher from "../pages/Teachers/Announcement";
 import ClassProgress from "../pages/Teachers/ClassProgress";
 import ClassMarks from "../pages/Teachers/ClassMarks";
 import AllClasses from "../pages/Teachers/AllClasses";
 import UploadExercise from "../pages/Teachers/UploadExercise";
+import EventManagement from "../pages/Teachers/EventManagement";
+import DisplayEvent from "../pages/Teachers/DisplayEvent";
+import EditEvent from "../pages/Teachers/EditEvent";
+import DisplayStudentPage from "../pages/Teachers/DisplayStudent";
+import TeacherUpdateStudent from "../pages/Teachers/TeacherUpdateStudent";
+import TeacherProfilePage from "../pages/Teachers/TeacherProfile";
+import ManageExamPage from "../pages/Teachers/ManageExamPage";
+
 //admin
 import AdminDashboard from "../pages/Admin/dashoard";
 import Teachers from "../pages/Admin/components/Teachers";
@@ -65,9 +73,15 @@ export const router = BrowserRouter(
       <Route path="/auths">
         <Route path="login" element={<LoginForm />}></Route>
         <Route path="signup" element={<RegistrationForm />}></Route>
-        <Route path="verify-email" element={<PasswordResetEmailRequest />}></Route>
+        <Route
+          path="verify-email"
+          element={<PasswordResetEmailRequest />}
+        ></Route>
         <Route path="reset-password" element={<HandlePasswordReset />}></Route>
-        <Route path="verification-code" element={<AuthenticateVerificationcode />}></Route>
+        <Route
+          path="verification-code"
+          element={<AuthenticateVerificationcode />}
+        ></Route>
       </Route>
       {/***************************************************************** STUDENT ROUTES********************************************************** */}
       <Route
@@ -83,7 +97,8 @@ export const router = BrowserRouter(
         <Route path="timetable" element={<TimeTable />}></Route>
         <Route path="exams" element={<Exam />}></Route>
         <Route path="update_pass" element={<UpdatePassword />}></Route>
-        {/* <Route path="exam" element={<StudentExam />}></Route> */}
+        {/* <Route path="writing-exam" element={<StudentExamPage />}></Route> */}
+        <Route path="attend-exam" element={<ExercisePage />}></Route>
       </Route>
       {/***************************************************************** TEACHERS ROUTES********************************************************** */}
       <Route
@@ -104,6 +119,19 @@ export const router = BrowserRouter(
         <Route path="class-mark" element={<ClassMarks />}></Route>
         <Route path="all-classes" element={<AllClasses />}></Route>
         <Route path="upload-exercise" element={<UploadExercise />}></Route>
+        <Route path="manage-exams" element={<ManageExamPage />}></Route>
+        <Route path="event-management" element={<EventManagement />}></Route>
+        <Route path="get-event/:eventID" element={<DisplayEvent />}></Route>
+        <Route path="edit-event/:eventID" element={<EditEvent />}></Route>
+        <Route
+          path="display-student/:studID"
+          element={<DisplayStudentPage />}
+        ></Route>
+        <Route
+          path="edit-student/:studID"
+          element={<TeacherUpdateStudent />}
+        ></Route>
+        <Route path="profile/info" element={<TeacherProfilePage />}></Route>
       </Route>
       {/***************************************************************** ADMIN ROUTES********************************************************** */}
       <Route

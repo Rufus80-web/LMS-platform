@@ -1,18 +1,33 @@
 import { FC } from "react";
-import { useTheme } from "../../../../context/ThemeContext";
+import { format } from "timeago.js";
+// import { useTheme } from "../../../../context/ThemeContext";
 
-const Announcement: FC = () => {
-  const {themeMode} = useTheme()
+type ExamInfoProps = {
+  title: string;
+  course: string;
+  description: string;
+  createdAt: string;
+};
+
+type SpreadExamInfoProps = {
+  announ: ExamInfoProps;
+};
+
+const Announcement: FC<SpreadExamInfoProps> = ({
+  announ: { title, course, description, createdAt },
+}) => {
+  // const { themeMode } = useTheme();
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col px-2 border-b-1 font-light border-blue-200 text-[#e8e6e6]">
       <div className="break-words">
-        <span className={`font-light text-xl ${themeMode === 'dark' && 'text-slate-50'}`}>Academic: </span>
-        <span className={`text-[13px] ${themeMode === 'dark' ? 'text-[#ebe8e894]' : 'text-[#1d1b1b9d]'}`}>
-          Summer training inter Live Project
-        </span>
+        <span className={`text-sm font-semibold `}>{title}</span>
+        <p>{course}</p>
+        <span className={`text-[13px]`}>{description}</span>
       </div>
       <div>
-        <span className={`text-[10px] ${themeMode === 'dark' ? 'text-[#ebe8e894]' : 'text-[#1d1b1b9d]'}`}>4 minutes ago</span>
+        <span className={`text-[10px]`}>
+          {format(createdAt)}
+        </span>
       </div>
     </div>
   );

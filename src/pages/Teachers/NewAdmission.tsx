@@ -1,4 +1,4 @@
-import { ChangeEvent, FC, FormEvent, useState } from "react";
+import { ChangeEvent, FC, FormEvent, useEffect, useState } from "react";
 import { Button } from "@mui/material";
 import {
   SidebarContext,
@@ -9,42 +9,90 @@ import Navbar from "./components/navbar/Navbar";
 import { Sidebar } from "./TSidebar";
 import Input from "./components/Input";
 import { useTheme } from "../../context/ThemeContext";
-
+import FormSelect from "../Admin/components/FormSelect";
+import { useAppDispatch, useAppSelector } from "../../Redux/configureStrore";
+import {
+  fetchTeacherCourseReducer,
+  getUserObjectId,
+} from "../../Redux/Slices/teacherSlice";
+import { registerStudentApi } from "../../api/teacher.api";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 type SidebarType = () => void;
 
 const NewAdmission: FC = () => {
   const [isOpenSidebar, setIsOpenSidebar] = useState(true);
+  const dispatch = useAppDispatch();
+  const route = useNavigate();
   const handleSidebarWidth = (): ReturnType<SidebarType> => {
-    console.log("state: " + isOpenSidebar);
     setIsOpenSidebar((prev) => !prev);
   };
   const { isOpen } = useTeacherSidebarContext();
   const [formData, setFormData] = useState({
-    fname: "",
-    lname: "",
     email: "",
-    contact: "",
-    address1: "",
-    address2: "",
-  })
-  const {themeMode} = useTheme()
+    matricule: "",
+    classRoom: "",
+    level: "",
+    course: "",
+  });
+  const { themeMode } = useTheme();
 
-  const OnChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const {name, value} = e.target
-    setFormData((data) => {
-        return {
-            ...data,
-            [name]: value
-        }
-    })
-  }
+  const cleanTheForm = () => {
+    setFormData({
+      email: "",
+      matricule: "",
+      classRoom: "",
+      level: "",
+      course: "",
+    });
+  };
 
-  const handleSubmit = (e: FormEvent) => {
-    e.preventDefault()
-    console.log(e)
-  }
+  //Redux store data
+  const { course } = useAppSelector((state) => state.course);
 
+  useEffect(() => {
+    dispatch(fetchTeacherCourseReducer());
+  }, []);
+
+  const OnChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const { name, value } = e.target;
+
+    setFormData({ ...formData, [name]: value });
+  };
+
+  // Create a new student
+  const StudentAdmission = async (e: FormEvent) => {
+    e.preventDefault();
+
+    try {
+      const reqBody = {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      };
+      const id = getUserObjectId();
+      const response = await registerStudentApi(reqBody, id);
+      const { status, message } = await response.json();
+
+      if (status === "error") {
+        toast.error(message);
+      } else {
+        toast.success(message);
+        cleanTheForm();
+
+        setTimeout(() => route("/teacher/students"), 1000);
+        // Navigate and clear the form
+      }
+    } catch (error: any) {
+      console.log(error);
+    }
+  };
+
+  // UI Component
   return (
     <div className="w-screen min-h-screen flex select-none">
       <SidebarContext.Provider
@@ -52,33 +100,80 @@ const NewAdmission: FC = () => {
       >
         <Sidebar />
         <div
-          className={`w-screen min-h-screen ${
-            isOpen ? "pl-14 pr-3" : "pl-12 pr-3"
-          } pb-[2em] ${themeMode === 'dark' ? 'bg-content-dark' : 'bg-white'}`}
+          className={`w-screen min-h-screen pb-[2em] ${
+            isOpen ? "pl-15 pr-3" : "pl-12 pr-3"
+          } ${themeMode === "dark" ? "bg-content-dark" : "bg-white"}`}
         >
           <Navbar />
 
-          <div className="pl-3">
+          <div className="pl-0">
             <DashHeader
               title="CREATE USER"
               message="Create a new user profile"
             />
             <div className={`mt-8 pr-3`}>
-                <form onSubmit={handleSubmit} className="w-full h-[65vh] p-0">
-                    <section className="flex gap-2">
-                        <Input type="text" name="fname" value={formData.fname} placeholder="First Name" onChange={OnChange} style="small-input" />
-                        <Input type="text" name="lname" value={formData.lname} placeholder="Last Name" onChange={OnChange} style="small-input" />
-                    </section>
-                    <section className="pt-6 flex flex-col gap-6">
-                        <Input type="email" name="email" value={formData.email} placeholder="Email " onChange={OnChange} style="long-input" />
-                        <Input type="text" name="contact" value={formData.contact} placeholder="Contact Number" onChange={OnChange} style="long-input" />
-                        <Input type="text" name="address1" value={formData.address1} placeholder="Address 1" onChange={OnChange} style="long-input" />
-                        <Input type="text" name="address2" value={formData.address2} placeholder="Address 2" onChange={OnChange} style="long-input" />
-                    </section>
-                    <section className="absolute right-6 bottom-17">
-                      <Button variant="contained" className="uppercase">Create new user</Button>
-                    </section>
-                </form>
+              <form
+                onSubmit={StudentAdmission}
+                className="w-[78vw] min-h-[65vh] p-2 pb-2"
+              >
+                <section className="pt-6 flex gap-6"></section>
+                <section className="pt-6 flex gap-6">
+                  <FormSelect
+                    name="classRoom"
+                    value={formData.classRoom}
+                    placeholder="Enter student class room"
+                    onChange={OnChange}
+                    style="small-input"
+                    options={[
+                      "BA1A",
+                      "BA1B",
+                      "BA1C",
+                      "BA1D",
+                      "BA2A",
+                      "BA2B",
+                      "SE3A",
+                      "SE3B",
+                      "SE3C",
+                    ]}
+                  />
+                  <FormSelect
+                    name="level"
+                    value={formData.level}
+                    placeholder="Choose student Level"
+                    onChange={OnChange}
+                    style="small-input"
+                    options={["Bachelor", "Master"]}
+                  />
+                </section>
+                <section className="pt-6 flex gap-6">
+                  <FormSelect
+                    name="course"
+                    value={formData.course}
+                    placeholder="Select a course"
+                    onChange={OnChange}
+                    style="small-input"
+                    options={course ? course : []}
+                  />
+                  <Input
+                    type="text"
+                    name="email"
+                    value={formData.email}
+                    placeholder="Email "
+                    onChange={OnChange}
+                    style="small-input"
+                  />
+                </section>
+
+                <section className="absolute right-3 bottom-22">
+                  <Button
+                    type="submit"
+                    variant="contained"
+                    className="uppercase"
+                  >
+                    Submit
+                  </Button>
+                </section>
+              </form>
             </div>
           </div>
         </div>

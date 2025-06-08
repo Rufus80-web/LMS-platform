@@ -1,106 +1,76 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Sidebar from "./components/sidebar/Sidebar";
 import Navbar from "./components/navbar/Navbar";
-import TableHeading from "./components/table/TableHeading";
-import TableHeader from "./components/table/TableHeader";
-import TableRow from "./components/table/TableRow";
-import TableBody from "./components/table/TableBody";
-import { tableRowType } from "../../static/types";
-import { Table } from '@mui/material'
-import { useTheme } from "../../context/ThemeContext";
-
-
-const TableRows: tableRowType[] = [
-  {
-    td1: "13 May 2022",
-    td2: "09-12 AM",
-    td3: "CS200",
-    td4: "38-786",
-  },
-  {
-    td1: "22 October 2020",
-    td2: "07-10 AM",
-    td3: "Data Science",
-    td4: "32-564",
-  },
-  {
-    td1: "25 September 2025",
-    td2: "14-16 PM",
-    td3: "Flutter",
-    td4: "45-546",
-  },
-  {
-    td1: "28 September 2025",
-    td2: "08-12 AM",
-    td3: "CCNA 2",
-    td4: "45-546",
-  },
-  {
-    td1: "28 September 2025",
-    td2: "08-12 AM",
-    td3: "CCNA 2",
-    td4: "45-546",
-  },
-  {
-    td1: "28 September 2025",
-    td2: "08-12 AM",
-    td3: "CCNA 2",
-    td4: "45-546",
-  },
-  {
-    td1: "28 September 2025",
-    td2: "08-12 AM",
-    td3: "CCNA 2",
-    td4: "45-546",
-  },
-  {
-    td1: "28 September 2025",
-    td2: "08-12 AM",
-    td3: "CCNA 2",
-    td4: "45-546",
-  },
-  {
-    td1: "28 September 2025",
-    td2: "08-12 AM",
-    td3: "CCNA 2",
-    td4: "45-546",
-  },
-  {
-    td1: "28 September 2025",
-    td2: "08-12 AM",
-    td3: "CCNA 2",
-    td4: "45-546",
-  },
-  {
-    td1: "28 September 2025",
-    td2: "08-12 AM",
-    td3: "CCNA 2",
-    td4: "45-546",
-  },
-  {
-    td1: "28 September 2025",
-    td2: "08-12 AM",
-    td3: "CCNA 2",
-    td4: "45-546",
-  },
-  {
-    td1: "28 September 2025",
-    td2: "08-12 AM",
-    td3: "CCNA 2",
-    td4: "45-546",
-  },
-  {
-    td1: "28 September 2025",
-    td2: "08-12 AM",
-    td3: "CCNA 2",
-    td4: "45-546",
-  },
-];
+import Dialog from "./components/Dialog";
+import { useAppDispatch, useAppSelector } from "../../Redux/configureStrore";
+import { getScheduledExamReducer } from "../../Redux/Slices/studentSlice";
+import ExamCard from "./components/ExamCard";
+import { useNavigate } from "react-router-dom";
+import { Card, CardContent, Typography } from "@mui/material";
+// import SchoolIcon from "@mui/icons-material/School";
 
 const Exam: React.FC = () => {
-  const { themeMode } = useTheme()
+  const dispatch = useAppDispatch();
+  const { examInfo } = useAppSelector((state) => state.studentExamInfo);
+  console.log(examInfo);
+
+  const navigate = useNavigate();
+  const [open, setOpen] = useState(false);
+  const [description, setDescription] = useState("");
+  const [title, setTitle] = useState("");
+
+  const handleClickOpen = ({
+    title,
+    description,
+  }: {
+    title: string;
+    description: string;
+  }) => {
+    setTitle(title);
+    setDescription(description);
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setTitle("");
+    setDescription("");
+    setOpen(false);
+  };
+  // console.log(examInfo);
+
+  useEffect(() => {
+    dispatch(getScheduledExamReducer());
+  }, [dispatch]);
+
+  const handleExamAttendance = (item: any) => {
+    // @examId populated ID
+
+    navigate("/student/attend-exam", {
+      state: {
+        examId: item.examId["_id"],
+        teacherId: item.teacherId["_id"],
+        datetime: item.datetime,
+        durationMinutes: item.examId["durationMinutes"],
+      },
+    });
+  };
+
+  const canAccessExam = (event: any): boolean => {
+    const now = new Date();
+    const examStart = new Date(`${event.datetime}:00`);
+    const examEnd = new Date(
+      examStart.getTime() + event.examId.durationMinutes * 60000
+    );
+
+    const canAccess = now >= examStart && now <= examEnd;
+    console.log("exam: " + event._id, canAccess);
+    return canAccess;
+  };
+
+  /********************************************************************************************************************************************************** */
   return (
-    <div className={`w-screen min-h-screen ${themeMode === 'light' ? 'bg-[#f6f6f9]' : 'bg-sidebar-dark'}`}>
+    <div
+      className={`w-screen min-h-screen bg-gradient-to-l from-[#111] to-[#082520c5] shadow-sm`}
+    >
       {/* sidebar section  */}
       <Sidebar />
 
@@ -110,22 +80,46 @@ const Exam: React.FC = () => {
         <Navbar />
 
         {/* Time's table content  */}
-        <div className="absolute bottom-0 w-[82vw] h-full flex flex-col justify-center items-center gap-3 pt-20 pl-2">
-          <div className="flex items-center justify-center gap-40">
-            <TableHeading header="Exam Available" />
-          </div>
-
-          {/* Exam  */}
-          <div className="overflow-x-auto rounded-2xl w-[68vw] overflow-y-scroll h-[60vh]">
-            <Table className="w-full table-auto">
-              <TableHeader th1="Date" th2="Time" th3="Course" th4="Room No." />
-              {/* On fetch API will return an array and we will change the prop value  */}
-              <TableBody
-                data={TableRows}
-                render={(data, index) => <TableRow item={data} key={index} />}
-              />
-            </Table>
-          </div>
+        <div className="absolute bottom-2 pb-[2em] w-[82vw] h-full overflow-auto pt-20 grid grid-cols-3 gap-y-8 pl-5">
+          {open && ( // Show more detail of the exam
+            <Dialog
+              open={open}
+              handleClose={handleClose}
+              title={title}
+              description={description}
+            />
+          )}
+          {examInfo.length > 0 ? (
+            examInfo.map((item, index) => (
+              <div>
+                <ExamCard
+                  index={index}
+                  item={{ ...item }}
+                  canAccess={canAccessExam(item)}
+                  getExamId={() => handleExamAttendance(item)}
+                  handleClickOpen={() =>
+                    handleClickOpen({
+                      title: item.course,
+                      description: item.description,
+                    })
+                  }
+                />
+              </div>
+            ))
+          ) :  (
+            <div className="absolute top-70 left-[30rem]">
+              <Card>
+                <CardContent>
+                  <Typography variant="h6" component="div" color="warning">
+                    No Exam scheduled Yet
+                  </Typography>
+                  <Typography component="p" color="warning">
+                    You shall be notified when so.
+                  </Typography>
+                </CardContent>
+              </Card>
+            </div>
+          )}
         </div>
       </div>
     </div>

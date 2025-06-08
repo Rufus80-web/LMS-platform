@@ -17,3 +17,37 @@
            <div className="w-full h-[8vh] border-2 bg-indigo-300"></div>
 
            mt-10 relative overflow-auto flex flex-col
+
+
+
+
+           
+const MonacoOptions = {
+  fontSize: 14,
+  automaticLayout: true,
+  fontFamily: "Fira Code, monospace",
+  fontLigatures: true,
+  lineNumbers: "on",
+  minimap: { enabled: true },
+  wordWrap: "on",
+  autoClosingBrackets: "always",
+  autoIndent: "advanced",
+  formatOnType: true,
+  formatOnPaste: true,
+  // renderLineHightlight: "all",
+  cursorSmoothCaretAnimation: "on",
+  smoothScrolling: true,
+  scrollBeyondLastLine: false,
+  quickSuggestions: true,
+  suggestOnTriggerCharacters: true, // Trigger suggestions on dot (.)
+  tabSize: 2,
+  insertSpaces: true,
+  bracketPairColorization: {
+    enabled: true, // color matching brackets
+  },
+  guides: {
+    indentation: true, // show indent guides
+    highlightActiveIndentation: true,
+  },
+  // renderWhiteSpaces: "boundary" // show whitespaces at boundaries
+};

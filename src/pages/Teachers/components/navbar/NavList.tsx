@@ -1,14 +1,20 @@
 import { tNavbarItems } from "../../../../static/utils";
 import { useTheme } from "../../../../context/ThemeContext";
 import { DarkMode, LightMode } from "@mui/icons-material";
+import toast from "react-hot-toast";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const NavList = () => {
+  const navigate = useNavigate()
+  const { pathname } = useLocation()
   const {themeMode, lightTheme, darkTheme} = useTheme()
   const setThemeMode = (iconName: string) => {
     if(iconName === 'themeMode' && typeof iconName === 'string'){
       if(themeMode === 'dark'){
+        toast.success('Switched to Light Mode')
         lightTheme()
       } else {
+        toast.success('Switched to Dark Mode')
         darkTheme()
       }
     }
@@ -31,7 +37,9 @@ const NavList = () => {
         {tNavbarItems.map((el) => (
           <li
             key={el.id}
-            className="w-8 h-8 rounded-full hover:bg-black hover:animate-pulse hover:cursor-pointer flex justify-center items-center"
+            title={el.title}
+            onClick={() => navigate(el.url)}
+            className={`w-8 h-8 rounded-full  hover:cursor-pointer flex justify-center items-center ${pathname === el.url && 'animate-pulse text-white bg-black'}`}
           >
             <span className={`text-[grey] text-sm`} onClick={() => setThemeMode(el.name)}>{displayThemeIcon({name: el.name, icon: el.icon})}</span>
           </li>

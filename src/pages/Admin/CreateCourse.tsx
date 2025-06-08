@@ -13,10 +13,13 @@ import { Course } from "../../static/types";
 import { addCourseRequest } from "../../api/admin.api";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
-import { useAppDispatch, useAppSelector, RootState } from "../../Redux/configureStrore";
+import {
+  useAppDispatch,
+  useAppSelector,
+  RootState,
+} from "../../Redux/configureStrore";
 import FormSelect from "./components/FormSelect";
-import { courseReducer } from "../../Redux/Slices/adminSlice";
-
+import { fetchTeachersReducer } from "../../Redux/Slices/adminSlice";
 
 type SidebarType = () => void;
 
@@ -45,9 +48,14 @@ const CreateCourse = () => {
     setIsOpenSidebar((prev) => !prev);
   };
   const {
-    users: { courses },
-  } = useAppSelector((state: RootState) => state.courseArray);
+    users: { teachers },
+  } = useAppSelector((state: RootState) => state.teachers);
   const dispatch = useAppDispatch();
+
+  // get only names of teachers fron taecher array and set on course Form
+  const teacherNameArray =
+    teachers &&
+    teachers.map((item) => `${item['firstname']} ${item['lastname']}`);
 
   // This function send user-data to the server to perform post request i.e Function to add a new Teacher to the DB
   const handleAddNewCourse = async (e: FormEvent) => {
@@ -58,6 +66,7 @@ const CreateCourse = () => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
         body: JSON.stringify(courseData),
       };
@@ -99,22 +108,8 @@ const CreateCourse = () => {
 
   useEffect(() => {
     // dispatch data from the store
-    dispatch(courseReducer());
+    dispatch(fetchTeachersReducer());
   }, []);
-
-  // Retrieve all teacher's names
-  const getTeacherNames = (): string[] => {
-    const arrayNames: Array<string> = [];
-    if (courses && courses.length > 0) {
-      for (const data of courses) {
-        let name: string = `${data["courseInstructor"]}`;
-        arrayNames.push(name);
-      }
-    } else {
-      throw new Error("Course array is possibly empty");
-    }
-    return arrayNames;
-  };
 
   // Returning UI component
   return (
@@ -164,7 +159,7 @@ const CreateCourse = () => {
                 placeholder="Course Instructor "
                 onChange={OnChange}
                 style="long-input"
-                options={getTeacherNames()}
+                options={teacherNameArray}
               />
               <Input
                 type="text"

@@ -9,6 +9,17 @@ import announcementReducer from './Slices/adminSlice';
 import usersReducer from './Slices/adminSlice';
 import logReducer from './Slices/adminSlice';
 
+// Teacher reducers
+import fetchTeacherCourseReducer from './Slices/teacherSlice';
+import getStudentCreatedByTeacherReducer  from './Slices/teacherSlice';
+import getEventCreatedByTeacherReducer from './Slices/teacherSlice';
+import getExamReducer  from './Slices/teacherSlice';
+
+// students reducers
+import getStudentAttendanceReducer from './Slices/studentSlice';
+import getScheduledExamReducer from './Slices/studentSlice';
+import getInstructorReducer  from './Slices/studentSlice';
+
 
 const ReduxStore = configureStore({
    reducer: {
@@ -19,7 +30,14 @@ const ReduxStore = configureStore({
      courseArray: courseReducer,
      announArray: announcementReducer,
      userArray: usersReducer,
-     logs: logReducer
+     logs: logReducer,
+     course: fetchTeacherCourseReducer,
+     _studentsOfTeacher: getStudentCreatedByTeacherReducer,
+     events: getEventCreatedByTeacherReducer,
+     exams: getExamReducer,
+     attendance: getStudentAttendanceReducer,
+     studentExamInfo: getScheduledExamReducer,
+     instructor: getInstructorReducer
    }
 })
 
@@ -32,3 +50,4 @@ export const  useAppDispatch = () => useDispatch<AppDispatch>()
 export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector
 
 export default ReduxStore;
+

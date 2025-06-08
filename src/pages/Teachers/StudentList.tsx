@@ -14,12 +14,15 @@ import _TableHeaders from "./components/talble/TableHeaders";
 import { useTableDataContext } from "../../context/TableActionContext";
 import { useTheme } from "../../context/ThemeContext";
 
-type SidebarType = () => void;
+type SidebarType = () => void; // Just loving doing it 😂. Could be ommited
 
 const StudentList: FC = () => {
   const [isOpenSidebar, setIsOpenSidebar] = useState(true);
+
+
+  // Dispatching sidebar state
   const handleSidebarWidth = (): ReturnType<SidebarType> => {
-    console.log("state: " + isOpenSidebar);
+    // console.log("state: " + isOpenSidebar);
     setIsOpenSidebar((prev) => !prev);
   };
 
@@ -36,6 +39,9 @@ const StudentList: FC = () => {
     changeRowPerPage,
   } = useTableDataContext();
 
+
+
+  // Return component UI
   return (
     <div className={`w-screen min-h-screen flex select-none ${themeMode === 'dark' ? 'bg-content-dark' : 'bg-white'}`}>
       <SidebarContext.Provider
@@ -44,7 +50,7 @@ const StudentList: FC = () => {
         <Sidebar />
         <div
           className={`w-screen min-h-screen ${
-            isOpen ? "pl-15 pr-3" : "pl-12 pr-3"
+            isOpen === true ? "pl-13 pr-3" : "pl-12 pr-3"
           } pb-[2em]`}
         >
           <Navbar />

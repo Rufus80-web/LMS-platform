@@ -1,0 +1,30 @@
+{
+    "examTitle": "Intro to JavaScript",
+    "type": "programming",
+    "durationMinutes": 30,
+    "examDate": "2025-06-22",
+    "examTime": "12:30",
+    "exercises": [
+      {
+        "title": "FizBuzz problem",
+        "language": "javascript",
+        "instructions": "Write a function that prints numbers 1 to 100...",
+        "solution": "function fizzBuzz() {...}",
+        "testCases": [
+          {"input": "", "expectedOutput": "1\n2\nFizz\n..."}
+        ]
+      },
+      {
+        "title": "simple Addition",
+        "question": "What is 2 + 2?",
+        "options": ["3", "4", "5", "6"],
+        "correctAnwer": "4"
+      },
+      {
+        "title": "simple Subtraction",
+        "question": "What is 2 - 2?",
+        "options": ["3", "4", "0", "6"],
+        "correctAnwer": "0"
+      }
+    ]
+  }

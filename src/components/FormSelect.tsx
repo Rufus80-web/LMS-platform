@@ -1,13 +1,15 @@
 import { ChangeEvent } from "react";
-import { classes as classRooms } from "../static/classes";
 
 type SelectType = {
   name: string;
   value: string;
   label: string;
   isRequired?: boolean;
+  disabled?: boolean,
+  options: string[]
   onChange: (e: ChangeEvent<HTMLSelectElement>) => void;
 };
+
 
 const FormSelect = ({
   name,
@@ -15,6 +17,8 @@ const FormSelect = ({
   label,
   onChange,
   isRequired,
+  disabled,
+  options
 }: SelectType) => {
   return (
     <div>
@@ -27,15 +31,16 @@ const FormSelect = ({
       <select
         name={name}
         value={value}
+        disabled={disabled}
         onChange={onChange}
-        className="mt-1 w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+        className={`border-2 border-[#00000011] shadow-2xl h-[7vh] w-[35vw] rounded-md`}
       >
         <option disabled value="">
-          Choose your class
+          {label}
         </option>
-        {classRooms?.map((room) => (
-          <option key={room.id} value={room.name}>
-            {room.name}
+        {options?.map((item) => (
+          <option key={item} value={item}>
+            {item}
           </option>
         ))}
       </select>

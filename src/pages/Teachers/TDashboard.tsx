@@ -17,7 +17,8 @@ const TDashboard: FC = () => {
         value={{ isOpen: isOpenSidebar, shouldOpen: handleSidebarWidth }}
       >
         <Sidebar  />
-        <MainContent />
+        <MainContent
+        />
       </SidebarContext.Provider>
     </div>
   );

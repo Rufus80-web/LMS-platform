@@ -7,7 +7,8 @@ type InputProps = {
   value: string;
   readonly placeholder?: string;
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
-  style: string;
+  style?: string;
+  disable?: boolean;
 };
 
 const Input = ({
@@ -16,17 +17,22 @@ const Input = ({
   value,
   placeholder,
   onChange,
-  style,
+  disable,
 }: InputProps) => {
-  const {themeMode} = useTheme()
+  const { themeMode } = useTheme();
   return (
     <input
       type={type}
       name={name}
       value={value}
       placeholder={placeholder}
+      disabled={disable}
       onChange={onChange}
-      className={`${style} ${themeMode === 'dark' ? 'bg-[#43495779] placeholder:text-slate-50 text-white' : 'bg-gray-200'}`}
+      className={`border-2 border-[#00000011] outline-0 shadow-2xl h-[7vh] w-[40vw] rounded-md indent-2 focus:border-slate-50 placeholder:text-[12px] ${
+        themeMode === "dark"
+          ? "bg-[#43495779] placeholder:text-slate-50 text-white"
+          : "bg-gray-200"
+      }`}
     />
   );
 };

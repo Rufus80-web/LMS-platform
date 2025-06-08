@@ -60,6 +60,8 @@
 /* Vanilla CSS */
 body {
     overflow-x: hidden;
+    /* background-color: #141b2d; */
+    /* color: var(--color-white) */
 }
 
 /* table {

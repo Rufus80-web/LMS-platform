@@ -2,7 +2,7 @@ export type Gender = "Male" | "Female";
 
 // Interface to handle themeMode in the application
 export interface ThemeModeProps {
-  themeMode: "light" | "dark";
+  themeMode: string; // "light" | "dark"
   lightTheme: () => void;
   darkTheme: () => void;
 }
@@ -14,7 +14,7 @@ export interface ThemeContextComponent {
 
 //Instantiating a ThemeModeprops object for the createContext() function
 export const themeMode: ThemeModeProps = {
-  themeMode: "light",
+  themeMode: localStorage.getItem("theme") as string ,
   lightTheme: () => {},
   darkTheme: () => {},
 };
@@ -81,4 +81,42 @@ export interface SemiUser {
 export interface Credentials {
   email: string;
   password: string;
+}
+
+// 
+export interface studentOfTeacherDataProps {
+  readonly id: string;
+  firstname: string;
+  lastname: string;
+  age?: number;
+  contact: string;
+  email: string;
+  roles: string;
+  isBlock: number
+  [index: number]: number;
+}
+
+
+export interface GradedExercise {
+  examId: string,
+  examTitle: string;
+  examTime: string,
+  examDate: string,
+  type: "mcq" | "programming";
+  durationMinutes: number;
+  exercises: any[];
+  dateOfExam?: Date;
+}
+
+export interface ExamProps{
+  examId: string,
+  examTitle: string;
+  durationMinutes: number;
+  exercises: any[];
+  examhasPassed: boolean;
+  teacherId: string,
+  room: string,
+  course: string,
+  _id?: string,
+  datetime: string
 }

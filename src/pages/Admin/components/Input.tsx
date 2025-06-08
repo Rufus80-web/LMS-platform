@@ -29,7 +29,7 @@ const Input = ({
       placeholder={placeholder}
       onChange={onChange}
       disabled={disable}
-      className={`${style} ${themeMode === 'dark' ? 'bg-[#43495779] placeholder:text-slate-50 text-white' : 'bg-[#eeeeee7c]'} select-none $`}
+      className={`${style} ${themeMode === 'dark' ? 'bg-[#43495779] placeholder:text-slate-50 text-white' : 'bg-[#eeeeee7c]'} select-none placeholder:textt-sm`}
     />
   );
 };

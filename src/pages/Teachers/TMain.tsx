@@ -2,7 +2,6 @@ import { Table, TableContainer, Paper, TablePagination } from "@mui/material";
 import { useTableDataContext } from "../../context/TableActionContext";
 import { useTheme } from "../../context/ThemeContext";
 
-
 import Navbar from "./components/navbar/Navbar";
 import DashHeader from "./components/DashHeader";
 import BoxUtil from "./components/Box";
@@ -21,10 +20,27 @@ import classRoom from "../../assets/images/class2.png";
 import money from "../../assets/images/money.png";
 import mortarboard from "../../assets/images/mortarboard.png";
 import shoppingList from "../../assets/images/shopping-list.png";
+import { useEffect } from "react";
+import { useAppDispatch, useAppSelector } from "../../Redux/configureStrore";
+import {
+  fetchTeacherCourseReducer,
+  getExamReducer,
+  getStudentCreatedByTeacherReducer,
+  getUserId,
+} from "../../Redux/Slices/teacherSlice";
 
 const MainContent: React.FC = () => {
   const { isOpen } = useTeacherSidebarContext();
-  const {themeMode} = useTheme()
+  const { themeMode } = useTheme();
+  const dispatch = useAppDispatch();
+
+  // redux store data
+  const { course } = useAppSelector((state) => state.course);
+  const { studentOfTeacherData } = useAppSelector(
+    (state) => state._studentsOfTeacher
+  );
+  const { exams } = useAppSelector((state) => state.exams);
+  const userId = getUserId();
   const {
     _order,
     _orderBy,
@@ -36,21 +52,43 @@ const MainContent: React.FC = () => {
     changeRowPerPage,
   } = useTableDataContext();
 
+  useEffect(() => {
+    if (userId) {
+      dispatch(fetchTeacherCourseReducer());
+      dispatch(getStudentCreatedByTeacherReducer());
+      dispatch(getExamReducer());
+    }
+  }, [userId, dispatch]);
+
+  /**************************************************************************UI UI UI UI UI UI UI UI UI UI ************************************************ */
+
   //UI
   return (
     <div
       className={`w-screen min-h-screen pb-[2em] ${
         isOpen ? "pl-15 pr-3" : "pl-12 pr-3"
-      } ${themeMode === 'dark' ? 'bg-content-dark' : 'bg-white'}`}
+      } ${themeMode === "dark" ? "bg-content-dark" : "bg-white"}`}
     >
       <Navbar />
       <DashHeader title="Dashboard" message="Welcome to your Dashboard" />
 
       <div className={`grid grid-cols-4 pt-5`}>
-        <BoxUtil image={classRoom} />
-        <BoxUtil image={mortarboard} />
-        <BoxUtil image={shoppingList} />
-        <BoxUtil image={money} />
+        <BoxUtil
+          image={classRoom}
+          total={studentOfTeacherData ? studentOfTeacherData.length : 0}
+          title="Total Students"
+        />
+        <BoxUtil
+          image={mortarboard}
+          title="Total Courses"
+          total={course ? course.length : 0}
+        />
+        <BoxUtil
+          image={shoppingList}
+          title="Total Scheduled Exams"
+          total={exams ? exams.length : 0}
+        />
+        <BoxUtil image={money} title="Class Rooms" total={10} />
       </div>
 
       <RecordInfo />
@@ -84,8 +122,10 @@ const MainContent: React.FC = () => {
               page={_page}
               onPageChange={changePage}
               onRowsPerPageChange={changeRowPerPage}
-              className={`${themeMode === 'light' ? 'bg-indigo-300' : 'bg-indigo-600'}`}
-              style={{color: themeMode === "light" ? "black" : "white",}}
+              className={`${
+                themeMode === "light" ? "bg-indigo-300" : "bg-indigo-600"
+              }`}
+              style={{ color: themeMode === "light" ? "black" : "white" }}
             />
           </Paper>
         </div>

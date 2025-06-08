@@ -8,7 +8,7 @@ const HeaderMain = ({ title }: HeaderProps) => {
   const { themeMode } = useTheme();
   return (
     <h2
-      className={`text-2xl ml-[0.5em] ${
+      className={`text-2xl ml-[0.5em] text-white ${
         themeMode === "light" ? "text-dark" : "text-white"
       }`}
     >

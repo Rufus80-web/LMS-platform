@@ -1,4 +1,4 @@
-import { TableDataProps } from "./types";
+// import { TableDataProps } from "./types";
 import {
   InfoOutline,
   UploadFile,
@@ -9,10 +9,7 @@ import {
   PlusOne,
   TimeToLeave,
   PlusOneSharp,
-  TableRestaurant,
-  Lock,
   ExitToApp,
-  BookOnline,
   Person,
   MenuBook,
   LightMode,
@@ -27,20 +24,21 @@ import {
   AccountCircle,
   AdminPanelSettings,
   People,
-  Login
+  Login,
+  Schedule,
 } from "@mui/icons-material";
 
 export const navItems = [
-  { id: 1, name: "Home", icon: <Dashboard />, url: "/student/dashboard" },
+  { id: 1, name: "Home", icon: '', url: "/student/dashboard" },
   {
     id: 2,
     name: "Time Table",
-    icon: <TableRestaurant />,
+    icon: '',
     url: "/student/timetable",
   },
-  { id: 3, name: "Exams", icon: <BookOnline />, url: "/student/exams" },
-  { id: 4, name: "Password", icon: <Lock />, url: "/student/update_pass" },
-  { id: 5, name: "Logout", icon: <ExitToApp />, url: "/auths/login" },
+  { id: 3, name: "Exams", icon: '', url: "/student/exams" },
+  { id: 4, name: "Password", icon: '', url: "/student/update_pass" },
+  { id: 5, name: "Logout", icon: <Logout />, url: "/auths/login" },
 ];
 
 export const teacherSidebarItems = {
@@ -61,7 +59,9 @@ export const teacherSidebarItems = {
       {
         id: 1,
         title: "",
-        children: [{ icon: <Dashboard />, name: "Dashnoard", goto: "dashboard" }],
+        children: [
+          { icon: <Dashboard />, name: "Dashnoard", goto: "dashboard" },
+        ],
       },
       {
         id: 2,
@@ -69,8 +69,13 @@ export const teacherSidebarItems = {
         children: [
           { icon: <InfoOutline />, name: "Students", goto: "students" },
           {
+            icon: <Schedule />,
+            name: "Manage Exams",
+            goto: "manage-exams",
+          },
+          {
             icon: <UploadFile />,
-            name: "Upload Exercise",
+            name: "Upload Exam",
             goto: "upload-exercise",
           },
         ],
@@ -84,7 +89,7 @@ export const teacherSidebarItems = {
             name: "New Admission",
             goto: "student-admission",
           },
-          { icon: <TimeToLeaveTwoTone />, name: "Tmetable", goto: "timetable" },
+          { icon: <Campaign />, name: "Schedule Exam", goto: "timetable" },
         ],
       },
       {
@@ -110,16 +115,51 @@ export const teacherSidebarItems = {
 export const adminSidebar = {
   closed: {
     icons: [
-      { id: 1, name: <Dashboard />, url: "/admin/dashboard" },
-      { id: 2, name: <School />, url: "/admin/manage.teachers" },
-      { id: 3, name: <Group />, url: "/admin/manage.students" },
-      { id: 4, name: <MenuBook />, url: "/admin/manage-courses" },
-      { id: 5, name: <Campaign />, url: "/admin/announcement" },
-      { id: 6, name: <AccountCircle />, url: "/admin/profile" },
-      { id: 7, name: <Logout />, url: "/auths/login" },
-      { id: 8, name: <People />, url: "/admin/users.account" },
-      { id: 9, name: <AdminPanelSettings />, url: "/admin/users.role" },
-      { id: 10, name: <Login />, url: "/admin/log-info" },
+      {
+        id: 1,
+        name: <Dashboard />,
+        url: "/admin/dashboard",
+        title: "Dashnoard",
+      },
+      {
+        id: 2,
+        name: <School />,
+        url: "/admin/manage.teachers",
+        title: "Teacher Management",
+      },
+      {
+        id: 3,
+        name: <Group />,
+        url: "/admin/manage.students",
+        title: "Student Management",
+      },
+      {
+        id: 4,
+        name: <MenuBook />,
+        url: "/admin/manage-courses",
+        title: "Course Management",
+      },
+      {
+        id: 5,
+        name: <Campaign />,
+        url: "/admin/announcement",
+        title: "Announcement",
+      },
+      {
+        id: 6,
+        name: <AccountCircle />,
+        url: "/admin/profile",
+        title: "Profile",
+      },
+      { id: 7, name: <Logout />, url: "/auths/login", title: "Logout" },
+      { id: 8, name: <People />, url: "/admin/users.account", title: "Users" },
+      {
+        id: 9,
+        name: <AdminPanelSettings />,
+        url: "/admin/users.role",
+        title: "Roles",
+      },
+      { id: 10, name: <Login />, url: "/admin/log-info", title: "Logs" },
     ],
   },
   open: {
@@ -197,8 +237,34 @@ export const adminSidebar = {
 };
 
 export const tNavbarItems = [
-  { id: 1, icon: <LightMode />, url: "", name: 'themeMode', },
-  { id: 2, icon: <NotificationImportant />, url: "", name:'Notification Icon' },
-  { id: 3, icon: <PendingActions />, url: "", name: 'Pending Actions' },
-  { id: 4, icon: <Person3 />, url: "", name: 'Person icon' },
+  {
+    id: 1,
+    icon: <LightMode />,
+    url: "",
+    name: "themeMode",
+    title: "themeMode",
+  },
+  {
+    id: 2,
+    icon: <NotificationImportant />,
+    url: "",
+    name: "Notification Icon",
+    title: "Notification",
+  },
+  {
+    id: 3,
+    icon: <PendingActions />,
+    url: "",
+    name: "Pending Actions",
+    title: "",
+  },
+  {
+    id: 4,
+    icon: <Person3 />,
+    url: "/teacher/profile/info",
+    name: "Person icon",
+    title: "My Profile",
+  },
 ];
+
+

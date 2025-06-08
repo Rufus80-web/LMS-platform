@@ -13,17 +13,13 @@ const LoginForm: FC = (): JSX.Element => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [message, setMessage] = useState<string>("");
-  const [status, setStatus] = useState<string>("error");
 
   const route = useNavigate();
 
   // Stops the loader when called
   const setSuccess = (msg: string, url: string) => {
     setTimeout(() => {
-      setIsLoading(false);
       toast.success(msg);
-      setMessage(msg);
       setTimeout(() => route(`${url}/dashboard`), 2000);
     }, 2000);
   };
@@ -31,9 +27,7 @@ const LoginForm: FC = (): JSX.Element => {
   // Display Error messages
   const setError = (msg: string) => {
     setTimeout(() => {
-      setIsLoading(false);
       toast.error(msg);
-      setMessage(msg);
     }, 2000);
   };
 
@@ -53,7 +47,6 @@ const LoginForm: FC = (): JSX.Element => {
       body: JSON.stringify(payload),
     };
     setIsLoading(true);
-    setMessage("");
 
     try {
       const response = await loginRequest(configs);
@@ -67,7 +60,6 @@ const LoginForm: FC = (): JSX.Element => {
       } else {
         // Extract user-role from user object
         const userRole = userObj["roles"];
-        setStatus(status);
         // Send the token to authsRedux Slice
         // dispatch(setToken(accessToken));
         localStorage.setItem("token", accessToken);
@@ -91,11 +83,13 @@ const LoginForm: FC = (): JSX.Element => {
     } catch (error: any) {
       console.error(error.message);
       throw new Error(error);
+    } finally {
+      setIsLoading(false)
     }
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-dark-bg px-4">
+    <div className="flex min-h-screen items-center justify-center bg-gradient-to-r from-[#111] to-[#082520e0] shadow-sm px-4">
       {/* Loader  */}
       {isLoading && (
         <div className="absolute flex">
@@ -119,7 +113,7 @@ const LoginForm: FC = (): JSX.Element => {
           exit={{ opacity: 0, x: "100%" }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4, delay: 0.3 }}
-          className="w-full max-w-md space-y-8 rounded-xl bg-white p-8 shadow-lg"
+          className="w-full max-w-md space-y-8 rounded-xl bg-[#ffffff] p-8 shadow-lg"
         >
           <div>
             <h2 className="text-center text-2xl font-bold text-gray-900">

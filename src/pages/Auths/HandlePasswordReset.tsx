@@ -65,7 +65,7 @@ const HandlePasswordReset = () => {
 
   // Component UI
   return (
-    <div className="flex min-h-screen items-center justify-center bg-dark-bg px-4">
+    <div className="flex min-h-screen items-center justify-center bg-gradient-to-r from-[#111] to-[#082520c5] shadow-sm px-4">
       <motion.div
         initial={{ opacity: 0, x: "-70%", y: "0%" }}
         animate={{ opacity: 1, x: 0 }}

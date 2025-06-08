@@ -73,9 +73,9 @@ const TeacherPanel: React.FC<TeacherPanelProps> = ({ onSave }) => {
 
   return (
     <Box sx={{ p: 3, pl: 0 }}>
-      <Typography variant="h5">Teacher Panel - Upload & Schedule</Typography>
+      <Typography variant="h5">Upload & Schedule MCQ Exam</Typography>
       <Box sx={{ mt: 2 }}>
-        <Typography>Upload Graded Exercise File (.json)</Typography>
+        <Typography>Upload Graded Exam File (.json)</Typography>
         <Input
           type="file"
           inputProps={{ accept: ".json" }}
