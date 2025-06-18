@@ -28,11 +28,13 @@ import {
   getStudentCreatedByTeacherReducer,
   getUserId,
 } from "../../Redux/Slices/teacherSlice";
+import { useLocation } from "react-router-dom";
 
 const MainContent: React.FC = () => {
   const { isOpen } = useTeacherSidebarContext();
   const { themeMode } = useTheme();
   const dispatch = useAppDispatch();
+  const location = useLocation()
 
   // redux store data
   const { course } = useAppSelector((state) => state.course);
@@ -53,12 +55,12 @@ const MainContent: React.FC = () => {
   } = useTableDataContext();
 
   useEffect(() => {
+    dispatch(fetchTeacherCourseReducer());
+    dispatch(getStudentCreatedByTeacherReducer());
+    dispatch(getExamReducer());
     if (userId) {
-      dispatch(fetchTeacherCourseReducer());
-      dispatch(getStudentCreatedByTeacherReducer());
-      dispatch(getExamReducer());
     }
-  }, [userId, dispatch]);
+  }, [location.pathname]);
 
   /**************************************************************************UI UI UI UI UI UI UI UI UI UI ************************************************ */
 

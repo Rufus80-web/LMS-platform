@@ -18,7 +18,7 @@ const Announcement: FC<SpreadExamInfoProps> = ({
 }) => {
   // const { themeMode } = useTheme();
   return (
-    <div className="flex flex-col px-2 border-b-1 font-light border-blue-200 text-[#e8e6e6]">
+    <div className="flex flex-col px-2 border-b-1 font-light border-blue-200 text-[#e8e6e6] bg-[#0000007e]">
       <div className="break-words">
         <span className={`text-sm font-semibold `}>{title}</span>
         <p>{course}</p>

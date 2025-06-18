@@ -4,6 +4,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { verificationCodeRequest } from "../../api/auths.api";
 import toast from "react-hot-toast";
 import InputField from "../../components/InputField";
+import ParticleContaner from "../../particles/Particle";
 
 const AuthenticateVerificationcode = () => {
   const [code, setCode] = useState<string>("");
@@ -58,22 +59,21 @@ const AuthenticateVerificationcode = () => {
   };
   return (
     <div className="flex min-h-screen items-center justify-center bg-gradient-to-r from-[#111] to-[#082520c5] shadow-sm px-4">
+      <ParticleContaner />
       <motion.div
         initial={{ opacity: 0, x: "70%", y: "0%" }}
         animate={{ opacity: 1, x: 0 }}
         exit={{ opacity: 0, x: "100%" }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.4, delay: 0.3 }}
-        className="w-full max-w-md space-y-8 rounded-xl bg-white p-8 shadow-lg select-none"
+        className="w-full max-w-md space-y-8 rounded-xl bg-[#11111180] text-white p-8 shadow-lg select-none"
       >
         <motion.form onSubmit={AuthenticateEmail}>
           <div className="flex justify-start gap-0.5">
             <div className="flex justify-center items-center w-6 h-6 rounded-full text-lg text-white bg-slate-500 animate-pulse">
               2
             </div>
-            <h2 className="text-2xl font-light text-gray-900">
-              Reset Password Procedure
-            </h2>
+            <h2 className="text-2xl font-light">Reset Password Procedure</h2>
           </div>
 
           <div className="pt-6">
@@ -83,6 +83,7 @@ const AuthenticateVerificationcode = () => {
               value={code}
               label="Verification Code"
               type="text"
+              style="text-white"
               placeholder="Enter 4-digits code sent.."
               onChange={(e: ChangeEvent<HTMLInputElement>) =>
                 setCode(e.target.value)
@@ -97,7 +98,13 @@ const AuthenticateVerificationcode = () => {
                 loading ? "bg-purple-600" : "bg-blue-500"
               } mt-4 flex justify-center items-center gap-2 cursor-pointer`}
             >
-              <div>{loading ? <span className="animate-pulse">Verifying...</span> : "Continue"}</div>
+              <div>
+                {loading ? (
+                  <span className="animate-pulse">Verifying...</span>
+                ) : (
+                  "Continue"
+                )}
+              </div>
               <div
                 className={`w-5 h-5 rounded-full border-2 border-solid border-white rounded-tl-0 border-t-0 ${
                   loading ? "animate-spin block" : "hidden"

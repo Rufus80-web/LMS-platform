@@ -35,7 +35,7 @@ const Announce_Teacher: FC<AnnouncementProps> = ({
         className={`remove-scroll w-full max-h-[50vh] pt-14 flex flex-col gap-0 overflow-auto `}
       >
         <div>
-          <h2 className="text-xl font-semibold text-white uppercase mt-2 px-2">
+          <h2 className="text-sm font-semibold text-white uppercase mt-2 px-2">
             Announcements
           </h2>
         </div>
@@ -44,7 +44,7 @@ const Announce_Teacher: FC<AnnouncementProps> = ({
         ))}
       </div>
       <div className="w-full pt-1 h-[50vh] pl-2 overflow-y-scroll remove-scroll-1 border-t-1 border-t-gray-500">
-        <h2 className="text-xl font-semibold text-white uppercase">
+        <h2 className="text-sm font-semibold text-white uppercase">
           Your Teachers
         </h2>
         <div className="pt-2 flex flex-col gap-2">

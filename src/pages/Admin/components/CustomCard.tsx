@@ -2,7 +2,7 @@ import {} from "react";
 import { Button } from "@mui/material";
 
 type MaterialCardProps = {
-  name: string;
+  name: string | undefined;
   state?: boolean;
   func1: () => void;
   func2: () => void;

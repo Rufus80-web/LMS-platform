@@ -11,6 +11,10 @@ const globalApi = axios.create({
     baseURL: globalURL,
     headers: {'Authorization': `Bearer ${localStorage.getItem('token') || ''}`}
 })
+const submissionApi = axios.create({
+    baseURL: 'http://localhost:8000/api/submit-exam',
+    headers: {'Authorization': `Bearer ${localStorage.getItem('token') || ''}`}
+})
 
 
 export const studentAttendaceApi = (id: string) => studentApi.get(`/attendance/${id}`) // Display all the attendances (courses) for a student
@@ -19,3 +23,5 @@ export const examScheduleInfoApi = (id: string) => studentApi.get(`/${id}/exam-s
 export const getEventExam = (examId: string, teacherId: string) => globalApi.get(`/${examId}/exam-scheduled/${teacherId}`)
 export const studentInstructorApi = (studId: string) => studentApi.get(`/instructors/${studId}`)
 export const studentPasswordRessesionApi = <T,>(data: T) => studentApi.patch('/password/update', data)
+export const studentSubmissionApi = () => submissionApi.get('/student-submission')
+export const submissionRequestApi = (examId: string) => submissionApi.get(`/submission/${examId}`)

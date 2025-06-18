@@ -6,6 +6,7 @@ import { getEventExam } from "../../api/student.api";
 import toast from "react-hot-toast";
 // import Editor from "@monaco-editor/react";
 import { getUserObjectId } from "../../Redux/Slices/teacherSlice";
+import CodeFeedback from "../../components/CodeFeedback";
 
 interface Exercise {
   type: "mcq" | "programming" | "structural";
@@ -29,6 +30,7 @@ const ExercisePage: React.FC = () => {
     teacherId: "",
     datetime: "",
     durationMinutes: 1,
+    isLocked: 0
   });
 
   // data state variables for the editor
@@ -46,6 +48,7 @@ const ExercisePage: React.FC = () => {
       teacherId: state.teacherId,
       datetime: state.datetime,
       durationMinutes: state.durationMinutes,
+      isLocked: state.isLocked
     });
   }, []);
 
@@ -175,6 +178,8 @@ const ExercisePage: React.FC = () => {
         />
       )}
       <h1 className="text-2xl font-bold text-slate-50">{exam.examTitle}</h1>
+
+      {/* <CodeFeedback inputCode={codeAnswers[0]} /> */}
 
       {exam.exercises.map((ex: Exercise, idx: number) => (
         <React.Fragment>

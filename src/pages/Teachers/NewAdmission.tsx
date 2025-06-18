@@ -32,7 +32,7 @@ const NewAdmission: FC = () => {
   const [formData, setFormData] = useState({
     email: "",
     matricule: "",
-    classRoom: "",
+    room: "",
     level: "",
     course: "",
   });
@@ -42,7 +42,7 @@ const NewAdmission: FC = () => {
     setFormData({
       email: "",
       matricule: "",
-      classRoom: "",
+      room: "",
       level: "",
       course: "",
     });
@@ -84,8 +84,8 @@ const NewAdmission: FC = () => {
         toast.success(message);
         cleanTheForm();
 
-        setTimeout(() => route("/teacher/students"), 1000);
         // Navigate and clear the form
+        setTimeout(() => route("/teacher/students"), 2500);
       }
     } catch (error: any) {
       console.log(error);
@@ -119,8 +119,8 @@ const NewAdmission: FC = () => {
                 <section className="pt-6 flex gap-6"></section>
                 <section className="pt-6 flex gap-6">
                   <FormSelect
-                    name="classRoom"
-                    value={formData.classRoom}
+                    name="room"
+                    value={formData.room}
                     placeholder="Enter student class room"
                     onChange={OnChange}
                     style="small-input"

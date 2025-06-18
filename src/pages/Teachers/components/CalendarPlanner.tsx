@@ -30,7 +30,6 @@ import { createEventApi, globalApi } from "../../../api/teacher.api";
 import toast from "react-hot-toast";
 import { useAppDispatch, useAppSelector } from "../../../Redux/configureStrore";
 
-
 const CalendarPlanner: React.FC = () => {
   const [open, setOpen] = useState(false);
   const [selectedDate, setSelectedDate] = useState<DateSelectArg | null>(null);
@@ -49,8 +48,7 @@ const CalendarPlanner: React.FC = () => {
   // exams from redux store
   const { exams } = useAppSelector((state) => state.exams);
   // get exams info scheduled by teacher
-  const { events:ScheduledEvents } = useAppSelector((state) => state.events)
-
+  const { events: ScheduledEvents } = useAppSelector((state) => state.events);
 
   // get the current Date
   const now = new Date().toISOString().slice(0, 16);
@@ -179,23 +177,21 @@ const CalendarPlanner: React.FC = () => {
 
   // get exams scheduled by teacher
   useEffect(() => {
-    dispatch(getEventCreatedByTeacherReducer())
-    
-  }, [])
+    dispatch(getEventCreatedByTeacherReducer());
+  }, []);
 
   const MapEventOnCalendar = () => {
-    const events = []
-    
-    for(const event of ScheduledEvents){
-      const obj = {title: '', start: '', end: '', allDays: ''}
-      obj.title = event.title
-      obj.start =  event.datetime?.split('T')[0] as string
-      events.push(obj)
+    const events = [];
+
+    for (const event of ScheduledEvents) {
+      const obj = { title: "", start: "", end: "", allDays: "" };
+      obj.title = event.title;
+      obj.start = event.datetime?.split("T")[0] as string;
+      events.push(obj);
     }
 
-    return events ? events : []
-  }
-
+    return events ? events : [];
+  };
 
   /*********************************************************************UI UI UI UI UI UI UI UI UI UI************************************* */
 
@@ -218,9 +214,14 @@ const CalendarPlanner: React.FC = () => {
           clearDialogInput();
           setOpen(false);
         }}
-        maxWidth="sm"
+        maxWidth="md"
         fullWidth
         scroll="paper"
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
         slotProps={{
           paper: {
             sx: {
@@ -239,7 +240,7 @@ const CalendarPlanner: React.FC = () => {
                   name="title"
                   type="text"
                   value={title}
-                  style={{ width: "18vw" }}
+                  style={{ width: "" }}
                   onChange={(e) => setTitle(e.target.value)}
                 />
               </Grid>
@@ -284,7 +285,7 @@ const CalendarPlanner: React.FC = () => {
                   label="Description"
                   name="description"
                   type="text"
-                  style={{ width: "18vw" }}
+                  style={{ width: "" }}
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
                 />
@@ -329,17 +330,16 @@ const CalendarPlanner: React.FC = () => {
                     ))}
                   </Select>
                 </FormControl>
+                <DialogActions>
+                  <Button
+                    variant="contained"
+                    type="button"
+                    onClick={handleEventScheduling}
+                  >
+                    Shedule Exam
+                  </Button>
+                </DialogActions>
               </Grid>
-
-              <DialogActions>
-                <Button
-                  variant="contained"
-                  type="button"
-                  onClick={handleEventScheduling}
-                >
-                  Shedule Exam
-                </Button>
-              </DialogActions>
             </Grid>
           </Box>
         </DialogContent>

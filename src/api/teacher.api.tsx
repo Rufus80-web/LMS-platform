@@ -24,7 +24,7 @@ export const getEventApi = (idTeacher: string, eventId: string) => api.get(`${ba
 export const updateEventApi = (idTeacher: string, eventId: string, request_body: Object) => api.put(`${baseURL}/event/${idTeacher}/${eventId}`, request_body)
 export const deleteEventApi = (idTeacher: string, eventId: string) => api.delete(`${baseURL}/event/${idTeacher}/${eventId}`)
 export const __getStudentApi = (idTeacher: string, matricule: string) => api.get(`${baseURL}/student/${idTeacher}/${matricule}`) // get a single student
-export const updateStudentApi = (idTeacher: string, matricule: string, request_body: Object) => api.put(`${baseURL}/student/${idTeacher}/${matricule}`, request_body)
+export const updateStudentApi = (idTeacher: string, matricule: string, request_body: RequestInit) => fetch(`${baseURL}/student/${idTeacher}/${matricule}`, request_body)
 export const deleteStudentApi = (idTeacher: string, matricule: string) => api.delete(`${baseURL}/student/${idTeacher}/${matricule}`)
 export const UpdateTeacherProfileApi = (idTeacher: string, formData: RequestInit) => fetch(`${baseURL}/update-profile/${idTeacher}`, formData)
 export const getTeacherDataApi = (id: string) => globalApi.get(`${globalURL}/user/${id}`)

@@ -8,11 +8,11 @@ import DashHeader from "../Teachers/components/DashHeader";
 import { Alert, Button } from "@mui/material";
 import { useNavigate, useParams } from "react-router-dom";
 import toast from "react-hot-toast";
-import { fetchTeacherCourseReducer, getUserObjectId } from "../../Redux/Slices/teacherSlice";
 import {
-  __getStudentApi,
-  updateStudentApi,
-} from "../../api/teacher.api";
+  fetchTeacherCourseReducer,
+  getUserObjectId,
+} from "../../Redux/Slices/teacherSlice";
+import { __getStudentApi, updateStudentApi } from "../../api/teacher.api";
 import { Sidebar } from "./TSidebar";
 import { useAppDispatch, useAppSelector } from "../../Redux/configureStrore";
 import FormSelect from "../../components/FormSelect";
@@ -25,10 +25,10 @@ const TeacherUpdateStudent: React.FC = () => {
   const { isOpen } = useTeacherSidebarContext();
 
   // Redux dispatcher actions
-  const dispatch = useAppDispatch()
+  const dispatch = useAppDispatch();
 
   // Redux data selector actor
-  const { course } = useAppSelector((state) => state.course)
+  const { course } = useAppSelector((state) => state.course);
 
   const [isOpenSidebar, setIsOpenSidebar] = useState(true);
   const handleSidebarWidth = (): ReturnType<SidebarType> => {
@@ -38,14 +38,14 @@ const TeacherUpdateStudent: React.FC = () => {
   const route = useNavigate();
   // create a student object
   const [student, setStudent] = useState({
-    classRoom: "",
+    room: "",
     studID: "",
     level: "",
     courses: "",
     email: "",
     name: "",
   });
-//   const [selectedCourses, setSelectedCourses] = useState<string[]>([])
+  //   const [selectedCourses, setSelectedCourses] = useState<string[]>([])
   const [isEditing, setIsEditing] = useState<boolean>(true);
   const [btnName, setBtnName] = useState("Update");
 
@@ -54,7 +54,6 @@ const TeacherUpdateStudent: React.FC = () => {
   // Handle form data onChange event
   const OnChange = (e: ChangeEvent<HTMLSelectElement | HTMLInputElement>) => {
     const { name, value } = e.target;
-    // const courseSelected: string[] = []
     setStudent({
       ...student,
       [name]: value,
@@ -71,29 +70,36 @@ const TeacherUpdateStudent: React.FC = () => {
       try {
         const teacherId = getUserObjectId();
         const request_body = {
-          classRoom: student.classRoom,
+          room: student.room,
           level: student.level,
-          course: student.courses
+          course: student.courses,
         };
+        const body = {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${localStorage.getItem('token')}`
+          },
+          body: JSON.stringify(request_body),
+        };
+
         const response = await updateStudentApi(
           teacherId,
           studID as string,
-          request_body
+          body
         );
 
-        const {
-          data: { status, message },
-        } = response;
+        const { status, message } = await response.json();
 
         if (status === "error") {
-          toast.error("Oops! " + message);
+          toast.error(message);
           // throw new Error(message);
         } else {
           toast.success(message);
 
           // Disable back form inputs
           setIsEditing(true);
-          
+
           // Reset submit button name
           setBtnName("Update");
 
@@ -127,11 +133,10 @@ const TeacherUpdateStudent: React.FC = () => {
     getStudentData();
   }, []);
 
-
   // fetch courses offered by a teacher
   useEffect(() => {
-    dispatch(fetchTeacherCourseReducer())
-  }, [])
+    dispatch(fetchTeacherCourseReducer());
+  }, []);
 
   // Set FormSelectData
 
@@ -149,7 +154,10 @@ const TeacherUpdateStudent: React.FC = () => {
           } ${themeMode === "dark" ? "bg-content-dark" : "bg-white"}`}
         >
           <Navbar />
-          <DashHeader title="Edit Student" message="Student Partial information" />
+          <DashHeader
+            title="Edit Student"
+            message="Student Partial information"
+          />
 
           <hr className="mt-3 border-[#85838336] border-solid border-1" />
 
@@ -158,12 +166,13 @@ const TeacherUpdateStudent: React.FC = () => {
             <form onSubmit={updateStudent} className="w-full h-[65vh] p-0">
               <section className="flex gap-2 mt-2">
                 <FormSelect
-                  name="classRoom"
-                  value={student.classRoom}
+                  name="room"
+                  value={student.room}
                   label="Pick a class"
                   onChange={OnChange}
                   disabled={isEditing}
                   options={classes}
+                  style="bg-slate-50"
                 />
                 <FormSelect
                   name="level"
@@ -171,7 +180,8 @@ const TeacherUpdateStudent: React.FC = () => {
                   label="Student Level"
                   onChange={OnChange}
                   disabled={isEditing}
-                  options={['Bachelor', 'Master']}
+                  options={["Bachelor", "Master"]}
+                  style="bg-slate-50"
                 />
               </section>
               <section className="pt-6 flex gap-6">
@@ -182,11 +192,10 @@ const TeacherUpdateStudent: React.FC = () => {
                   onChange={OnChange}
                   disabled={isEditing}
                   options={course}
+                  style="bg-slate-50"
                 />
               </section>
-              <section className="flex gap-2 mt-2">
-                
-              </section>
+              <section className="flex gap-2 mt-2"></section>
               {/* {selectedCourses} */}
               <section className="absolute right-3 bottom-72 flex justify-center items-center gap-2">
                 {!isEditing && <Alert>Form fields enabled</Alert>}

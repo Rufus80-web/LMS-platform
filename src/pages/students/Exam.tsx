@@ -50,6 +50,7 @@ const Exam: React.FC = () => {
         teacherId: item.teacherId["_id"],
         datetime: item.datetime,
         durationMinutes: item.examId["durationMinutes"],
+        isLocked: item.examId['isLocked']
       },
     });
   };
@@ -106,7 +107,7 @@ const Exam: React.FC = () => {
                 />
               </div>
             ))
-          ) :  (
+          ) :  ( // Displayed if no exam is scheduled
             <div className="absolute top-70 left-[30rem]">
               <Card>
                 <CardContent>

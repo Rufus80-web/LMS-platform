@@ -1,20 +1,27 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { examScheduleInfoApi, studentAttendaceApi, studentInstructorApi } from "../../api/student.api";
+import {
+  examScheduleInfoApi,
+  studentAttendaceApi,
+  studentInstructorApi,
+  studentSubmissionApi,
+} from "../../api/student.api";
 import { getUserObjectId } from "./teacherSlice";
 import { UseDispatch } from "react-redux";
 
 type initStateProps = {
   attendances: string[];
-  examInfo: any[],
-  instructors: {firstname: string, lastname: string, profile: string}[]
+  examInfo: any[];
+  instructors: { firstname: string; lastname: string; profile: string }[];
+  studSubmissions: any[];
 };
 
-type ReduxDispatch = ReturnType<UseDispatch>
+type ReduxDispatch = ReturnType<UseDispatch>;
 
 const initialState: initStateProps = {
   attendances: [],
   examInfo: [],
-  instructors: []
+  instructors: [],
+  studSubmissions: [],
 };
 
 export const getStudentAttendanceReducer = createAsyncThunk(
@@ -23,53 +30,77 @@ export const getStudentAttendanceReducer = createAsyncThunk(
     try {
       const userId: string | null = getUserObjectId();
       const req = await studentAttendaceApi(userId as string);
-      const { data, status, message } = req.data
+      const { data, status, message } = req.data;
 
-      if(status === 'OK'){
-        thunkApi.dispatch(setAttendance(data))
+      if (status === "OK") {
+        thunkApi.dispatch(setAttendance(data));
       } else {
-        console.error(message)
+        console.error(message);
       }
     } catch (error: any) {
-      throw new Error(error)
+      throw new Error(error);
     }
   }
 );
 
 // Reducer function to retrieve all the sheduled exams of students of the same class
 export const getScheduledExamReducer = () => {
-  return async function scheduledExamThunk(dispatch: ReduxDispatch, _getState: any) {
+  return async function scheduledExamThunk(
+    dispatch: ReduxDispatch,
+    _getState: any
+  ) {
     try {
-      const uid: string | null | undefined = getUserObjectId() as string
-      const response = await examScheduleInfoApi(uid)
-      const { sheduledExams, status, message } = response.data  
+      const uid: string | null | undefined = getUserObjectId() as string;
+      const response = await examScheduleInfoApi(uid);
+      const { sheduledExams, status, message } = response.data;
 
-      if(status === 'error') throw new Error(message)
-      
-      dispatch(setScheduledexams(sheduledExams))
+      if (status === "error") throw new Error(message);
+
+      dispatch(setScheduledexams(sheduledExams));
     } catch (e: any) {
-      console.error(e.message)
-      throw new Error(e)
+      console.error(e.message);
+      throw new Error(e);
     }
-  }
-}
+  };
+};
 
 // reducer function to get all the instructors of a student
-export const getInstructorReducer = createAsyncThunk('instructors/get', async (__, thunkApi) => {
-  try {
-    const studId = getUserObjectId()
-     const response = await studentInstructorApi(studId as string)
-     const result = response.data
+export const getInstructorReducer = createAsyncThunk(
+  "instructors/get",
+  async (__, thunkApi) => {
+    try {
+      const studId = getUserObjectId();
+      const response = await studentInstructorApi(studId as string);
+      const result = response.data;
 
-     if(result.status === 'error'){
-      thunkApi.rejectWithValue(result.message)
-     }
+      if (result.status === "error") {
+        thunkApi.rejectWithValue(result.message);
+      }
 
-     thunkApi.dispatch(setInstructors(result.data))
-  } catch (e: any) {
-    console.error(e.message)
+      thunkApi.dispatch(setInstructors(result.data));
+    } catch (e: any) {
+      console.error(e.message);
+    }
   }
-})
+);
+
+export const studentSubmissionReducer = createAsyncThunk(
+  "get/submission",
+  async (__, thunkApi) => {
+    try {
+      const response = await studentSubmissionApi();
+      const data = await response.data;
+
+      if (data.status === "error") {
+        console.error(data.message);
+      }
+
+      thunkApi.dispatch(setSubmissions(data.submissions));
+    } catch (e: any) {
+      return console.error(e);
+    }
+  }
+);
 
 const studentSlice = createSlice({
   name: "student/slice",
@@ -84,10 +115,18 @@ const studentSlice = createSlice({
     setInstructors: (state, action) => {
       state.instructors = action.payload;
     },
+    setSubmissions: (state, action) => {
+      state.studSubmissions = action.payload;
+    },
   },
 });
 
-export const { setAttendance, setScheduledexams, setInstructors } = studentSlice.actions;
+export const {
+  setAttendance,
+  setScheduledexams,
+  setInstructors,
+  setSubmissions,
+} = studentSlice.actions;
 export default studentSlice.reducer;
 
 // Retrieves userId from localstorage

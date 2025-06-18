@@ -8,6 +8,7 @@ import { Credentials } from "../../static/Interface";
 import { Roles } from "../../static/types";
 import { parseJWT } from "../../services/decode-token";
 import { motion, AnimatePresence } from "framer-motion";
+import ParticleContaner from "../../particles/Particle";
 
 const LoginForm: FC = (): JSX.Element => {
   const [email, setEmail] = useState<string>("");
@@ -26,9 +27,7 @@ const LoginForm: FC = (): JSX.Element => {
 
   // Display Error messages
   const setError = (msg: string) => {
-    setTimeout(() => {
-      toast.error(msg);
-    }, 2000);
+    toast.error(msg);
   };
 
   // Handles login attempts
@@ -84,20 +83,15 @@ const LoginForm: FC = (): JSX.Element => {
       console.error(error.message);
       throw new Error(error);
     } finally {
-      setIsLoading(false)
+      setIsLoading(false);
     }
   };
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-gradient-to-r from-[#111] to-[#082520e0] shadow-sm px-4">
-      {/* Loader  */}
+      <ParticleContaner />
       {isLoading && (
         <div className="absolute flex">
-          {/* <div
-            className={`w-10 h-10 rounded-full border-4 border-solid rounded-tl-none border-yellow-600 ${
-              isLoading && "rotate-full"
-            }`}
-          ></div> */}
           <div
             className={`w-10 h-10 rounded-full border-4 border-b-0 border-solid border-green-600 ${
               isLoading && "rotate-back-full"
@@ -113,10 +107,10 @@ const LoginForm: FC = (): JSX.Element => {
           exit={{ opacity: 0, x: "100%" }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4, delay: 0.3 }}
-          className="w-full max-w-md space-y-8 rounded-xl bg-[#ffffff] p-8 shadow-lg"
+          className="w-full max-w-md space-y-8 rounded-xl bg-[#11111180] text-white p-8 shadow-lg z-10"
         >
           <div>
-            <h2 className="text-center text-2xl font-bold text-gray-900">
+            <h2 className="text-center text-2xl font-bold text-white">
               Sign In
             </h2>
 
@@ -129,9 +123,11 @@ const LoginForm: FC = (): JSX.Element => {
                   value={email}
                   label="Email"
                   type="email"
+                  placeholder="Enter email address"
                   onChange={(e: ChangeEvent<HTMLInputElement>) =>
                     setEmail(e.target.value)
                   }
+                  style="text-white"
                 />
                 {/* password filed  */}
                 <InputField
@@ -140,6 +136,8 @@ const LoginForm: FC = (): JSX.Element => {
                   value={password}
                   label="Password"
                   type="password"
+                  placeholder="Enter Password"
+                  style="text-white"
                   onChange={(e: ChangeEvent<HTMLInputElement>) =>
                     setPassword(e.target.value)
                   }

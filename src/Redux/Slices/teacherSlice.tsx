@@ -52,13 +52,12 @@ export const getStudentCreatedByTeacherReducer = () => {
     try {
       const teacherId = getUserObjectId();
       const response = await studentsOfTeachersApi(teacherId);
-      const { data, message, status } = response.data;
+      const { students, message, status } = response.data;
 
       if (status === "error") {
         throw new Error(message);
       }
 
-      const { students } = data;
       dispatch(setStudentsOfTeacher(students));
     } catch (error: any) {
       console.error(error);

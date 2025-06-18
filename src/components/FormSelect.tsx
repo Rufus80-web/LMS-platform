@@ -7,6 +7,7 @@ type SelectType = {
   isRequired?: boolean;
   disabled?: boolean,
   options: string[]
+  style?: string
   onChange: (e: ChangeEvent<HTMLSelectElement>) => void;
 };
 
@@ -18,7 +19,8 @@ const FormSelect = ({
   onChange,
   isRequired,
   disabled,
-  options
+  options,
+  style
 }: SelectType) => {
   return (
     <div>
@@ -33,7 +35,7 @@ const FormSelect = ({
         value={value}
         disabled={disabled}
         onChange={onChange}
-        className={`border-2 border-[#00000011] shadow-2xl h-[7vh] w-[35vw] rounded-md`}
+        className={`border-2 border-[#00000011] shadow-2xl h-[7vh] w-[35vw] rounded-md ${style}`}
       >
         <option disabled value="">
           {label}

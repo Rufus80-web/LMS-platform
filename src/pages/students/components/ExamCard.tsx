@@ -100,7 +100,7 @@ const ExamCard: React.FC<ExamCard> = ({
           Exam - {item.course}
         </Typography>
         <Typography gutterBottom variant="body2" color="text.secondary">
-          Course - {item.description?.slice(0, 40) + "..."}
+          Description - {item.description?.slice(0, 40) + "..."}
         </Typography>
         <Typography gutterBottom color="text.secondary" component="p">
           Date - {LocaleDate(item.datetime?.split("T")[0])}
@@ -109,7 +109,7 @@ const ExamCard: React.FC<ExamCard> = ({
           Time - {item.datetime?.split("T")[1]}
         </Typography>
         <Typography gutterBottom color="text.secondary" component="p">
-          Course Instructor - {item.teacherId?.gender === "Male" ? "M" : "Mme"}{" "}
+          Instructor - {item.teacherId?.gender === "Male" ? "Mr" : "Mme"}{" "}
           &nbsp;
           {item.teacherId.firstname} {item.teacherId.lastname}
         </Typography>

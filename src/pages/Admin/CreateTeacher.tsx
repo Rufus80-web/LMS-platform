@@ -29,7 +29,7 @@ const CreateTeacher = () => {
     email: "",
     contact: "",
     address: "",
-    roles: '',
+    roles: "",
     gender: "",
     password: "",
   });
@@ -53,7 +53,7 @@ const CreateTeacher = () => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "Authorization": `Bearer ${localStorage.getItem("token")}`
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
         body: JSON.stringify(formData),
       };
@@ -62,24 +62,24 @@ const CreateTeacher = () => {
       const response = await addTeacherRequest(configs);
 
       // Jsonify the server response
-      const { error, message } = await response.json();
+      const { status, message } = await response.json();
 
-      if (!error) {
+      if (status === "OK") {
         toast.success(message);
 
         // Clear the Form Input after successfull registration
         cleanTheForm();
 
         // Then Redirect
-        route("/admin/manage.teachers");
+        setTimeout(() => route("/admin/manage.teachers"), 2000);
       } else {
         // Set Loader
         setIsLoading(true);
         // Display error message
         setTimeout(() => {
-          setIsLoading(false)
+          setIsLoading(false);
           toast.error(message);
-        }, 1200)
+        }, 3000);
 
         // clearTimeout(timer)
       }
@@ -97,7 +97,7 @@ const CreateTeacher = () => {
       password: "",
       contact: "",
       address: "",
-      roles: '',
+      roles: "",
       gender: "",
     });
   };

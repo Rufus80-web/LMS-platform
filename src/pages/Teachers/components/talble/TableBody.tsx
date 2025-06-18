@@ -27,20 +27,20 @@ const _TableBody = ({ tableRows, page, rowPerPage }: TableBodyProps) => {
             style={{ color: themeMode === "light" ? "black" : "teal" }}
           >
             <Link
-              to={`/teacher/display-student/${row.userId._id}`}
+              to={`/teacher/display-student/${row._id}`}
               className="text-dark-bg underline hover:text-teal-500"
-              title={`See more details for ${row.userId["firstname"]}`}
+              title={`See more details for ${row["firstname"]}`}
             >
-              {row.userId.firstname} {row.userId.lastname}
+              {row.firstname} {row.lastname}
             </Link>
           </TableCell>
-          <TableCell style={{ color: color }} title={row.matricule}>{row.matricule?.slice(0, 10)}</TableCell>
-          <TableCell style={{ color: color }}>{row.userId.contact}</TableCell>
+          {/* <TableCell style={{ color: color }} title={row.matricule}>{row.matricule?.slice(0, 10)}</TableCell> */}
+          <TableCell style={{ color: color }}>{row.contact}</TableCell>
           <TableCell style={{ color: color }}>
             <Link
               to={""}
               className="text-blue-600 hover:underline"
-              title={`Send mail to ${row.userId["firstname"]}`}
+              title={`Send mail to ${row["firstname"]}`}
             >
               {row.email}
             </Link>
@@ -48,7 +48,7 @@ const _TableBody = ({ tableRows, page, rowPerPage }: TableBodyProps) => {
           <TableCell style={{ color: color }}>
             {row.isBlock === 0 ? <Lock /> : <LockOpen />}
           </TableCell>
-          <TableCell style={{ color: color }}>{row.userId.gender}</TableCell>
+          <TableCell style={{ color: color }}>{row.gender}</TableCell>
         </TableRow>
       ))}
     </TableBody>

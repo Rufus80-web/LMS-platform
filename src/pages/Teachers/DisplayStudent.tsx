@@ -14,23 +14,39 @@ import { getUserObjectId } from "../../Redux/Slices/teacherSlice";
 import img from "../../assets/images/profile-1.jpg";
 import CustomCard from "../Admin/components/CustomCard";
 import toast from "react-hot-toast";
-import { motion } from 'framer-motion'
-
+import { motion } from "framer-motion";
 
 type SidebarType = () => void;
+type studentProps = {
+  room: string;
+  matricule: string;
+  level: string;
+  courses: string;
+  email: string;
+  stud_id?: {
+    firstname: string;
+    lastname: string;
+    _id: string;
+    email: string;
+  };
+};
 
 const DisplayStudentPage: FC = () => {
   const [isOpenSidebar, setIsOpenSidebar] = useState(true);
-  const [student, setStudent] = useState({
-    classRoom: '',
-    studID: '',
-    level: '',
-    courses: '',
-    email: '',
-    name: "",
-    userId: {}
+  const [student, setStudent] = useState<studentProps>({
+    room: "",
+    matricule: "",
+    level: "",
+    courses: "",
+    email: "",
+    stud_id: {
+      firstname: "",
+      lastname: "",
+      _id: "",
+      email: "",
+    },
   });
-  console.log(student)
+  console.log(student);
   const [cardTransition, setCardTransition] = useState(false);
   const handleSidebarWidth = (): ReturnType<SidebarType> => {
     setIsOpenSidebar((prev) => !prev);
@@ -110,7 +126,7 @@ const DisplayStudentPage: FC = () => {
              `}
         >
           <CustomCard
-            name={student.name}
+            name={student?.stud_id?.firstname}
             state={cardTransition}
             func1={deleteStudentRequest}
             func2={unmountCardContainer}
@@ -120,7 +136,7 @@ const DisplayStudentPage: FC = () => {
           <div className="pl-1">
             <DashHeader
               title="student Data"
-              message={'Personal Informations'}
+              message={"Personal Informations"}
             />
             {/* <div className={`mt-8 pr-3`} style={{color: themeMode === "light" ? "black" : "#d4d0d08c",}}></div> */}
             <hr className="mt-3 border-[#85838336] border-solid border-1" />
@@ -133,7 +149,7 @@ const DisplayStudentPage: FC = () => {
               <section className="grid grid-cols-3 items-center">
                 <div className="flex flex-col gap-3 w-60 h-15">
                   <span>Name:</span>
-                  <span>{student.name}</span>
+                  <span>{student?.stud_id?.firstname}</span>
                 </div>
                 <div className="flex flex-col gap-3 w-60 h-15">
                   <span>Attachement:</span>
@@ -150,7 +166,14 @@ const DisplayStudentPage: FC = () => {
               <section className="flex justify-start items-center">
                 <div className="flex flex-col justify-start items-start">
                   <div>Email</div>
-                  <div>{student.email}</div>
+                  <div>{student?.stud_id?.email}</div>
+                </div>
+              </section>
+              <hr className="mt-3 border-[#85838336] border-solid border-1" />
+              <section className="flex justify-start items-center">
+                <div className="flex flex-col justify-start items-start">
+                  <div>Matricule</div>
+                  <div>{student?.matricule}</div>
                 </div>
               </section>
               <hr className="mt-3 border-[#85838336] border-solid border-1" />
@@ -158,7 +181,7 @@ const DisplayStudentPage: FC = () => {
                 <div className="flex flex-col gap-3 w-60 h-15">
                   <span>ClassName</span>
 
-                  <span>{student.classRoom}</span>
+                  <span>{student.room}</span>
                 </div>
                 <div className="flex flex-col gap-3 w-60 h-15">
                   <span>Level:</span>
@@ -166,7 +189,13 @@ const DisplayStudentPage: FC = () => {
                 </div>
                 <div className="flex flex-col gap-3 w-60 h-15">
                   <span>Courses:</span>
-                  <span>{student.courses.toString().split(',').join('-').toUpperCase()}</span>
+                  <span>
+                    {student.courses
+                      .toString()
+                      .split(",")
+                      .join("-")
+                      .toUpperCase()}
+                  </span>
                 </div>
               </section>
               <hr className="mt-3 border-[#85838336] border-solid border-1" />

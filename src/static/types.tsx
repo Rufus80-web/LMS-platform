@@ -8,14 +8,13 @@ export type TableBodyProps = {
     matricule: string;
     email: string;
     isBlock: number;
-    userId: {
-      id: string;
-      _id: string;
-      firstname: string;
-      lastname: string;
-      gender: string;
-      contact: string;
-    };
+
+    id: string;
+    _id: string;
+    firstname: string;
+    lastname: string;
+    gender: string;
+    contact: string;
   }>;
   page: number;
   rowPerPage: number;
@@ -145,5 +144,5 @@ export type Event = {
     firstname?: string;
     lastname?: string;
     gender?: string;
-  }
+  };
 };

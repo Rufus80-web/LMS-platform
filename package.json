@@ -35,12 +35,15 @@
     "react-redux": "^9.2.0",
     "react-router-dom": "^7.5.2",
     "react-toastify": "^11.0.5",
+    "react-tsparticles": "^2.12.2",
     "recharts": "^2.15.3",
     "sweetalert": "^2.1.2",
     "sweetalert2": "^11.19.1",
     "swiper": "^11.2.8",
     "tailwindcss": "^4.1.4",
-    "timeago.js": "^4.0.2"
+    "timeago.js": "^4.0.2",
+    "tsparticles": "^3.8.1",
+    "tsparticles-slim": "^2.12.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.22.0",

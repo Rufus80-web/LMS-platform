@@ -32,7 +32,7 @@ const _TableHeaders = ({ orderBy, order, handleSort }: TableHeadProps) => {
             Name
           </TableSortLabel>
         </TableCell>
-        <TableCell style={{ color: color }}>
+        {/* <TableCell style={{ color: color }}>
           <TableSortLabel
             active={orderBy === "age"}
             direction={orderBy === "age" ? order : "asc"}
@@ -40,7 +40,7 @@ const _TableHeaders = ({ orderBy, order, handleSort }: TableHeadProps) => {
           >
             martricule
           </TableSortLabel>
-        </TableCell>
+        </TableCell> */}
         <TableCell style={{ color: color }}>
           <TableSortLabel
             active={orderBy === "phoneNumber"}

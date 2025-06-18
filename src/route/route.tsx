@@ -18,10 +18,12 @@ import HandlePasswordReset from "../pages/Auths/HandlePasswordReset";
 import AuthenticateVerificationcode from "../pages/Auths/AuthenticateVerificationcode";
 // student views
 import StudentDashboard from "../pages/students/Dashboard";
-import TimeTable from "../pages/students/TimeTable";
+import TimeTable from "../pages/students/ExamSubmission";
 import Exam from "../pages/students/Exam";
 import UpdatePassword from "../pages/students/UpdatePassword";
 import ExercisePage from "../pages/students/ExercisePage";
+import SubmissionDetail from "../pages/students/SubmissionDetails"
+
 
 //Teacher views
 import TDashboard from "../pages/Teachers/TDashboard";
@@ -99,6 +101,7 @@ export const router = BrowserRouter(
         <Route path="update_pass" element={<UpdatePassword />}></Route>
         {/* <Route path="writing-exam" element={<StudentExamPage />}></Route> */}
         <Route path="attend-exam" element={<ExercisePage />}></Route>
+        <Route path="exam/details/:examId" element={<SubmissionDetail />}></Route>
       </Route>
       {/***************************************************************** TEACHERS ROUTES********************************************************** */}
       <Route

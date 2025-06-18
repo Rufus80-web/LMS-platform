@@ -69,14 +69,14 @@ const CreateStudent = () => {
 
       if (status === 'error') {
         hotToast.error(message);
-        // Clear the Form Input after successfull registration
-        cleanTheForm();
-
+        
       } else {
         // Display error message
         hotToast.success(message);
+        // Clear the Form Input after successfull registration
+        cleanTheForm();
         // Then Redirect
-        route("/admin/manage.students");
+        setTimeout(() => route("/admin/manage.students"), 3000)
       }
     } catch (err: any) {
       console.log(err.message);
@@ -180,12 +180,12 @@ const CreateStudent = () => {
                 options={["Male", "Female"]}
               />
               <FormSelect
-                name="role"
+                name="roles"
                 value={formData.roles as string}
                 placeholder="User Role"
                 onChange={OnChange}
                 style="small-input"
-                options={["User", "Teacher", "Administrator", "Student"]}
+                options={["Teacher", "Administrator", "Student"]}
               />
               <Input
                 type="password"

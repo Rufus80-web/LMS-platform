@@ -14,7 +14,7 @@ const ExamTimer: React.FC<Props> = ({ durationMinutes, onTimeUp }) => {
       setSecondsLeft((prev) => {
         if (prev <= 1) {
           clearInterval(interval);
-          onTimeUp();
+          onTimeUp(); // Handles automatic exam submission
           return 0;
         }
         return prev - 1;

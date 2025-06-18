@@ -5,6 +5,7 @@ import { authenticateEmailRequest } from "../../api/auths.api";
 import toast from "react-hot-toast";
 import InputField from "../../components/InputField";
 import Swal from "sweetalert2";
+import ParticleContaner from "../../particles/Particle";
 
 const PasswordResetEmailRequest = () => {
   const [email, setEmail] = useState<string>("");
@@ -32,19 +33,19 @@ const PasswordResetEmailRequest = () => {
           setTimeout(() => {
             setIsLoading(false);
             toast.error(message);
-            setEmail("")
+            setEmail("");
           }, 2000);
         } else {
           setTimeout(() => {
-            setIsLoading(false)
+            setIsLoading(false);
             toast.success("Verification code send. Check your mail");
-            Swal.fire('Notification', message, 'info')
+            Swal.fire("Notification", message, "info");
             route("/auths/verification-code", {
               state: {
                 email: email,
               },
             });
-          }, 2000)
+          }, 2000);
         }
       } catch (error: any) {
         throw new Error(error.message);
@@ -53,22 +54,21 @@ const PasswordResetEmailRequest = () => {
   };
   return (
     <div className="flex min-h-screen items-center justify-center bg-gradient-to-r from-[#111] to-[#082520c5] shadow-sm px-4">
+      <ParticleContaner />
       <motion.div
         initial={{ opacity: 0, x: "70%", y: "0%" }}
         animate={{ opacity: 1, x: 0 }}
         exit={{ opacity: 0, x: "100%" }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.4, delay: 0.3 }}
-        className="w-full max-w-md space-y-8 rounded-xl bg-white p-8 shadow-lg select-none"
+        className="w-full max-w-md space-y-8 rounded-xl bg-[#11111180] text-white p-8 shadow-lg select-none"
       >
         <motion.form onSubmit={AuthenticateEmail}>
           <div className="flex justify-start gap-0.5">
             <div className="flex justify-center items-center w-6 h-6 rounded-full text-lg text-white bg-slate-500 animate-pulse">
               1
             </div>
-            <h2 className="text-2xl font-light text-gray-900">
-              Reset Password Procedure
-            </h2>
+            <h2 className="text-2xl font-light">Reset Password Procedure</h2>
           </div>
 
           <div className="pt-6">
@@ -78,6 +78,7 @@ const PasswordResetEmailRequest = () => {
               value={email}
               label="Email Address"
               type="email"
+              style="text-white"
               placeholder="Enter your email here.."
               onChange={(e: ChangeEvent<HTMLInputElement>) =>
                 setEmail(e.target.value)

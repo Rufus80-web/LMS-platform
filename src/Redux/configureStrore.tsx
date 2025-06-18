@@ -19,6 +19,7 @@ import getExamReducer  from './Slices/teacherSlice';
 import getStudentAttendanceReducer from './Slices/studentSlice';
 import getScheduledExamReducer from './Slices/studentSlice';
 import getInstructorReducer  from './Slices/studentSlice';
+import studentSubmissionReducer from './Slices/studentSlice'
 
 
 const ReduxStore = configureStore({
@@ -37,7 +38,8 @@ const ReduxStore = configureStore({
      exams: getExamReducer,
      attendance: getStudentAttendanceReducer,
      studentExamInfo: getScheduledExamReducer,
-     instructor: getInstructorReducer
+     instructor: getInstructorReducer,
+     studentSubmission: studentSubmissionReducer
    }
 })
 
